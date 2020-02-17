@@ -1,5 +1,9 @@
 var ws281x = require('rpi-ws281x-v2');
 class Interface {
+  updateScreen() {
+      ws281x.render(this.pixels);
+  }
+
   constructor(pixels) {
     ws281x.configure({leds:pixels, gpio:18, strip:'rgb'});
     this.pixels = new Uint32Array(pixels);
@@ -9,11 +13,7 @@ class Interface {
 
     this.pixels[15] = color;
 
-    updateScreen();
-  }
-
-  updateScreen() {
-      ws281x.render(this.pixels);
+    this.updateScreen();
   }
 
 }
