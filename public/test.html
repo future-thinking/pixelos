@@ -46,6 +46,11 @@
         if (dir == 'LEFT') {
           x = -1;
         }
+
+        if (orientation == 0) {
+          x = -x;
+        }
+
         if (orientation == 2) {
           x = -x;
           y = -y;
@@ -92,5 +97,12 @@
         <td></td>
       </tr>
     </table>
+
+
+    <form class="" action="/eval" method="post">
+      <input type="text" name="eval" value="Eval Command...">
+      <button type="submit" name="submit" value="submit"></button>
+    </form>
+
   </body>
 </html>
