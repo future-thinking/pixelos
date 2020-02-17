@@ -39,6 +39,7 @@ class Interface {
     for (let p = 0; p < this.pixel_amount; p++) {
         this.pixels[p] = 0,0,0;
   }
+  updateScreen();
 }
 
   fillScreen(r,g,b) {
@@ -46,16 +47,18 @@ class Interface {
     for (let p = 0; p < this.pixel_amount; p++) {
       this.pixels[p] = color;
   }
+  updateScreen();
 }
 
   drawFullscreenImage(path){
     PNG.decode(path, function(pixels) {
     // pixels is a 1d array (in rgba order) of decoded pixel data
-    for (let p = 0; p < this.pixel_amount; p++) {
-      color = pixels;
-        this.pixels[p] = pixels
-  }
-});
+      for (let p = 0; p < this.pixel_amount; p++) {
+        color = pixels;
+          this.pixels[p] = pixels
+      }
+    });
+    updateScreen();
   }
 
 
