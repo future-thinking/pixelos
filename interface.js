@@ -35,12 +35,16 @@ class Interface {
 
 
   clearScreen() {
-    for (let x, x <= this.side, x++) {
-      for (let y, y <= this.side, y++) {
+    for (let p, p <= pixel_amount, p++) {
         setPixel(x,y,0,0,0);
-      }
-    }
   }
+}
+
+  fillScreen(r,g,b) {
+    for (let p = 0, p < pixel_amount, p++) {
+        setPixel(x,y,r,g,b);
+  }
+}
 
 
 
