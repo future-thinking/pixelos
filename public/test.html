@@ -3,27 +3,92 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" href="/test.css">
+    <style>
+      table {
+        width: 75vmin;
+        height: 75vmin;
+        margin: auto;
+        margin-top: 12.5vmin;
+      }
+
+      table tr {
+        height: 25vmin;
+        width: 75vmin;
+      }
+
+      table tr td {
+        height: 25vmin;
+        width: 25vmin;
+      }
+
+      button {
+        height: 25vmin;
+        width: 25vmin;
+      }
+
+      </style>
     <script src="/socket.io/socket.io.js"></script>
     <script>
       var socket = io();
+      var orientation = 0;
+      function getCorrectCoords(dir) {
+        let x = 0;
+        let y = 0;
+        if (dir == 'UP') {
+          y = 1;
+        }
+        if (dir == 'DOWN') {
+          y = -1;
+        }
+        if (dir == 'RIGHT') {
+          x = 1;
+        }
+        if (dir == 'LEFT') {
+          x = -1;
+        }
+        if (orientation == 2) {
+          x = -x;
+          y = -y;
+        }
+        if (orientation == 1) {
+          let xt = x;
+          x = y;
+          y = xt;
+          x = -x;
+          y = -y;
+        }
+        if (orientation == 3) {
+          let xt = x;
+          x = y;
+          y = xt;
+        }
+        let output = {'x': x, 'y': y};
+
+        return output;
+      }
+      function setOrientation(ori) {
+        orientation = ori;
+      }
+      socket.on('ori', function(msg) {
+        setOrientation(msg);
+      })
     </script>
   </head>
   <body>
     <table>
       <tr>
         <td></td>
-        <td><button type="button" name="button" label="UP" onclick="io.emit('button', {x: 0, y: 1})"></button></td>
+        <td><button type="button" name="button" label="UP" onclick="socket.emit('button', getCorrectCoords('UP'))"></button></td>
         <td></td>
       </tr>
       <tr>
-        <td><button type="button" name="button" label="LEFT" onclick="io.emit('button', {x: -1, y: 0})"></button></td>
+        <td><button type="button" name="button" label="LEFT" onclick="socket.emit('button', getCorrectCoords('LEFT'))"></button></td>
         <td></td>
-        <td><button type="button" name="button" label="RIGHT" onclick="io.emit('button', {x: 1, y: 0})"></button></td>
+        <td><button type="button" name="button" label="RIGHT" onclick="socket.emit('button', getCorrectCoords('RIGHT'))"></button></td>
       </tr>
       <tr>
         <td></td>
-        <td><button type="button" name="button" label="DOWN" onclick="io.emit('button', {x: 0, y: -1})"></button></td>
+        <td><button type="button" name="button" label="DOWN" onclick="socket.emit('button', getCorrectCoords('DOWN'))"></button></td>
         <td></td>
       </tr>
     </table>
