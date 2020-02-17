@@ -36,7 +36,7 @@ class Interface {
 
   clearScreen() {
     let color = 0 | 0 | 0;
-    for (let p, p <= pixel_amount, p++) {
+    for (let p, p < pixel_amount, p++) {
         this.pixels[p] = 0,0,0;
   }
 }
