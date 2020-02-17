@@ -5,7 +5,7 @@ var io = require('socket.io')(http);
 var interface_module = require('./interface.js');
 var interface = new interface_module(144);
 
-app.use(express.static('public'));
+app.use(require('express').static('public'));
 
 var x = 5;
 var y = 5;
