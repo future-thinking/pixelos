@@ -27,7 +27,7 @@ io.on('connection', function(socket){
 });
 
 app.get('/', function (req, res) {
-  res.sendFile('/public/test.html');
+  res.sendFile(__dirname + '/public/test.html');
 });
 
 app.listen(3000, function () {
