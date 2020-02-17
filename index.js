@@ -1,5 +1,5 @@
-var express = require('express');
-var app = express();
+var app = require('express')();
+var http = require('http').createServer(app);
 var mysql = require('mysql');
 var interface_module = require('./interface.js');
 var io = require('socket.io')(http);
