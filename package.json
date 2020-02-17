@@ -1,0 +1,22 @@
+{
+  "name": "pixel-os-nodejs",
+  "version": "1.0.0",
+  "description": "nodejs driven api for ws281x-LEDs matrix",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RobinD95/pixel-os-nodejs.git"
+  },
+  "author": "P3ntest, Lopf95",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RobinD95/pixel-os-nodejs/issues"
+  },
+  "homepage": "https://github.com/RobinD95/pixel-os-nodejs#readme",
+  "dependencies": {
+    "epxress": "0.0.1-security"
+  }
+}
