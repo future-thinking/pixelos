@@ -4,18 +4,21 @@ class Interface {
       ws281x.render(this.pixels);
   }
 
-  constructor(pixels) {
-    ws281x.configure({leds:pixels, gpio:18, strip:'rgb'});
-    this.pixels = new Uint32Array(pixels);
-
-    var red = 255, green = 0, blue = 0;
-    var color = (red << 16) | (green << 8)| blue;
-
-    this.pixels[15] = color;
-
-    this.updateScreen();
+  translatePixelCoordinates(x, y) {
+      return y * Math.sqrt(this.pixel_amount) + x;
   }
 
+  setPixel(x, y, r, g, b) {
+    let color = r | g | b
+    this.pixels[transatePixelCoordinates(x, y)] = color;
+  }
+
+  constructor(pixels) {
+    this.pixel_amount = pixels;
+    ws281x.configure({leds:pixels, gpio:18, strip:'rgb'});
+    this.updateScreen();
+    this.pixels = new Uint32Array(pixels);
+  }
 }
 
 module.exports = Interface
