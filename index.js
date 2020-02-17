@@ -7,7 +7,7 @@ var io = require('socket.io')(http);
 
 var interface = new interface_module(144);
 
-app.use(express.static('public'));
+//app.use(express.static('public'));
 
 var x = 5;
 var y = 5;
