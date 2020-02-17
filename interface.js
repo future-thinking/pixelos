@@ -8,6 +8,8 @@ class Interface {
     var color = (red << 16) | (green << 8)| blue;
 
     this.pixels[15] = color;
+
+    updateScreen();
   }
 
   updateScreen() {
@@ -16,4 +18,4 @@ class Interface {
 
 }
 
-module.exports = User
+module.exports = Interface
