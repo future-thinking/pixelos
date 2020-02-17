@@ -31,7 +31,7 @@ io.on('connection', function(socket){
   })
 });
 
-server.listen(3000);
+//server.listen(3000);
 app.listen(3000, function () {
   console.log('PixelOS Web listening on port 3000!');
 });
