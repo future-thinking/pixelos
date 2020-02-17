@@ -1,4 +1,6 @@
 var ws281x = require('rpi-ws281x-v2');
+var PNG = require('png-js');
+
 class Interface {
   updateScreen() {
       ws281x.render(this.pixels);
@@ -29,6 +31,24 @@ class Interface {
     this.pixels = new Uint32Array(pixel_amount);
     this.width = Math.sqrt(this.pixel_amount);
   }
+
+
+
+  clearScreen() {
+    for (let p, p <= pixel_amount, p++) {
+        setPixel(x,y,0,0,0);
+  }
+}
+
+  fillScreen(r,g,b) {
+    for (let p = 0, p < pixel_amount, p++) {
+        setPixel(x,y,r,g,b);
+  }
+}
+
+
+
+
 }
 
 module.exports = Interface
