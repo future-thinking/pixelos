@@ -10,7 +10,7 @@ class Interface {
 
   setPixel(x, y, r, g, b) {
     let color = r | g | b
-    this.pixels[translatePixelCoordinates(x, y)] = color;
+    this.pixels[this.translatePixelCoordinates(x, y)] = color;
   }
 
   constructor(pixel_amount) {
