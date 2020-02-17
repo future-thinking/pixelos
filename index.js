@@ -8,10 +8,20 @@ var interface = new interface_module(144);
 
 app.use(express.static('public'));
 
+var x = 5;
+var y = 5;
+
+interface.setPixel(5, 5, 255, 0, 0);
+interface.updateScreen();
+
 io.on('connection', function(socket){
   console.log('a user connected');
   socket.on('button', function (coords) {
-    console.log("better: " + coords.x + " " + coords.y);
+    interface.setPixel(x, y, 0, 0, 0);
+    x = x + coords.x;
+    y = y + coords.y;
+    interface.setPixel(x, y, 255, 0, 0);
+    interface.updateScreen();
   })
 });
 

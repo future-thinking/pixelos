@@ -13,11 +13,10 @@ class Interface {
     this.pixels[transatePixelCoordinates(x, y)] = color;
   }
 
-  constructor(pixels) {
-    this.pixel_amount = pixels;
-    ws281x.configure({leds:pixels, gpio:18, strip:'rgb'});
-    this.updateScreen();
-    this.pixels = new Uint32Array(pixels);
+  constructor(pixel_amount) {
+    this.pixel_amount = pixel_amount;
+    ws281x.configure({leds:this.pixel_amount, gpio:18, strip:'rgb'});
+    this.pixels = new Uint32Array(pixel_amount);
   }
 }
 
