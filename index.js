@@ -4,7 +4,7 @@ var mysql = require('mysql');
 var ws281x = require('rpi-ws281x-v2');
 
 // One time initialization
-ws281x.configure({leds:144, gpio:1, strip:rgb});
+ws281x.configure({leds:144, gpio:18, strip:rgb});
 
 // Create my pixels
 var pixels = new Uint32Array(144);
