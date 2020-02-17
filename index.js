@@ -19,6 +19,7 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
   console.log('a user connected');
+  socket.emit('ori', 3);
   socket.on('button', function (coords) {
     interface.setPixel(x, y, 0, 0, 0);
     x = x + coords.x;

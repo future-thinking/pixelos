@@ -69,6 +69,9 @@
       function setOrientation(ori) {
         orientation = ori;
       }
+      socket.on('ori', function(msg) {
+        setOrientation(msg);
+      })
     </script>
   </head>
   <body>
