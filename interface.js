@@ -8,13 +8,11 @@ class Interface {
     var color = (red << 16) | (green << 8)| blue;
 
     this.pixels[15] = color;
-
-    updateScreen() {
-        ws281x.render(this.pixels);
-    }
   }
 
-
+  updateScreen() {
+      ws281x.render(this.pixels);
+  }
 
 }
 
