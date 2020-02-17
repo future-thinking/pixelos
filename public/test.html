@@ -55,12 +55,14 @@
           x = y;
           y = xt;
           x = -x;
+          y = -y;
         }
         if (orientation == 3) {
           let xt = x;
           x = y;
           y = xt;
           y = -y;
+          x = -x;
         }
         let output = {'x': x, 'y': y};
 
