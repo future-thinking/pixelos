@@ -21,7 +21,7 @@ class Interface {
   }
 
   setPixel(x, y, r, g, b) {
-    let color = r | g | b
+    let color = r | g | b;
     this.pixels[this.translatePixelCoordinates(x, y)] = color;
   }
 
@@ -35,18 +35,28 @@ class Interface {
 
 
   clearScreen() {
+    let color = 0 | 0 | 0;
     for (let p, p <= pixel_amount, p++) {
-        setPixel(x,y,0,0,0);
+        this.pixels[p] = 0,0,0;
   }
 }
 
   fillScreen(r,g,b) {
+    let color = r | g | b;
     for (let p = 0, p < pixel_amount, p++) {
-        setPixel(x,y,r,g,b);
+      this.pixels[p] = color;
   }
 }
 
-
+  drawFullscreenImage(path){
+    PNG.decode(path, function(pixels) {
+    // pixels is a 1d array (in rgba order) of decoded pixel data
+    for (let p = 0, p < pixel_amount, p++) {
+      color = pixels;
+        this.pixels[p] = pixels
+  }
+});
+  }
 
 
 }
