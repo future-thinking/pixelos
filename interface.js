@@ -5,12 +5,17 @@ class Interface {
   }
 
   translatePixelCoordinates(x, y) {
-      x = x % Math.sqrt(this.pixel_amount);
-      y = y % Math.sqrt(this.pixel_amount);
-      if (y % 2 == 0) {
-        x = -x;
-      }
-      return y * Math.sqrt(this.pixel_amount) + x;
+    x = x % this.width;
+    y = y % this.width;
+
+    let pix = 0;
+    if(y % 2 == 0) {
+      pix = y * this.width + x;
+    } else {
+      pix = y * this.width + this.width - 1 - x;
+    }
+
+    return pix;
   }
 
   setPixel(x, y, r, g, b) {
@@ -22,6 +27,7 @@ class Interface {
     this.pixel_amount = pixel_amount;
     ws281x.configure({leds:this.pixel_amount, gpio:18, strip:'rgb'});
     this.pixels = new Uint32Array(pixel_amount);
+    this.width = Math.sqrt(this.pixel_amount);
   }
 }
 
