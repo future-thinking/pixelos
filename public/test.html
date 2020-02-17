@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" href="/test.css">
     <style>
       table {
         width: 75vmin;
@@ -37,17 +36,17 @@
     <table>
       <tr>
         <td></td>
-        <td><button type="button" name="button" label="UP" onclick="io.emit('button', {x: 0, y: 1})"></button></td>
+        <td><button type="button" name="button" label="UP" onclick="socket.emit('button', {x: 0, y: 1})"></button></td>
         <td></td>
       </tr>
       <tr>
-        <td><button type="button" name="button" label="LEFT" onclick="io.emit('button', {x: -1, y: 0})"></button></td>
+        <td><button type="button" name="button" label="LEFT" onclick="socket.emit('button', {x: -1, y: 0})"></button></td>
         <td></td>
-        <td><button type="button" name="button" label="RIGHT" onclick="io.emit('button', {x: 1, y: 0})"></button></td>
+        <td><button type="button" name="button" label="RIGHT" onclick="socket.emit('button', {x: 1, y: 0})"></button></td>
       </tr>
       <tr>
         <td></td>
-        <td><button type="button" name="button" label="DOWN" onclick="io.emit('button', {x: 0, y: -1})"></button></td>
+        <td><button type="button" name="button" label="DOWN" onclick="socket.emit('button', {x: 0, y: -1})"></button></td>
         <td></td>
       </tr>
     </table>
