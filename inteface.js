@@ -3,7 +3,7 @@ class Interface {
   constructor(pixels) {
     ws281x.configure({leds:pixels, gpio:18, strip:'rgb'});
     this.pixels = new Uint32Array(pixels);
-    
+
     var red = 255, green = 0, blue = 0;
     var color = (red << 16) | (green << 8)| blue;
 
