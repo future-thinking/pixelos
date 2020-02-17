@@ -30,6 +30,42 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
       var socket = io();
+      var orientation = 0;
+      function getCorrectCoords(dir) {
+        let x = 0;
+        let y = 0;
+        if (dir == "UP") {
+          y = 1;
+        }
+        if (dir == "DOWN") {
+          y = -1;
+        }
+        if (dir == "RIGHT") {
+          x = 1;
+        }
+        if (dir == "LEFT") {
+          x = -1;
+        }
+        if (orientation == 2) {
+          x = -x;
+          y = -y;
+        }
+        if (orientation == 1) {
+          let xt = x;
+          x = y;
+          y = xt;
+          x = -x;
+        }
+        if (orientation == 3) {
+          let xt = x;
+          x = y;
+          y = xt;
+          y = -y;
+        }
+      }
+      function setOrientation(ori) {
+        orientation = ori;
+      }
     </script>
   </head>
   <body>
