@@ -5,6 +5,11 @@ class Interface {
   }
 
   translatePixelCoordinates(x, y) {
+      x = x % Math.sqrt(this.pixel_amount);
+      y = y % Math.sqrt(this.pixel_amount);
+      if (y % 2 == 0) {
+        x = -x;
+      }
       return y * Math.sqrt(this.pixel_amount) + x;
   }
 
