@@ -3,7 +3,7 @@ var app = express();
 var http = require('http').createServer(app);
 var mysql = require('mysql');
 var interface_module = require('./interface.js');
-var io = require('socket.io').listen(app);
+var io = require('socket.io').listen(server);
 
 var interface = new interface_module(144);
 
