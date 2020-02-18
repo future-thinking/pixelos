@@ -47,11 +47,11 @@ class Interface {
   }
 }
 
-  drawFullscreenImage(path){
-    PNG.decode(path, function(pixels) {
-    // pixels is a 1d array (in rgba order) of decoded pixel data
+  drawFullscreenImage(path) {
     console.log(this.pixel_amount);
-	console.log(pixels);
+    PNG.decode(path, function(pixels) {
+      // pixels is a 1d array (in rgba order) of decoded pixel data
+	   console.log(pixels);
       for (let p = 0; p < this.pixel_amount; p++) {
         color = pixels;
           this.pixels[p] = pixels
