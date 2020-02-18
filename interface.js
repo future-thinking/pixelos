@@ -25,7 +25,7 @@ class Interface {
   }
 
   setPixel(x, y, r, g, b) {
-    this.pixels[this.translatePixelCoordinates(x, y)] = this.getCorrectColor(r, b, g);
+    this.pixels[this.translatePixelCoordinates(x, y)] = this.getCorrectColor(r, g, b);
   }
 
   constructor(pixel_amount) {
