@@ -1,21 +1,18 @@
-table {
-  width: 75vmin;
-  height: 75vmin;
-  margin: auto;
-  margin-top: 12.5vmin;
+.controller_button {
+  background-color: red;
+  border-radius: 100%;
+  border-color: black;
+  border-width: 5px;
+  width: 40vh;
+  height: 40vh;
+  font-size: 8vw;
 }
 
-table tr {
-  height: 25vmin;
-  width: 75vmin;
+.buttons_table {
+  text-align: right;
 }
 
-table tr td {
-  height: 25vmin;
-  width: 25vmin;
-}
-
-button {
-  height: 25vmin;
-  width: 25vmin;
+.buttons_container {
+  text-align: right;
+  display: flex;
 }

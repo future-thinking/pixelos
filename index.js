@@ -10,6 +10,8 @@ const bodyParser = require('body-parser');
 app.use(require('express').static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 
+var players = new Array();
+
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/public/index.html');
 });
@@ -25,10 +27,29 @@ app.post('/evalpost', (req, res) => {
   res.redirect('/eval');
 });
 
-io.on('connection', function(socket){
-  console.log('a user connected');
-  socket.emit('ori', 3);
+io.on('connection', function(socket) {
+  if (players.length > 4) {
+    socket.emit('game_full', "");
+    console.log("Player got kicked for 'Game Full!'");
+  }
+  players.push(socket);
+  console.log("Player connected as player" + players.length + ".");
+  updatePlayerNumbers();
+  socket.on('disconnect' () => {
+    console.log('User left.');
+    if (players.includes(socket)) {
+      players.splice(players.indexOf(socket));
+    }
+  });
+  console.log('');
 });
+
+updatePlayerNumbers() {
+  console.log("players: " + players);
+  players.forEach(function(item, index, array) {
+      item.emit("player_number_info", index + 1);
+  });
+}
 
 http.listen(3000, function(){
   console.log('listening on *:3000');
