@@ -21,6 +21,7 @@ class MultiSnake {
     this.doody = Math.random();
     this.ended = false;
     this.spawnFood();
+    this.alive_players = players.length;
   }
 
   isEnded() {
@@ -53,13 +54,14 @@ class MultiSnake {
   }
 
   playerDie(player) {
-    this.playerObjs.splice(this.playerObjs.indexOf(player), 1);
-    this.players.splice(this.playerObjs.indexOf(player), 1);
-    if (this.players.length < 2) {
-      console.log("====================================" + this.playerObjs)
-      this.interface.fillScreenHex(this.playerObjs[0].color);
-      this.interface.updateScreen();
-      this.ended = true;
+    this.alive_players--;
+    if (this.alive_players < 2) {
+      this.playerObjs.forEach((item, i) => {
+        if (item.alive) {
+          this.interface.fillScreenHex(player.color);
+        }
+      });
+
     }
   }
 
@@ -79,11 +81,12 @@ class SnakePlayer {
     this.interface = screen_interface;
     this.maingame = maingame;
     this.direction = "up";
-    switch (player_num) {
+    this.alive = true;
+    switch (player_num) { //grb
       case 0:
         this.x = 1;
         this.y = 1;
-        this.color = 0xFF0000;
+        this.color = 0x0000FF;
         break;
       case 1:
         this.x = 10;
@@ -93,12 +96,12 @@ class SnakePlayer {
       case 2:
         this.x = 3;
         this.y = 1;
-        this.color = 0x0000FF;
+        this.color = 0xFF0000;
         break;
       case 3:
         this.x = 7;
         this.y = 1;
-        this.color = 0xFF00FF;
+        this.color = 0xFFFF00;
         break;
       default:
 
@@ -123,14 +126,15 @@ class SnakePlayer {
         this.x -= 1;
         break;
     }
-    if (this.x > 11 || this.x < 0) {this.maingame.playerDie(this);}
-    if (this.y > 11 || this.y < 0) {this.maingame.playerDie(this);}
+    if (this.x > 11 || this.x < 0) {this.alive = false; this.maingame.playerDie(this);}
+    if (this.y > 11 || this.y < 0) {this.alive = false; this.maingame.playerDie(this);}
   }
 
   tick() {
     this.applyDirection();
     this.body.forEach((item, i) => {
       if (item.x == this.x && item.y == this.y) {
+        this.alive = false;
         this.maingame.playerDie(this);
         return;
       }
@@ -140,6 +144,7 @@ class SnakePlayer {
       if (item != this) {
         item.body.forEach((itemb, i) => {
           if (itemb.x == this.x && itemb.y == this.y) {
+            this.alive = false;
             this.maingame.playerDie(this);
             return;
           }

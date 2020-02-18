@@ -1,9 +1,21 @@
 function updatePlayerCount(count) {
+  color = "blue";
+  switch (count) {
+    case 2:
+      color="red";
+      break;
+    case 3:
+      color="green";
+      break;
+    case 4:
+      color="yellow";
+      break;
+  }
   for (let i = 1; i < 5; i++) {
     document.getElementById("player_"  + i).style.backgroundColor = "white";
   }
   for (let i = 1; i < count + 1; i++) {
-    document.getElementById("player_"  + i).style.backgroundColor = "blue";
+    document.getElementById("player_"  + i).style.backgroundColor = color;
   }
 }
 
