@@ -43,7 +43,7 @@ class Interface {
 
   fillScreen(r,g,b) {
     for (let p = 0; p < this.pixel_amount; p++) {
-      this.pixels[p] = getCorrectColor(r,g,b);
+      this.pixels[p] = this.getCorrectColor(r,g,b);
   }
 }
 
