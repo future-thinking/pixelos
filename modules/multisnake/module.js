@@ -15,7 +15,6 @@ class MultiSnake {
     this.ticks = 0;
     this.totalTicks = 0;
     this.foods = new Array();
-    spawnFood();
   }
 
   isEnded() {
@@ -125,9 +124,9 @@ class SnakePlayer {
 
   tick() {
     this.applyDirection();
-    if (this.body.includes({'x': this.x, 'y': this.y})) {
-      this.maingame.playerDie(this);
-    }
+    //if (this.body.includes({'x': this.x, 'y': this.y})) {
+    //  this.maingame.playerDie(this);
+    //}
     let food = -1;
     this.foods.forEach((item, i) => {
       if (item.x == this.x && item.y == this.y) {
