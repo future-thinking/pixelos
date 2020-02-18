@@ -208,8 +208,7 @@ class SnakePlayer {
     this.body.forEach((item, i) => {
           this.interface.setPixelHex(item.x, item.y, this.color);
     });
-    this.interface.setPixelHex(this.body[0].x, this.body[0].y, )
-    this.body[0]
+    this.interface.setPixelHex(this.body[0].x, this.body[0].y, this.headColor);
   }
 
   setDirection(direction) {
