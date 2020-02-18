@@ -198,6 +198,9 @@ class SnakePlayer {
   }
 
   render() {
+    if (!this.alive) {
+      return;
+    }
     this.body.forEach((item, i) => {
           this.interface.setPixelHex(item.x, item.y, this.color);
     });
