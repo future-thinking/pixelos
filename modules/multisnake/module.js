@@ -52,6 +52,8 @@ class MultiSnake {
     this.playerObjs.splice(this.playerObjs.indexOf(player), 1);
     this.players.splice(this.playerObjs.indexOf(player), 1);
     if (this.players.length < 2) {
+      this.interface.fillScreenHex(this.playersObjs[0].color);
+      this.interface.updateScreen();
       this.ended = true;
     }
   }
