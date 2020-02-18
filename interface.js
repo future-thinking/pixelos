@@ -43,20 +43,22 @@ class Interface {
 
   fillScreen(r,g,b) {
     for (let p = 0; p < this.pixel_amount; p++) {
-      this.pixels[p] = getCorrectColor(r,g,b);
+      this.pixels[p] = this.getCorrectColor(r,g,b);
   }
 }
 
   drawFullscreenImage(path) {
-    console.log(this.pixel_amount);
-    PNG.decode(path, function(pixels) {
-      // pixels is a 1d array (in rgba order) of decoded pixel data
-	   console.log(pixels);
-      for (let p = 0; p < this.pixel_amount; p++) {
-        color = pixels;
-          this.pixels[p] = pixels
+    /*PNG.decode(path, function(pixels) {
+        let imgPixels = pixels;
+    })*/;
+    ctx.drawImage(img, 0, 0);
+    var imgPixels = ctx.getImageData(x, y, width, height).data;
+    for (let p = 0; p < this.pixel_amount; p = p + 4) {
+      color = imgPixels[p] | imgPixels[p+1] | imgPixels[p+2];
+      if (imgPixels[p+3] == 'ff'){
+        this.pixels[p] = color;
       }
-    });
+    }
   }
 
 }
