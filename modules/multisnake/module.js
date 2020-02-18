@@ -166,9 +166,13 @@ class SnakePlayer {
 
   collisionCheck() {
     this.body.forEach((item, i) => {
+      let alr = false;
       if (item.x == this.x && item.y == this.y) {
-        this.maingame.playerDie(this);
-        return;
+        if (alr) {
+          this.maingame.playerDie(this);
+          return;
+        }
+        alr = true;
       }
     });
 
