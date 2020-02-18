@@ -34,7 +34,7 @@ class MultiSnake {
   }
 
   update() {
-    if (!this.alive) return;
+    if (!this.ended) return;
     console.log("game tick");
     this.ticks++;
     if (this.ticks >= 10) {
