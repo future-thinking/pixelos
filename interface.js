@@ -24,8 +24,31 @@ class Interface {
     return pix;
   }
 
+  setPixelHex(x,y,hex){
+    var orientation = 3;
+    switch (orientation) {
+      case 0:
+      xnew = x;
+      ynew = y;
+        break;
+      case 1:
+        xnew = -y;
+        ynew = x;
+        break;
+      case 2:
+        xnew = -x;
+        ynew = -y;
+        break;
+      case 3:
+        xnew = y;
+        ynew = -x;
+        break;
+    }
+    this.pixels[this.translatePixelCoordinates(xnew, ynew)] = hex;
+  }
+
   setPixel(x, y, r, g, b) {
-    this.pixels[this.translatePixelCoordinates(x, y)] = this.getCorrectColor(r, g, b);
+    this.setPixelHex(x,y,this.getCorrectColor(r, g, b));
   }
 
   constructor(pixel_amount) {
@@ -47,19 +70,6 @@ class Interface {
   }
 }
 
-drawFullscreenImage(path) {
-  cv = document.querySelector("#cv");
-  img1 = document.querySelector("./img/error.png");
-  c = cv.getContext("2d");
-  var imgPixels = c.getImageData( 0,0,this.width,this.width);
-    for (let p = 0; p < this.pixel_amount; p = p + 4) {
-      console.log(imgPixels[p] + " " + imgPixels[p+1] + " " + imgPixels[p2] + " " + imgPixels[p+3]);
-      color = imgPixels[p] | imgPixels[p+1] | imgPixels[p+2];
-      if (imgPixels[p+3] == 'ff'){
-        this.pixels[p] = color;
-      }
-    }
-  }
 }
 
 module.exports = Interface
