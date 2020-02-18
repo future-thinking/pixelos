@@ -9,7 +9,7 @@ class MultiSnake {
     this.players = players;
     this.playerObjs = new Array();
     this.players.forEach((item, i) => {
-      this.playerObjs.push(new SnakePlayer(item, this.interface, i));
+      this.playerObjs.push(new SnakePlayer(item, this.interface, i, this));
     });
     this.ticks = 0;
   }
@@ -31,6 +31,10 @@ class MultiSnake {
     console.log("multisnake end");
   }
 
+  playerDie(player) {
+    this.playerObjs.splice(this.playerObjs.indexOf(player), 1);
+  }
+
   playerInput(player_socket, type, content) {
     if (type="direction_change") {
       this.playerObjs[this.players.indexOf(player_socket)].setDirection(content);
@@ -39,9 +43,10 @@ class MultiSnake {
 }
 
 class SnakePlayer {
-  constructor(socket, screen_interface, player_num) {
+  constructor(socket, screen_interface, player_num, maingame) {
     this.interface = screen_interface;
     this.dir = "up";
+    this.maingame = maingame;
     switch (player_num) {
       case 0:
         this.x = 1;
@@ -95,6 +100,9 @@ class SnakePlayer {
   tick() {
     this.body.splice(this.body.length - 1);
     this.applyDirection();
+    if (this.body.includes({'x': this.x, 'y': this.y})) {
+
+    }
     this.body.unshift({'x': this.x, 'y': this.y});
     this.body.forEach((item, i) => {
           this.interface.setPixelHex(item.x, item.y, this.color);
@@ -103,16 +111,24 @@ class SnakePlayer {
 
   setDirection(direction) {
     if (direction.w) {
-      this.direction = "up";
+      if (this.direction != "down") {
+          this.direction = "up";
+      }
     }
     if (direction.d) {
-      this.direction = "right";
+      if (this.direction != "left") {
+        this.direction = "right";
+    }
     }
     if (direction.s) {
-      this.direction = "down";
+      if (this.direction != "up") {
+        this.direction = "down";
+      }
     }
     if (direction.a) {
-      this.direction = "left";
+      if (this.direction != "right") {
+        this.direction = "left";
+      }
     }
   }
 }
