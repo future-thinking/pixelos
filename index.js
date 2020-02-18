@@ -33,7 +33,7 @@ var currentGame = -1;
 
 function startGame(game) {
   if (currentGame != -1) {
-    games[currentGame].stop();
+    games[currentGame].end();
   }
   currentGame = game;
   games[currentGame].start(players);
@@ -63,6 +63,7 @@ io.on('connection', function(socket) {
   if (players.length >= 4) {
     socket.emit('game_full', "");
     console.log("Player got kicked for 'Game Full!'");
+    return;
   }
   players.push(socket);
   console.log("Player connected as player" + players.length + ".");
