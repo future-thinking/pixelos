@@ -75,7 +75,7 @@ class MultiSnake {
       }
     });
 
-    if (this.deads.length >= (this.playerObjs.length - 1) {
+    if (this.deads.length >= (this.playerObjs.length - 1)) {
       this.playerObjs.forEach((item, i) => {
         if (!this.deads.includes(item)) {
           this.interface.fillScreenHex(item.color);
