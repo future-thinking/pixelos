@@ -87,3 +87,9 @@ function updatePlayerNumbers() {
 http.listen(3000, function(){
   console.log('listening on *:3000');
 });
+
+setInterval(function () {
+  if (currentGame != -1) {
+    games[currentGame].update();
+  }
+}, 50);
