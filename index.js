@@ -12,6 +12,31 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 var players = new Array();
 
+function getDirectories(path) {
+  return fs.readdirSync(path).filter(function (file) {
+    return fs.statSync(path+'/'+file).isDirectory();
+  });
+}
+
+var games = new Array();
+
+let module_folders = getDirectories("./modules");
+console.log("dirs:" + module_folders)
+module_folders.forEach((item, i) => {
+  games.push(new require(item + "/game.js")(interface));
+});
+
+console.log(games);
+var currentGame = -1;
+
+function startGame(game) {
+  if (currentGame != -1) {
+    games[currentGame].stop();
+  }
+  currentGame = game;
+  games[currentGame].start(players);
+}
+
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/public/index.html');
 });
@@ -41,6 +66,11 @@ io.on('connection', function(socket) {
       players.splice(players.indexOf(socket), 1);
     }
     updatePlayerNumbers();
+  });
+  socket.on('direction_change', (dir) => {
+    if (currentGame != -1) {
+      games[currentGame].playerInput(socket, dir);
+    }
   });
   console.log('');
 });
