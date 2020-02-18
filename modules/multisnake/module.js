@@ -91,13 +91,13 @@ class SnakePlayer {
         this.color = 0x00FF00;
         break;
       case 2:
-        this.x = 10;
-        this.y = 10;
+        this.x = 3;
+        this.y = 1;
         this.color = 0x0000FF;
         break;
       case 3:
-        this.x = 1;
-        this.y = 10;
+        this.x = 7;
+        this.y = 1;
         this.color = 0xFF00FF;
         break;
       default:
