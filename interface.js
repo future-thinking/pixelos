@@ -25,7 +25,7 @@ class Interface {
   }
 
   setPixelHex(x,y,hex){
-    var orientation = 3;
+    var orientation = 0;
     var xnew = 0;
     var ynew = 0;
     switch (orientation) {
@@ -34,8 +34,8 @@ class Interface {
       ynew = y;
         break;
       case 1:
-        xnew = -y;
-        ynew = x;
+        xnew = y;
+        ynew = -x;
         break;
       case 2:
         xnew = -x;
