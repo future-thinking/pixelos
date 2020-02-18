@@ -66,8 +66,8 @@ class MultiSnake {
 class SnakePlayer {
   constructor(socket, screen_interface, player_num, maingame) {
     this.interface = screen_interface;
-    this.dir = "up";
     this.maingame = maingame;
+    this.direction = "up";
     switch (player_num) {
       case 0:
         this.x = 1;
@@ -124,13 +124,14 @@ class SnakePlayer {
     }
 
     this.maingame.playerObjs.forEach((item, i) => {
-      item.body.forEach((itemb, i) => {
-        if (itemb.x == this.x && itemb.y == this.y) {
-          this.maingame.playerDie(this);
-          return;
-        }
-      });
-
+      if (item != this) {
+        item.body.forEach((itemb, i) => {
+          if (itemb.x == this.x && itemb.y == this.y) {
+            this.maingame.playerDie(this);
+            return;
+          }
+        });
+      }
     });
 
 
