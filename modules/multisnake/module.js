@@ -17,7 +17,7 @@ class MultiSnake {
   update() {
     console.log("game tick");
     this.ticks++;
-    if (this.ticks >= 50) {
+    if (this.ticks >= 150) {
       this.interface.clearScreen();
       this.playerObjs.forEach((item, i) => {
         item.tick();
@@ -93,15 +93,15 @@ class SnakePlayer {
         this.x -= 1;
         break;
     }
-    if (this.x > 11) {this.x = 0;}
-    if (this.y > 11) {this.y = 0;}
+    if (this.x > 11 || this.x < 0) {this.maingame.playerDie(this);}
+    if (this.y > 11 || this.y < 0) {this.maingame.playerDie(this);}
   }
 
   tick() {
     this.body.splice(this.body.length - 1);
     this.applyDirection();
     if (this.body.includes({'x': this.x, 'y': this.y})) {
-
+      this.maingame.playerDie(this);
     }
     this.body.unshift({'x': this.x, 'y': this.y});
     this.body.forEach((item, i) => {
