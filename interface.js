@@ -6,6 +6,10 @@ class Interface {
       ws281x.render(this.pixels);
   }
 
+  rgbToHex(r, g, b) {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  }
+
   translatePixelCoordinates(x, y) {
     x = x % this.width;
     y = y % this.width;
@@ -32,7 +36,7 @@ class Interface {
 
   clearScreen() {
     for (let p = 0; p < this.pixel_amount; p++) {
-        this.pixels[p] = 0,0,0;
+        this.pixels[p] = 0x;
   }
 }
 
