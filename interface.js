@@ -48,8 +48,8 @@ class Interface {
 }
 
   drawFullscreenImage(path) {
-    PNG.decode(path, function(imgPixels) {
-      // pixels is a 1d array (in rgba order) of decoded pixel data
+    PNG.decode(path, function(pixels) {
+      let imgPixels = pixels; 
 	   console.log(pixels);
     });
     for (let p = 0; p < this.pixel_amount; p = p + 4) {
