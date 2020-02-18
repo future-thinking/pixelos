@@ -30,8 +30,8 @@ class Interface {
     var ynew = 0;
     switch (orientation) {
       case 0:
-      xnew = x;
-      ynew = y;
+      xnew = y;
+      ynew = x;
         break;
       case 1:
         xnew = y;
