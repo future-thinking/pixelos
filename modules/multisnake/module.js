@@ -136,7 +136,7 @@ class SnakePlayer {
     if (food != -1) {
       this.maingame.foods.splice(food, 1);
     }else {
-      this.maingame.body.splice(this.body.length - 1);
+      this.body.splice(this.body.length - 1);
     }
 
     this.body.unshift({'x': this.x, 'y': this.y});
