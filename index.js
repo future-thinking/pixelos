@@ -1,6 +1,7 @@
 const app = require('express')();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
+const fs = require('fs');
 
 const interface_module = require('./interface.js');
 const interface = new interface_module(144);

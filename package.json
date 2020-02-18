@@ -21,6 +21,7 @@
     "color-convert": "^2.0.1",
     "epxress": "0.0.1-security",
     "express": "^4.17.1",
+    "fs": "0.0.1-security",
     "mysql": "^2.18.1",
     "png-js": "^1.0.0",
     "pug": "^2.0.4",
