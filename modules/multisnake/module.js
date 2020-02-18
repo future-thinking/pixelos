@@ -131,6 +131,9 @@ class SnakePlayer {
   }
 
   tick() {
+    if (!this.alive) {
+      return;
+    }
     this.applyDirection();
     this.body.forEach((item, i) => {
       if (item.x == this.x && item.y == this.y) {
@@ -154,7 +157,7 @@ class SnakePlayer {
 
 
     if (this.maingame.foodx == this.x && this.maingame.foody == this.y) {
-      this.maingame.spawnFood()
+      this.maingame.spawnFood();
     }else {
       this.body.splice(this.body.length - 1);
     }
