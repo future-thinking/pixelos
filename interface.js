@@ -9,14 +9,12 @@ class Interface {
   translatePixelCoordinates(x, y) {
     x = x % this.width;
     y = y % this.width;
-
     let pix = 0;
     if(y % 2 == 0) {
       pix = y * this.width + x;
     } else {
       pix = y * this.width + this.width - 1 - x;
     }
-
     return pix;
   }
 
@@ -32,14 +30,11 @@ class Interface {
     this.width = Math.sqrt(this.pixel_amount);
   }
 
-
-
   clearScreen() {
     let color = 0 | 0 | 0;
     for (let p = 0; p < this.pixel_amount; p++) {
         this.pixels[p] = 0,0,0;
   }
-  updateScreen();
 }
 
   fillScreen(r,g,b) {
@@ -47,7 +42,6 @@ class Interface {
     for (let p = 0; p < this.pixel_amount; p++) {
       this.pixels[p] = color;
   }
-  updateScreen();
 }
 
   drawFullscreenImage(path){
@@ -58,9 +52,7 @@ class Interface {
           this.pixels[p] = pixels
       }
     });
-    updateScreen();
   }
-
 
 }
 
