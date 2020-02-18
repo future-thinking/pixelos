@@ -91,7 +91,7 @@ http.listen(3000, function(){
 setInterval(function () {
   if (currentGame != -1) {
     games[currentGame].update();
-    if (games[currentGame].isEnded) {
+    if (games[currentGame].isEnded()) {
       currentGame = -1;
       games[currentGame].end();
     }
