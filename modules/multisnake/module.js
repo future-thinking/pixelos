@@ -52,7 +52,7 @@ class MultiSnake {
     this.playerObjs.splice(this.playerObjs.indexOf(player), 1);
     this.players.splice(this.playerObjs.indexOf(player), 1);
     if (this.players.length < 2) {
-      this.maingame.ended = true;
+      this.ended = true;
     }
   }
 
