@@ -50,8 +50,8 @@ class SnakePlayer {
       this.direction = "left";
       this.x += -1;
     }
-    interface.setPixel(this.x, this.y, 255, 0, 0);
-    interface.updateScreen();
+    this.interface.setPixel(this.x, this.y, 255, 0, 0);
+    this.interface.updateScreen();
   }
 }
 
