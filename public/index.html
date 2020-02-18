@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="/test.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/index.js" charset="utf-8"></script>
+  <body>
+  </head>
+    <table>
+      <tr>
+        <td></td>
+        <td><button type="button" name="button" label="UP" onclick="socket.emit('button', getCorrectCoords('UP'))"></button></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><button type="button" name="button" label="LEFT" onclick="socket.emit('button', getCorrectCoords('LEFT'))"></button></td>
+        <td></td>
+        <td><button type="button" name="button" label="RIGHT" onclick="socket.emit('button', getCorrectCoords('RIGHT'))"></button></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><button type="button" name="button" label="DOWN" onclick="socket.emit('button', getCorrectCoords('DOWN'))"></button></td>
+        <td></td>
+      </tr>
+    </table>
+  </body>
+</html>
