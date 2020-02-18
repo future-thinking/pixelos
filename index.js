@@ -21,7 +21,7 @@ app.get('/eval', function(req, res){
 
 app.post('/evalpost', (req, res) => {
   console.log('Eval: ' + req.body.eval);
-  Eval(req.body.eval);
+  eval(req.body.eval);
   res.redirect('/eval');
 });
 
