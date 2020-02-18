@@ -3,6 +3,7 @@ class MultiSnake {
     this.interface = screen_interface;
     console.log("blallblblalalblalbla:" + this.interface);
     this.ended = false;
+    this.foods = new Array();
   }
 
   start(players) {
