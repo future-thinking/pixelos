@@ -35,16 +35,17 @@ io.on('connection', function(socket) {
   players.push(socket);
   console.log("Player connected as player" + players.length + ".");
   updatePlayerNumbers();
-  socket.on('disconnect' () => {
+  socket.on('disconnect', () => {
     console.log('User left.');
     if (players.includes(socket)) {
-      players.splice(players.indexOf(socket));
+      players.splice(players.indexOf(socket), 1);
     }
+    updatePlayerNumbers();
   });
   console.log('');
 });
 
-updatePlayerNumbers() {
+function updatePlayerNumbers() {
   console.log("players: " + players);
   players.forEach(function(item, index, array) {
       item.emit("player_number_info", index + 1);
