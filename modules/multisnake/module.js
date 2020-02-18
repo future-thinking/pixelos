@@ -2,6 +2,7 @@ class MultiSnake {
   constructor(screen_interface) {
     this.interface = screen_interface;
     console.log("blallblblalalblalbla:" + this.interface);
+    this.ended = false;
   }
 
   start(players) {
@@ -9,26 +10,54 @@ class MultiSnake {
     this.players = players;
     this.playerObjs = new Array();
     this.players.forEach((item, i) => {
-      this.playerObjs.push(new SnakePlayer(item, this.interface, i));
+      this.playerObjs.push(new SnakePlayer(item, this.interface, i, this));
     });
     this.ticks = 0;
+    this.totalTicks = 0;
+    this.foods = new Array();
+  }
+
+  isEnded() {
+    return this.ended;
+  }
+
+  spawnFood() {
+    this.foods.push({'x': (Math.random() * 5 + 3), 'y': (Math.random() * 5 + 3)});
   }
 
   update() {
     console.log("game tick");
     this.ticks++;
-    if (this.ticks >= 50) {
+    if (this.ticks >= 10) {
       this.interface.clearScreen();
       this.playerObjs.forEach((item, i) => {
         item.tick();
       });
-      this.ticks == 0;
+      this.ticks = 0;
+      this.totalTicks++;
+      if (this.totalTicks > 10) {
+        this.spawnFood();
+      }
+
+      this.foods.forEach((item, i) => {
+        this.interface.setPixelHex(item.x, item.y, 0xFFFFFF);
+      });
+
+
       this.interface.updateScreen();
     }
   }
 
   end() {
     console.log("multisnake end");
+  }
+
+  playerDie(player) {
+    this.playerObjs.splice(this.playerObjs.indexOf(player), 1);
+    this.players.splice(this.playerObjs.indexOf(player), 1);
+    if (this.players.length < 2) {
+      this.maingame.ended = true;
+    }
   }
 
   playerInput(player_socket, type, content) {
@@ -39,9 +68,10 @@ class MultiSnake {
 }
 
 class SnakePlayer {
-  constructor(socket, screen_interface, player_num) {
+  constructor(socket, screen_interface, player_num, maingame) {
     this.interface = screen_interface;
     this.dir = "up";
+    this.maingame = maingame;
     switch (player_num) {
       case 0:
         this.x = 1;
@@ -88,13 +118,28 @@ class SnakePlayer {
         this.x -= 1;
         break;
     }
-    if (this.x > 11) {this.x = 0;}
-    if (this.y > 11) {this.y = 0;}
+    if (this.x > 11 || this.x < 0) {this.maingame.playerDie(this);}
+    if (this.y > 11 || this.y < 0) {this.maingame.playerDie(this);}
   }
 
   tick() {
-    this.body.splice(this.body.length - 1);
     this.applyDirection();
+    //if (this.body.includes({'x': this.x, 'y': this.y})) {
+    //  this.maingame.playerDie(this);
+    //}
+    let food = -1;
+    this.foods.forEach((item, i) => {
+      if (item.x == this.x && item.y == this.y) {
+        food = i;
+      }
+    });
+
+    if (food != -1) {
+      this.foods.splice(food, 1);
+    }else {
+      this.body.splice(this.body.length - 1);
+    }
+
     this.body.unshift({'x': this.x, 'y': this.y});
     this.body.forEach((item, i) => {
           this.interface.setPixelHex(item.x, item.y, this.color);
@@ -103,16 +148,24 @@ class SnakePlayer {
 
   setDirection(direction) {
     if (direction.w) {
-      this.direction = "up";
+      if (this.direction != "down") {
+          this.direction = "up";
+      }
     }
     if (direction.d) {
-      this.direction = "right";
+      if (this.direction != "left") {
+        this.direction = "right";
+    }
     }
     if (direction.s) {
-      this.direction = "down";
+      if (this.direction != "up") {
+        this.direction = "down";
+      }
     }
     if (direction.a) {
-      this.direction = "left";
+      if (this.direction != "right") {
+        this.direction = "left";
+      }
     }
   }
 }
