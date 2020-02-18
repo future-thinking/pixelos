@@ -50,7 +50,7 @@ class Interface {
   drawFullscreenImage(path) {
     var imgPixels = PNG.decode(path);
     for (let p = 0; p < this.pixel_amount; p = p + 4) {
-      color = imgPixels[p] | imgPixels[p+1] | imgPixels[p+2];PNG.decode(path)
+      color = imgPixels[p] | imgPixels[p+1] | imgPixels[p+2];
       if (imgPixels[p+3] == 'ff'){
         this.pixels[p] = color;
       }
