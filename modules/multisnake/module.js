@@ -17,12 +17,12 @@ class MultiSnake {
   update() {
     console.log("game tick");
     this.ticks++;
-    if (this.ticks >= 150) {
+    if (this.ticks >= 10) {
       this.interface.clearScreen();
       this.playerObjs.forEach((item, i) => {
         item.tick();
       });
-      this.ticks == 0;
+      this.ticks = 0;
       this.interface.updateScreen();
     }
   }
@@ -33,6 +33,7 @@ class MultiSnake {
 
   playerDie(player) {
     this.playerObjs.splice(this.playerObjs.indexOf(player), 1);
+    this.players.splice(this.playerObjs.indexOf(player), 1);
   }
 
   playerInput(player_socket, type, content) {
