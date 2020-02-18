@@ -1,18 +1,10 @@
-.controller_button {
-  background-color: red;
-  border-radius: 100%;
+.player_display_container {
+
+}
+.player_display_container table tr td {
+  background-color: white;
   border-color: black;
-  border-width: 5px;
-  width: 40vh;
-  height: 40vh;
-  font-size: 8vw;
-}
-
-.buttons_table {
-  text-align: right;
-}
-
-.buttons_container {
-  text-align: right;
-  display: flex;
+  border-style: solid;
+  width: 30px;
+  height: 30px;
 }
