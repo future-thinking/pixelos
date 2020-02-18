@@ -54,6 +54,11 @@ app.post('/evalpost', (req, res) => {
   res.redirect('/eval');
 });
 
+app.post('/tempstartpost', (req, res) => {
+  startGame(1);
+  res.redirect('/temp_starter.html');
+});
+
 io.on('connection', function(socket) {
   if (players.length >= 4) {
     socket.emit('game_full', "");
