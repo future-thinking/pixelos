@@ -48,11 +48,9 @@ class Interface {
 }
 
   drawFullscreenImage(path) {
-    /*PNG.decode(path, function(pixels) {
-        let imgPixels = pixels;
-    })*/;
-    ctx.drawImage(img, 0, 0);
-    var imgPixels = ctx.getImageData(x, y, width, height).data;
+    PNG.decode(path, function(pixels) {
+        var imgPixels = pixels;
+    });
     for (let p = 0; p < this.pixel_amount; p = p + 4) {
       color = imgPixels[p] | imgPixels[p+1] | imgPixels[p+2];
       if (imgPixels[p+3] == 'ff'){
