@@ -29,8 +29,8 @@ class SnakePlayer {
     this.dir = "up";
     this.x = 5;
     this.y = 5;
-    interface.setPixel(this.x, this.y, 255, 0, 0);
-    interface.updateScreen();
+    this.interface.setPixel(this.x, this.y, 255, 0, 0);
+    this.interface.updateScreen();
   }
 
   setDirection(direction) {
