@@ -64,7 +64,7 @@ class SnakePlayer {
   }
 
   tick() {
-    this,applyDirection();
+    this.applyDirection();
     this.interface.setPixel(this.x, this.y, 255, 0, 0);
   }
 
