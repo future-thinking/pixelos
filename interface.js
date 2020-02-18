@@ -37,7 +37,7 @@ class Interface {
 
   clearScreen() {
     for (let p = 0; p < this.pixel_amount; p++) {
-        this.pixels[p] = 0x;
+        this.pixels[p] = 0x000000;
   }
 }
 
