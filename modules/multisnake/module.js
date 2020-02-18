@@ -17,7 +17,7 @@ class MultiSnake {
   update() {
     console.log("game tick");
     this.ticks++;
-    if (ticks >= 20) {
+    if (this.ticks >= 20) {
       this.interface.clearScreen();
       playerObjs.forEach((item, i) => {
         item.tick();
