@@ -28,7 +28,7 @@ app.post('/evalpost', (req, res) => {
 });
 
 io.on('connection', function(socket) {
-  if (players.length > 4) {
+  if (players.length >= 4) {
     socket.emit('game_full', "");
     console.log("Player got kicked for 'Game Full!'");
   }
