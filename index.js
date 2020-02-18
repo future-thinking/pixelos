@@ -92,8 +92,8 @@ setInterval(function () {
   if (currentGame != -1) {
     games[currentGame].update();
     if (games[currentGame].isEnded()) {
-      currentGame = -1;
       games[currentGame].end();
+      currentGame = -1;
     }
   }
 }, 50);
