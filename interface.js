@@ -1,10 +1,9 @@
 const ws281x = require('rpi-ws281x-v2');
-var PNG = require('png-js');
 const convert = require('color-convert');
 
 class Interface {
   updateScreen() {
-      ws281x.render(this.pixels);
+    ws281x.render(this.pixels);
   }
 
   getCorrectColor(r, g, b) {
@@ -32,19 +31,19 @@ class Interface {
       case 0:
       xnew = y;
       ynew = x;
-        break;
+      break;
       case 1:
-        xnew = y;
-        ynew = -x;
-        break;
+      xnew = y;
+      ynew = -x;
+      break;
       case 2:
-        xnew = -x;
-        ynew = -y;
-        break;
+      xnew = -x;
+      ynew = -y;
+      break;
       case 3:
-        xnew = y;
-        ynew = -x;
-        break;
+      xnew = y;
+      ynew = -x;
+      break;
     }
     this.pixels[this.translatePixelCoordinates(xnew, ynew)] = hex;
   }
@@ -62,15 +61,21 @@ class Interface {
 
   clearScreen() {
     for (let p = 0; p < this.pixel_amount; p++) {
-        this.pixels[p] = 0x000000;
+      this.pixels[p] = 0x000000;
+    }
   }
-}
 
   fillScreen(r,g,b) {
     for (let p = 0; p < this.pixel_amount; p++) {
       this.pixels[p] = this.getCorrectColor(r,g,b);
+    }
   }
-}
+
+  fillScreenHex(hex) {
+    for (let p = 0; p < this.pixel_amount; p++) {
+      this.pixels[p] = hex
+    }
+  }
 
 }
 
