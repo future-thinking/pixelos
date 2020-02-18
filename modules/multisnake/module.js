@@ -58,7 +58,11 @@ class MultiSnake {
 
   playerInput(player_socket, type, content) {
     if (type="direction_change") {
-      this.playerObjs[this.players.indexOf(player_socket)].setDirection(content);
+      if (this.players.includes(player_socket)) {
+        if (this.playerObjs.length > this.players.indexOf(player_socket)) {
+          this.playerObjs[this.players.indexOf(player_socket)].setDirection(content);
+        }
+      }
     }
   }
 }
