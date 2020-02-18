@@ -48,7 +48,7 @@ class Interface {
 }
 
   drawFullscreenImage(path) {
-    var imgPixels = PNG.decode(path, function{});
+    var imgPixels = PNG.decode(path, function(){});
     for (let p = 0; p < this.pixel_amount; p = p + 4) {
       console.log(imgPixels[p] + " " + imgPixels[p+1] + " " + imgPixels[p2] + " " + imgPixels[p+3]);
       color = imgPixels[p] | imgPixels[p+1] | imgPixels[p+2];
