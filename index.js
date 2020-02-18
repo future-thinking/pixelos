@@ -71,7 +71,7 @@ io.on('connection', function(socket) {
   });
   socket.on('direction_change', (dir) => {
     if (currentGame != -1) {
-      games[currentGame].playerInput(socket, dir);
+      games[currentGame].playerInput(socket, "direction_change", dir);
     }
   });
   console.log('');
@@ -87,3 +87,9 @@ function updatePlayerNumbers() {
 http.listen(3000, function(){
   console.log('listening on *:3000');
 });
+
+setInterval(function () {
+  if (currentGame != -1) {
+    games[currentGame].update();
+  }
+}, 50);
