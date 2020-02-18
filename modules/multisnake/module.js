@@ -118,9 +118,22 @@ class SnakePlayer {
 
   tick() {
     this.applyDirection();
-    //if (this.body.includes({'x': this.x, 'y': this.y})) {
-    //  this.maingame.playerDie(this);
-    //}
+    if (this.body.includes({'x': this.x, 'y': this.y})) {
+      this.maingame.playerDie(this);
+      return;
+    }
+
+    this.maingame.playerObjs.forEach((item, i) => {
+      item.body.forEach((itemb, i) => {
+        if (itemb.x == this.x && itemb.y == this.y) {
+          this.maingame.playerDie(this);
+          return;
+        }
+      });
+
+    });
+
+
     if (this.maingame.foodx == this.x && this.maingame.foody == this.y) {
       this.maingame.spawnFood()
     }else {
