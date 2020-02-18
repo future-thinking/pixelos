@@ -26,8 +26,8 @@ class MultiSnake {
 }
 
 class SnakePlayer {
-  constructor(socket, interface) {
-    this.interface = interface;
+  constructor(socket, screen_interface) {
+    this.interface = screen_interface;
     this.dir = "up";
     this.x = 5;
     this.y = 5;
