@@ -107,22 +107,26 @@ class SnakePlayer {
       case 0:
         this.x = 1;
         this.y = 1;
-        this.color = 0x0000FF;
+        this.color = 0x0000AA;
+        this.headColor = 0x0000FF;
         break;
       case 1:
         this.x = 10;
         this.y = 1;
-        this.color = 0x00FF00;
+        this.color = 0x00AA00;
+        this.headColor = 0x00FF00;
         break;
       case 2:
         this.x = 3;
         this.y = 1;
-        this.color = 0xFF0000;
+        this.color = 0xAA0000;
+        this.headColor = 0xFF0000;
         break;
       case 3:
         this.x = 7;
         this.y = 1;
-        this.color = 0xFFFF00;
+        this.color = 0xAAAA00;
+        this.headColor = 0xFFFF00;
         break;
       default:
 
@@ -204,6 +208,8 @@ class SnakePlayer {
     this.body.forEach((item, i) => {
           this.interface.setPixelHex(item.x, item.y, this.color);
     });
+    this.interface.setPixelHex(this.body[0].x, this.body[0].y, )
+    this.body[0]
   }
 
   setDirection(direction) {
