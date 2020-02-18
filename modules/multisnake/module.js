@@ -7,7 +7,11 @@ class MultiSnake {
 
   start(players) {
     console.log("multisnake start");
-    this.players = players;
+    this.players = new Array();
+    players.forEach((item, i) => {
+      this.players.push(item);
+    });
+
     this.playerObjs = new Array();
     this.players.forEach((item, i) => {
       this.playerObjs.push(new SnakePlayer(item, this.interface, i, this));
