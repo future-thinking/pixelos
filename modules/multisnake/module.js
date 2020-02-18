@@ -34,6 +34,7 @@ class MultiSnake {
   }
 
   update() {
+    if (!this.alive) return;
     console.log("game tick");
     this.ticks++;
     if (this.ticks >= 10) {
@@ -54,14 +55,22 @@ class MultiSnake {
   }
 
   playerDie(player) {
-    this.alive_players--;
-    if (this.alive_players < 2) {
+    let totalPlayers = 0;
+    player.alive = false;
+    this.playerObjs.forEach((item, i) => {
+      if (item.alive) {
+        totalPlayers++;
+      }
+    });
+
+    if (totalPlayers < 2) {
       this.playerObjs.forEach((item, i) => {
         if (item.alive) {
-          this.interface.fillScreenHex(player.color);
+          this.interface.fillScreenHex();
         }
       });
-
+      this.ended = true;
+      this.interface.updateScreen();
     }
   }
 
