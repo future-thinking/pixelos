@@ -1,4 +1,4 @@
-class MultiSnake() {
+class MultiSnake {
   constructor(interface) {
     this.interface = interface;
   }
@@ -24,7 +24,7 @@ class MultiSnake() {
   }
 }
 
-class SnakePlayer() {
+class SnakePlayer {
   constructor(socket) {
     this.dir = "up";
     this.x = 5;

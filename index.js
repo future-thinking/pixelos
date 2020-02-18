@@ -24,7 +24,8 @@ var games = new Array();
 let module_folders = getDirectories("./modules");
 console.log("dirs:" + module_folders)
 module_folders.forEach((item, i) => {
-  games.push(new require("./modules/" + item + "/module.js")(interface));
+  let game =  require("./modules/" + item + "/module.js");
+  games.push(new game(interface));
 });
 
 console.log(games);
