@@ -1,6 +1,7 @@
 class MultiSnake {
   constructor(screen_interface) {
     this.interface = screen_interface;
+    console.log("blallblblalalblalbla:" + this.interface);
   }
 
   start(players) {
