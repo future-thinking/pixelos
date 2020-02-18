@@ -47,11 +47,11 @@ class Interface {
   }
 }
 
-  drawFullscreenImage(path) {
-    PNG.decode(path, function(pixels){
-      imgPixels = pixels;
- // pixels is a 1d array (in rgba order) of decoded pixel data
-    });
+drawFullscreenImage(path) {
+  cv = document.querySelector("#cv");
+  img1 = document.querySelector("./img/error.png");
+  c = cv.getContext("2d");
+  var imgPixels = c.getImageData( 0,0,this.width,this.width);
     for (let p = 0; p < this.pixel_amount; p = p + 4) {
       console.log(imgPixels[p] + " " + imgPixels[p+1] + " " + imgPixels[p2] + " " + imgPixels[p+3]);
       color = imgPixels[p] | imgPixels[p+1] | imgPixels[p+2];
@@ -60,7 +60,6 @@ class Interface {
       }
     }
   }
-
 }
 
 module.exports = Interface
