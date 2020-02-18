@@ -22,6 +22,7 @@ class MultiSnake {
     this.ended = false;
     this.spawnFood();
     this.alive_players = players.length;
+    this.deads = new Array();
   }
 
   isEnded() {
@@ -35,12 +36,23 @@ class MultiSnake {
 
   update() {
     if (this.ended) return;
+    this.deads.forEach((item, i) => {
+      item.alive = false;
+    });
+
     console.log("game tick");
     this.ticks++;
     if (this.ticks >= 10) {
       this.interface.clearScreen();
       this.playerObjs.forEach((item, i) => {
-        item.tick();
+        item.move();
+      });
+      this.playerObjs.forEach((item, i) => {
+        item.collisionCheck();
+      });
+      if (this.ended) return;
+      this.playerObjs.forEach((item, i) => {
+        item.render();
       });
       this.ticks = 0;
 
@@ -56,16 +68,16 @@ class MultiSnake {
 
   playerDie(player) {
     let totalPlayers = 0;
-    player.alive = false;
+    this.deads.push(player);
     this.playerObjs.forEach((item, i) => {
       if (item.alive) {
         totalPlayers++;
       }
     });
 
-    if (totalPlayers < 2) {
+    if (this.deads.length >= (this.playerObjs.length - 1) {
       this.playerObjs.forEach((item, i) => {
-        if (item.alive) {
+        if (!this.deads.includes(item)) {
           this.interface.fillScreenHex(item.color);
         }
       });
@@ -118,6 +130,7 @@ class SnakePlayer {
 
     this.body = new Array();
     this.body.push({'x': this.x, 'y': this.y});
+    this.eaten = false;
   }
 
   applyDirection() {
@@ -135,28 +148,37 @@ class SnakePlayer {
         this.x -= 1;
         break;
     }
-    if (this.x > 11 || this.x < 0) {this.alive = false; this.maingame.playerDie(this);}
-    if (this.y > 11 || this.y < 0) {this.alive = false; this.maingame.playerDie(this);}
+    if (this.x > 11 || this.x < 0) {this.maingame.playerDie(this);}
+    if (this.y > 11 || this.y < 0) {this.maingame.playerDie(this);}
   }
 
-  tick() {
+  move() {
     if (!this.alive) {
       return;
     }
     this.applyDirection();
+    if (!this.eaten) {
+      this.body.splice(this.body.length - 1);
+    }
+    this.eaten = false;
+    this.body.unshift({'x': this.x, 'y': this.y});
+  }
+
+  collisionCheck() {
     this.body.forEach((item, i) => {
       if (item.x == this.x && item.y == this.y) {
-        this.alive = false;
         this.maingame.playerDie(this);
         return;
       }
     });
 
     this.maingame.playerObjs.forEach((item, i) => {
-      if (item != this) {
+      if (item != this && item.alive) {
         item.body.forEach((itemb, i) => {
           if (itemb.x == this.x && itemb.y == this.y) {
-            this.alive = false;
+            if (item.x == itemb.x && item.y == itemb.y) {
+              this.maingame.playerDie(item);
+            }
             this.maingame.playerDie(this);
             return;
           }
@@ -167,12 +189,11 @@ class SnakePlayer {
 
     if (this.maingame.foodx == this.x && this.maingame.foody == this.y) {
       this.maingame.spawnFood();
-    }else {
-      this.body.splice(this.body.length - 1);
+      this.eaten = true;
     }
+  }
 
-    this.body.unshift({'x': this.x, 'y': this.y});
-
+  render() {
     this.body.forEach((item, i) => {
           this.interface.setPixelHex(item.x, item.y, this.color);
     });
