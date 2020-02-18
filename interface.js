@@ -1,9 +1,15 @@
-var ws281x = require('rpi-ws281x-v2');
+const ws281x = require('rpi-ws281x-v2');
 var PNG = require('png-js');
+const convert = require('color-convert');
 
 class Interface {
   updateScreen() {
       ws281x.render(this.pixels);
+  }
+
+  getCorrectColor(r, g, b) {
+    let color = "0x" + convert.rgb.hex(r, g, b);
+    return color;
   }
 
   translatePixelCoordinates(x, y) {
@@ -21,8 +27,7 @@ class Interface {
   }
 
   setPixel(x, y, r, g, b) {
-    let color = r | g | b;
-    this.pixels[this.translatePixelCoordinates(x, y)] = color;
+    this.pixels[this.translatePixelCoordinates(x, y)] = getCorrectColor(r, b, g);
   }
 
   constructor(pixel_amount) {
