@@ -13,6 +13,10 @@ var w_press = false; //87
   var s_press = false; //83
   var a_press = false; //65
   var d_press = false; //68
+  var up_press = false; //38
+  var down_press = false; //40
+  var left_press = false; //37
+  var right_press = false; //39
 
   function changed() {
     var dirobj = {
@@ -28,25 +32,25 @@ var w_press = false; //87
 
   document.onkeydown = function (e) {
     //console.log(e);
-    if (e.keyCode == 87) {
+    if (e.keyCode == 87 || e.keyCode == 38) {
       if (!w_press) {
         w_press = true;
         changed();
       }
     }
-    if (e.keyCode == 83) {
+    if (e.keyCode == 83 || e.keyCode == 40) {
       if (!s_press) {
         s_press = true;
         changed();
       }
     }
-    if (e.keyCode == 65) {
+    if (e.keyCode == 65 || e.keyCode == 37) {
       if (!a_press) {
         a_press = true;
         changed();
       }
     }
-    if (e.keyCode == 68) {
+    if (e.keyCode == 68 || e.keyCode == 39) {
       if (!d_press) {
         d_press = true;
         changed();
@@ -55,25 +59,25 @@ var w_press = false; //87
   };
 
   document.onkeyup = function (e) {
-    if (e.keyCode == 87) {
+    if (e.keyCode == 87 || e.keyCode == 38) {
       if (w_press) {
         w_press = false;
         changed();
       }
     }
-    if (e.keyCode == 83) {
+    if (e.keyCode == 83 || e.keyCode == 40) {
       if (s_press) {
         s_press = false;
         changed();
       }
     }
-    if (e.keyCode == 65) {
+    if (e.keyCode == 65 || e.keyCode == 37) {
       if (a_press) {
         a_press = false;
         changed();
       }
     }
-    if (e.keyCode == 68) {
+    if (e.keyCode == 68 || e.keyCode == 39) {
       if (d_press) {
         d_press = false;
         changed();
