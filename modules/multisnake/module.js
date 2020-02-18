@@ -127,7 +127,7 @@ class SnakePlayer {
     //  this.maingame.playerDie(this);
     //}
     let food = -1;
-    this.foods.forEach((item, i) => {
+    this.maingame.foods.forEach((item, i) => {
       if (item.x == this.x && item.y == this.y) {
         food = i;
       }
