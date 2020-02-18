@@ -25,7 +25,7 @@ class Interface {
   }
 
   setPixel(x, y, r, g, b) {
-    this.pixels[this.translatePixelCoordinates(x, y)] = getCorrectColor(r, b, g);
+    this.pixels[this.translatePixelCoordinates(x, y)] = this.getCorrectColor(r, b, g);
   }
 
   constructor(pixel_amount) {
@@ -37,7 +37,7 @@ class Interface {
 
   clearScreen() {
     for (let p = 0; p < this.pixel_amount; p++) {
-        this.pixels[p] = 0x;
+        this.pixels[p] = 0x000000;
   }
 }
 
