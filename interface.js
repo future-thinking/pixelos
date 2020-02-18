@@ -2,6 +2,14 @@ const ws281x = require('rpi-ws281x-v2');
 const convert = require('color-convert');
 
 class Interface {
+
+  constructor(pixel_amount) {
+    this.pixel_amount = pixel_amount;
+    ws281x.configure({leds:this.pixel_amount, gpio:18, strip:'rgb'});
+    this.pixels = new Uint32Array(pixel_amount);
+    this.width = Math.sqrt(this.pixel_amount);
+  }
+  
   updateScreen() {
     ws281x.render(this.pixels);
   }
@@ -50,13 +58,6 @@ class Interface {
 
   setPixel(x, y, r, g, b) {
     this.setPixelHex(x,y,this.getCorrectColor(r, g, b));
-  }
-
-  constructor(pixel_amount) {
-    this.pixel_amount = pixel_amount;
-    ws281x.configure({leds:this.pixel_amount, gpio:18, strip:'rgb'});
-    this.pixels = new Uint32Array(pixel_amount);
-    this.width = Math.sqrt(this.pixel_amount);
   }
 
   clearScreen() {
