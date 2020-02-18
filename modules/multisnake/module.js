@@ -11,10 +11,20 @@ class MultiSnake {
     this.players.forEach((item, i) => {
       this.playerObjs.push(new SnakePlayer(item, this.interface));
     });
+    this.ticks = 0;
   }
 
   update() {
     console.log("game tick");
+    ticks++;
+    if (ticks >= 20) {
+      this.interface.clearScreen();
+      playerObjs.forEach((item, i) => {
+        item.tick();
+      });
+      ticks == 0;
+      this.interface.updateScreen();
+    }
   }
 
   end() {
@@ -34,8 +44,28 @@ class SnakePlayer {
     this.dir = "up";
     this.x = 5;
     this.y = 5;
+  }
+
+  applyDirection() {
+    switch (this.direction) {
+      case "up":
+        this.y += 1;
+        break;
+      case "down":
+        this.y += -1;
+        break;
+      case "right":
+        this.x += 1;
+        break;
+      case "left":
+        this.x -= 1;
+        break;
+    }
+  }
+
+  tick() {
+    applyDirection();
     this.interface.setPixel(this.x, this.y, 255, 0, 0);
-    this.interface.updateScreen();
   }
 
   setDirection(direction) {
@@ -51,8 +81,6 @@ class SnakePlayer {
     if (direction.a) {
       this.direction = "left";
     }
-    this.interface.setPixel(this.x, this.y, 255, 0, 0);
-    this.interface.updateScreen();
   }
 }
 
