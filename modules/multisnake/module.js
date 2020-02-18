@@ -66,7 +66,7 @@ class MultiSnake {
     if (totalPlayers < 2) {
       this.playerObjs.forEach((item, i) => {
         if (item.alive) {
-          this.interface.fillScreenHex();
+          this.interface.fillScreenHex(item.color);
         }
       });
       this.ended = true;
