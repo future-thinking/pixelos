@@ -99,8 +99,6 @@ class SnakePlayer {
 
     this.body = new Array();
     this.body.push({'x': this.x, 'y': this.y});
-    this.body.push({'x': this.x, 'y': this.y});
-    this.body.push({'x': this.x, 'y': this.y});
   }
 
   applyDirection() {
@@ -118,8 +116,8 @@ class SnakePlayer {
         this.x -= 1;
         break;
     }
-    if (this.x > 11 || this.x < 0) {this.maingame.playerDie(this);}
-    if (this.y > 11 || this.y < 0) {this.maingame.playerDie(this);}
+    //if (this.x > 11 || this.x < 0) {this.maingame.playerDie(this);}
+    //if (this.y > 11 || this.y < 0) {this.maingame.playerDie(this);}
   }
 
   tick() {
