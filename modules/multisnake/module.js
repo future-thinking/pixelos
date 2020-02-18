@@ -121,7 +121,7 @@ class SnakePlayer {
     //if (this.body.includes({'x': this.x, 'y': this.y})) {
     //  this.maingame.playerDie(this);
     //}
-    if (this.maingame.foodx == this.x && this.maingame.foody = this.y)){
+    if (this.maingame.foodx == this.x && this.maingame.foody == this.y)){
       this.maingame.spawnFood()
     }else {
       this.body.splice(this.body.length - 1);
