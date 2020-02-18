@@ -88,6 +88,8 @@ class SnakePlayer {
         this.x -= 1;
         break;
     }
+    if (this.x > 11) {this.x = 0;}
+    if (this.y > 11) {this.y = 0;}
   }
 
   tick() {
