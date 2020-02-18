@@ -118,10 +118,12 @@ class SnakePlayer {
 
   tick() {
     this.applyDirection();
-    if (this.body.includes({'x': this.x, 'y': this.y})) {
-      this.maingame.playerDie(this);
-      return;
-    }
+    this.body.forEach((item, i) => {
+      if (item.x == this.x && item.y == this.y) {
+        this.maingame.playerDie(this);
+        return;
+      }
+    });
 
     this.maingame.playerObjs.forEach((item, i) => {
       if (item != this) {
