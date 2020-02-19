@@ -13,6 +13,7 @@ class MultiSnake {
     });
     this.spawnFood();
     this.ended = false;
+    this.tick = 0;
   }
 
   isEnded() {
@@ -38,6 +39,11 @@ class MultiSnake {
   }
 
   update() {
+    this.tick++;
+    if (!(this.tick >= 20)) {
+      return;
+    }
+    this.tick = 0;
     console.log("game tick 2");
     if (this.ended) {
       return;
@@ -58,6 +64,12 @@ class MultiSnake {
         }
       }
     });
+
+    this.playerObjs.forEach((item, i) => {
+      item.render();
+    });
+
+
     console.log("Deaths: " + deaths);
     console.log("All players: " + this.playerObjs);
     deaths.forEach((item, i) => {
@@ -69,6 +81,9 @@ class MultiSnake {
         item.checkEat();
       }
     });
+
+    this.interface.setPixel(this.foodx, this.foody, 0xFFFFFF);
+    this.interface.updateScreen();
 
     let totalPlayers = this.playerObjs.length;
     let deadPlayers = 0;
@@ -191,6 +206,14 @@ class SnakePlayer {
         this.eaten = true;
       }
     });
+
+  }
+
+  render() {
+    this.body.forEach((item, i) => {
+      this.maingame.interface.setPixel(item.x, item.y, this.headColor);
+    });
+    this.maingame.interface.setPixel(this.x, this.y, this.color);
 
   }
 
