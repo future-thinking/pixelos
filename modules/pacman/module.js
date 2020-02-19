@@ -15,11 +15,11 @@ class PacMan {
   }
 }
 
-class PacManPlayer() {
+class PacManPlayer {
 
 }
 
-class Map() {
+class Map {
   constructor() {
     this.map = new Array();
     for (int x = 0; x < 12; x++) {
