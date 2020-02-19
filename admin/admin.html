@@ -5,13 +5,13 @@
   <script>
     function restartButtonPress() {
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/tempstartpost", true);
+    xhttp.open("POST", "/restartgame", true);
     xhttp.send();
   }
 
-  function gamestartButtonPress() {
+  function startButtonPress(game) {
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/tempstartpost", true);
+    xhttp.open("POST", "/startgamepost", true);
     xhttp.send();
   }
 </script>
@@ -22,5 +22,10 @@
   <script src="/admin.js" charset="utf-8"></script>
 <h1>Admin Panel</h1>
 <button type="button" onclick="restartButtonPress();">restart game</button>
+<form class="" action="/adminpannel" method="post">
+  <label for="game">Game to start:</label>
+  <input type="text" id="game" name="game"><br><br>
+  <input type="submit" value="Submit">
+</form>
 </body>
 </html>
