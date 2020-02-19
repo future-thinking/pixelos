@@ -11,8 +11,7 @@ class MultiSnake {
     this.players.forEach((item, i) => {
       this.playerObjs.push(item, this.interface, i + 1, this);
     });
-
-    spawnFood();
+    this.spawnFood();
   }
 
   isEnded() {
@@ -50,6 +49,7 @@ class MultiSnake {
         if (item.collisionCheck) {
           deaths.push(item);
         }
+
       }
     });
     deaths.forEach((item, i) => {
