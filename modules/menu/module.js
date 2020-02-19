@@ -1,7 +1,6 @@
 class Menu {
   constructor(screen_interface) {
     this.interface = screen_interface;
-    console.log("blallblblalalblalbla:" + this.interface);
     this.ended = false;
     this.page = 0;
     this.direction = "up";
@@ -75,7 +74,7 @@ class Menu {
 
   showMenu() {
     this.interface.clearScreen();
-    
+
   }
 
 }

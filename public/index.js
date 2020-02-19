@@ -1,6 +1,12 @@
 var socket = io();
 
+var currentCount = 0;
+
 function updatePlayerCount(count) {
+  if (count == currentCount) {
+    return;
+  }
+  currentCount = count;
   color = "blue";
   switch (count) {
     case 2:

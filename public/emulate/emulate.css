@@ -1,0 +1,19 @@
+.screen_container table tr td {
+  width: 7.8vmin;
+  height: 7.8vmin;
+  margin: 0;
+  padding: 0;
+  border-style: solid;
+  border-color: #505050;
+}
+
+.screen_container {
+  margin: auto;
+  text-align: center;
+}
+
+.screen_container table {
+  margin: auto;
+  text-align: center;
+  border-collapse: collapse;
+}
