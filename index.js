@@ -62,7 +62,7 @@ app.post('/adminloginattemp', (req, res) => {
   if (req.body.uname == "pixel" && req.body.pword == "pixelos") {
     console.log(req.body.uname + " " + req.body.pword)
   }
-  //res.redirect('');
+  res.redirect('/admin/admin.html');
 });
 
 app.post('/tempstartpost', (req, res) => {
