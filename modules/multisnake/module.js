@@ -38,9 +38,10 @@ class MultiSnake {
   }
 
   update() {
-    console.log("game tick");
-    if (this.ended)
+    console.log("game tick 2");
+    if (this.ended) {
       return;
+    }
     console.log("survived");
     this.playerObjs.forEach((item, i) => {
       if (item.alive)
