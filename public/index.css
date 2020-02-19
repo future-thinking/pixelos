@@ -1,10 +1,33 @@
 .player_display_container {
-
+  margin: auto;
+  text-align: center;
 }
+
+.player_display_container table {
+  text-align: center;
+  margin: auto;
+}
+
 .player_display_container table tr td {
   background-color: white;
   border-color: black;
   border-style: solid;
   width: 30px;
   height: 30px;
+}
+
+.buttons_container {
+  text-align: center;
+  margin: auto;
+  margin-top: 2em;
+}
+
+.buttons_container table {
+  text-align: center;
+  margin: auto;
+}
+
+.buttons_container table tr td button {
+  width: 30vmin;
+  height: 30vmin;
 }

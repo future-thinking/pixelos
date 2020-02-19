@@ -1,3 +1,5 @@
+var socket = io();
+
 function updatePlayerCount(count) {
   color = "blue";
   switch (count) {
@@ -19,7 +21,6 @@ function updatePlayerCount(count) {
   }
 }
 
-var socket = io();
 
 var w_press = false; //87
   var s_press = false; //83
@@ -41,6 +42,15 @@ var w_press = false; //87
     socket.emit('direction_change', dirobj);
   }
 
+  function pressed(key) {
+    eval(key + "_press = true;");
+    changed();
+  }
+
+  function release(key) {
+    eval(key + "_press = false;");
+    changed();
+  }
 
   document.onkeydown = function (e) {
     //console.log(e);

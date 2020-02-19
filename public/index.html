@@ -3,15 +3,37 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <link rel="stylesheet" href="/index.css">
-    <script src="/socket.io/socket.io.js"></script>
     <script src="/index.js" charset="utf-8"></script>
     <script type="text/javascript">
-    window.onbeforeunload = function() {
-        return "If you leave now, you will be killed.";
+      window.onbeforeunload = function() {
+        alert("Bitte nicht während einem Spiel aufhören.");
+          return "If you leave now, you will be killed.";
+      }
+    </script>
+    <script>
+    function absorbEvent_(event) {
+      var e = event || window.event;
+      e.preventDefault && e.preventDefault();
+      e.stopPropagation && e.stopPropagation();
+      e.cancelBubble = true;
+      e.returnValue = false;
+      return false;
     }
-</script>
-  <body>
+
+    function preventLongPressMenu(node) {
+      node.ontouchstart = absorbEvent_;
+      node.ontouchmove = absorbEvent_;
+      node.ontouchend = absorbEvent_;
+      node.ontouchcancel = absorbEvent_;
+    }
+
+    function init() {
+      preventLongPressMenu(document.getElementById('theimage'));
+    }
+  </script>
+    <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
       <div class="player_display_container">
@@ -21,6 +43,27 @@
             <td id="player_2"></td>
             <td id="player_3"></td>
             <td id="player_4"></td>
+          </tr>
+        </table>
+      </div>
+      <div class="buttons_container">
+        <table>
+          <tr>
+            <td></td>
+            <td><button type="button" name="button"
+              onmousedown="pressed('w')"
+              onmouseup="release('w')">W</button></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><button type="button" name="button">A</button></td>
+            <td></td>
+            <td><button type="button" name="button">D</button></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><button type="button" name="button">S</button></td>
+            <td></td>
           </tr>
         </table>
       </div>
