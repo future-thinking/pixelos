@@ -47,8 +47,8 @@ app.get('/eval', function(req, res){
   res.sendFile(__dirname + '/public/eval.html');
 });
 
-app.get('/restartgame', function(req,res){
-  startGame(1);
+app.post('/restartgame', function(req,res){
+  startGame(currentGame);
 });
 
 app.post('/evalpost', (req, res) => {
@@ -58,11 +58,18 @@ app.post('/evalpost', (req, res) => {
 });
 
 app.post('/adminloginattemp', (req, res) => {
-  console.log('adminloginattemp: ' + req.body.uname);
-  if (req.body.uname == "pixel" && req.body.pword == "pixelos") {
-    console.log(req.body.uname + " " + req.body.pword)
+  console.log('adminloginattemp by: ' + req.body.username);
+  if (req.body.username == "pixel" && req.body.pass == "pixelos") {
+    console.log(req.body.username + " " + req.body.pass)
   }
   res.sendFile(__dirname + '/admin/admin.html');
+});
+
+app.post('/startgamepost', (req, res) => {
+  console.log('startgamepost: ' + req.body.game);
+  if (req.body.game != -1) {
+    startGame(req.body.game);
+  }
 });
 
 app.post('/tempstartpost', (req, res) => {
