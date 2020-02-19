@@ -14,11 +14,13 @@ class PacMan {
 
     this.ghosts = new Array();
 
-    for (let ghostPlayerId = 1; ghostPlayerId < players.length) {
-
+    for (let ghostPlayerId = 1; ghostPlayerId < players.length; ghostPlayerId++) {
+      ghosts.push(new Ghost(players[ghostPlayerId]));
     }
   }
+
   isEnded() { return this.ended; }
+
 
   update() {
     this.tick++;
@@ -39,7 +41,7 @@ class PacManPlayer {
   }
 }
 
-class Ghost() {
+class Ghost {
   constructor(player_socket, ghost_num) {
     this.socket = player_socket;
   }

@@ -1,10 +1,12 @@
+const isOnlyEmulating = ((process.argv.includes("-e")) ? true : false);
+
 const app = require('express')();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const fs = require('fs');
 
 const interface_module = require('./interface.js');
-const interface = new interface_module(144);
+const interface = new interface_module(144, isOnlyEmulating);
 
 const bodyParser = require('body-parser');
 
@@ -12,6 +14,8 @@ app.use(require('express').static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 
 var players = new Array();
+
+global.emulating_sockets = new Array();
 
 function getDirectories(path) {
   return fs.readdirSync(path).filter(function (file) {
@@ -22,13 +26,11 @@ function getDirectories(path) {
 var games = new Array();
 
 let module_folders = getDirectories("./modules");
-console.log("dirs:" + module_folders)
 module_folders.forEach((item, i) => {
   let game =  require("./modules/" + item + "/module.js");
   games.push(new game(interface));
 });
 
-console.log(games);
 var currentGame = -1;
 var lastGame = -1;
 
@@ -99,7 +101,21 @@ io.on('connection', function(socket) {
     if (players.includes(socket)) {
       players.splice(players.indexOf(socket), 1);
     }
+    if (emulating_sockets.includes(socket)) {
+      emulating_sockets.splice(emulating_sockets.indexOf(socket), 1);
+    }
     updatePlayerNumbers();
+  });
+  socket.on("only_emul", (msg) => {
+    console.log("Emulate Request recieved.");
+    if (players.includes(socket)) {
+      players.splice(players.indexOf(socket), 1);
+    }
+    if (!emulating_sockets.includes(socket)) {
+      emulating_sockets.push(socket);
+    }
+    updatePlayerNumbers();
+    console.log("Emulating Sockets: " + emulating_sockets);
   });
   socket.on('direction_change', (dir) => {
     if (currentGame != -1) {

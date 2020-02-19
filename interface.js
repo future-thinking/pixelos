@@ -3,15 +3,32 @@ const convert = require('color-convert');
 
 class Interface {
 
-  constructor(pixel_amount) {
+  constructor(pixel_amount, isOnlyEmulating) {
+    this.isOnlyEmulating = isOnlyEmulating;
     this.pixel_amount = pixel_amount;
-    ws281x.configure({leds:this.pixel_amount, gpio:18, strip:'rgb'});
+    if (!isOnlyEmulating) {
+      ws281x.configure({leds:this.pixel_amount, gpio:18, strip:'rgb'});
+    }
     this.pixels = new Uint32Array(pixel_amount);
     this.width = Math.sqrt(this.pixel_amount);
   }
-  
+
   updateScreen() {
-    ws281x.render(this.pixels);
+    if (!this.isOnlyEmulating) {
+      ws281x.render(this.pixels);
+    }
+    if (emulating_sockets.length > 0) {
+      let rows = new Array();
+      for (let row = 0; row < 12; row++) {
+        rows.push(new Array());
+        for (let pixel = 0; pixel < 12; pixel++) {
+          rows[row].push(this.pixels[this.translatePixelCoordinates(pixel, row)]);
+        }
+      }
+      emulating_sockets.forEach((emu_socket, i) => {
+        emu_socket.emit('pixup', rows);
+      });
+    }
   }
 
   getCorrectColor(r, g, b) {
