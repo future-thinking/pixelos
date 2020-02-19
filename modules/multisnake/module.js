@@ -34,8 +34,20 @@ class MultiSnake {
   }
 
   spawnFood() {
-    this.foodx = parseInt(Math.random() * 11);
-    this.foody = parseInt(Math.random() * 11);
+    let works = true;
+    do {
+      this.foodx = parseInt(Math.random() * 11);
+      this.foody = parseInt(Math.random() * 11);
+      this.playerObjs.forEach((item, i) => {
+        item.body.forEach((bodyPart, i) => {
+          if (bodyPart.x == this.foodx && bodyPart.y == this.foody) {
+            works = false;
+          }
+        });
+
+      });
+
+    } while (!works);
   }
 
   update() {
