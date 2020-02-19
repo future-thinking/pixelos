@@ -41,6 +41,7 @@ class MultiSnake {
     console.log("game tick");
     if (this.ended)
       return;
+    console.log("survived");
     this.playerObjs.forEach((item, i) => {
       if (item.alive)
         item.moveBody();
@@ -51,9 +52,9 @@ class MultiSnake {
         if (item.collisionCheck) {
           deaths.push(item);
         }
-
       }
     });
+    console.log("Deaths: " + deaths);
     deaths.forEach((item, i) => {
       item.alive = false;
     });
@@ -71,8 +72,8 @@ class MultiSnake {
     let alivePlayers = totalPlayers - deadPlayers;
 
     if (alivePlayers < 2) {
+      this.ended = true;
       if (alivePlayers < 1) {
-        this.ended = true;
         this.interface.fillScreen(0xFFFFFF);
         this.interface.updateScreen();
         return;
@@ -110,6 +111,7 @@ class SnakePlayer {
     this.maingame = maingame;
     this.direction = "up";
     this.alive = true;
+    this.num = player_num;
     switch (player_num) { //grb
       case 0:
         this.x = 1;
@@ -187,6 +189,7 @@ class SnakePlayer {
         player.body.forEach((bodyPart, i) => {
           if (!(player == this && bodyPart == this.body[0])) {
               if (this.x == bodyPart.x && this.y == bodyPart.y) {
+                console.log("Player died from collision: " + this.num + " by " + player.num);
                 return true;
               }
           }
