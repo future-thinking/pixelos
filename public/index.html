@@ -5,15 +5,11 @@
     <title></title>
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <link rel="stylesheet" href="/index.css">
-        <script src="/socket.io/socket.io.js"></script>
-    <script src="/index.js" charset="utf-8"></script>
-    <script type="text/javascript">
-      window.onbeforeunload = function() {
-        alert("Bitte nicht während einem Spiel aufhören.");
-          return "If you leave now, you will be killed.";
-      }
-    </script>
     <script>
+    window.onbeforeunload = function() {
+      alert("Bitte nicht während einem Spiel aufhören.");
+        return "If you leave now, you will be killed.";
+    }
     function absorbEvent_(event) {
       var e = event || window.event;
       e.preventDefault && e.preventDefault();
@@ -35,7 +31,12 @@
     }
   </script>
   </head>
-  <body>
+  <body class="body">
+    <div class="wrapper" id="wrapperId">
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/virtualjoystick.js"></script>
+    <script src="/index.js" charset="utf-8"></script>
       <div class="player_display_container">
         <table>
           <tr>
