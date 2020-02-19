@@ -122,13 +122,19 @@ class MultiSnake {
     console.log("multisnake end");
   }
 
-  playerInput(player_socket, type, content) {
-    if (type="direction_change") {this.direction = "up";
-      if (this.players.includes(player_socket)) {
-        if (this.playerObjs.length > this.players.indexOf(player_socket)) {
-          this.playerObjs[this.players.indexOf(player_socket)].setDirection(content);
+  playerInput(player_socket, player_num, type, content) {
+    if (type="direction_change") {
+      this.playerObjs.forEach((item, i) => {
+        if (item.num == player_num) {
+          item.setDirection(content);
         }
-      }
+      });
+
+      // if (this.players.includes(player_socket)) {
+      //   if (this.playerObjs.length > this.players.indexOf(player_socket)) {
+      //     this.playerObjs[this.players.indexOf(player_socket)].setDirection(content);
+      //   }
+      // }
     }
   }
 }
@@ -237,6 +243,29 @@ class SnakePlayer {
       return true;
     }
     return false;
+  }
+
+  setDirection(direction) {
+    if (direction.w) {
+      if (this.direction != "down") {
+          this.direction = "up";
+      }
+    }
+    if (direction.d) {
+      if (this.direction != "left") {
+        this.direction = "right";
+      }
+    }
+    if (direction.s) {
+      if (this.direction != "up") {
+        this.direction = "down";
+      }
+    }
+    if (direction.a) {
+      if (this.direction != "right") {
+        this.direction = "left";
+      }
+    }
   }
 }
 

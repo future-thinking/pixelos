@@ -90,7 +90,7 @@ io.on('connection', function(socket) {
   });
   socket.on('direction_change', (dir) => {
     if (currentGame != -1) {
-      games[currentGame].playerInput(socket, "direction_change", dir);
+      games[currentGame].playerInput(socket, players.indexOf(socket) + 1, "direction_change", dir);
     }
   });
   console.log('');
