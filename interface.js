@@ -1,6 +1,7 @@
 const ws281x = require('rpi-ws281x-v2');
 const convert = require('color-convert');
 
+
 class Interface {
 
   constructor(pixel_amount, isOnlyEmulating) {
@@ -11,6 +12,10 @@ class Interface {
     }
     this.pixels = new Uint32Array(pixel_amount);
     this.width = Math.sqrt(this.pixel_amount);
+  }
+
+  getWidth() {
+    return this.width;
   }
 
   updateScreen() {
@@ -94,6 +99,13 @@ class Interface {
     for (let p = 0; p < this.pixel_amount; p++) {
       this.pixels[p] = hex
     }
+  }
+
+  showFullscreenPng(path) {
+    PNG.decode(path, function(pixels) {
+    // pixels is a 1d array (in rgba order) of decoded pixel data
+    console.log(pixels)
+});
   }
 
 }
