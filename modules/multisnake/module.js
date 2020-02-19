@@ -60,15 +60,17 @@ class MultiSnake {
       item.alive = false;
     });
     this.playerObjs.forEach((item, i) => {
-      if (item.alive)
+      if (item.alive) {
         checkEat();
+      }
     });
 
     let totalPlayers = this.playerObjs.length;
     let deadPlayers = 0;
     this.playerObjs.forEach((item, i) => {
-      if (!item.alive)
+      if (!item.alive) {
         deadPlayers++;
+      }
     });
     let alivePlayers = totalPlayers - deadPlayers;
 
