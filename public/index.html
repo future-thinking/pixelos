@@ -7,13 +7,12 @@
     <link rel="stylesheet" href="/index.css">
         <script src="/socket.io/socket.io.js"></script>
     <script src="/index.js" charset="utf-8"></script>
-    <script type="text/javascript">
-      window.onbeforeunload = function() {
-        alert("Bitte nicht während einem Spiel aufhören.");
-          return "If you leave now, you will be killed.";
-      }
-    </script>
+    <script src="/virtualjoystick.js"></script>
     <script>
+    window.onbeforeunload = function() {
+      alert("Bitte nicht während einem Spiel aufhören.");
+        return "If you leave now, you will be killed.";
+    }
     function absorbEvent_(event) {
       var e = event || window.event;
       e.preventDefault && e.preventDefault();
@@ -67,7 +66,7 @@
           </tr>
           <tr>
             <td></td>
-            <td><button type="button" name="button" 
+            <td><button type="button" name="button"
               onmousedown="pressed('s')"
               onmouseup="release('s')">S</button></td>
             <td></td>
