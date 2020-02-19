@@ -43,6 +43,7 @@ class MultiSnake {
     if (!(this.tick >= 20)) {
       return;
     }
+    this.interface.fillScreen(0x000000);
     this.tick = 0;
     console.log("game tick 2");
     if (this.ended) {
@@ -83,6 +84,7 @@ class MultiSnake {
     });
 
     this.interface.setPixel(this.foodx, this.foody, 0xFFFFFF);
+    console.log("screen update");
     this.interface.updateScreen();
 
     let totalPlayers = this.playerObjs.length;
@@ -214,7 +216,6 @@ class SnakePlayer {
       this.maingame.interface.setPixel(item.x, item.y, this.headColor);
     });
     this.maingame.interface.setPixel(this.x, this.y, this.color);
-
   }
 
   collisionCheck() {
