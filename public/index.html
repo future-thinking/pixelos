@@ -56,13 +56,20 @@
             <td></td>
           </tr>
           <tr>
-            <td><button type="button" name="button">A</button></td>
+            <td><button type="button"
+              onmousedown="pressed('a')"
+              onmouseup="release('a')" name="button">A</button></td>
+
             <td></td>
-            <td><button type="button" name="button">D</button></td>
+            <td><button type="button"
+                onmousedown="pressed('d')"
+                onmouseup="release('d')" name="button">D</button></td>
           </tr>
           <tr>
             <td></td>
-            <td><button type="button" name="button">S</button></td>
+            <td><button type="button" name="button" 
+              onmousedown="pressed('s')"
+              onmouseup="release('s')">S</button></td>
             <td></td>
           </tr>
         </table>
