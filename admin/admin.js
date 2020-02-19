@@ -6,6 +6,6 @@ function restartButtonPress() {
 
 function gamestartButtonPress() {
   var xhttp = new XMLHttpRequest();
-  xhttp.open("GET", "/tempstartpost", true);
+  xhttp.open("POST", "/tempstartpost", true);
   xhttp.send();
 }
