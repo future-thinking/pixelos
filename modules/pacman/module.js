@@ -15,10 +15,12 @@ class PacMan {
     this.ghosts = new Array();
 
     for (let ghostPlayerId = 1; ghostPlayerId < players.length) {
-
+      ghosts.push(new Ghost(players[ghostPlayerId]));
     }
   }
+
   isEnded() { return this.ended; }
+
 
   update() {
     this.tick++;
