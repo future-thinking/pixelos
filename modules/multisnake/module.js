@@ -58,7 +58,7 @@ class MultiSnake {
       }
     });
     console.log("Deaths: " + deaths);
-    console.log("All players: " + playerObjs);
+    console.log("All players: " + this.playerObjs);
     deaths.forEach((item, i) => {
       item.alive = false;
     });
