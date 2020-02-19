@@ -51,6 +51,12 @@ app.post('/restartgame', function(req,res){
   startGame(currentGame);
 });
 
+app.post('/startgame', function(req,res){
+  console.log('/startgame');
+  startGame(req.body.game);
+
+});
+
 app.post('/evalpost', (req, res) => {
   console.log('Eval: ' + req.body.eval);
   eval(req.body.eval);
