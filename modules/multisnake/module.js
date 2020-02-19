@@ -11,8 +11,8 @@ class MultiSnake {
     this.players.forEach((item, i) => {
       this.playerObjs.push(item, this.interface, i + 1, this);
     });
-
-    spawnFood();
+    this.spawnFood();
+    this.ended = false;
   }
 
   isEnded() {
@@ -38,6 +38,7 @@ class MultiSnake {
   }
 
   update() {
+    console.log("game tick");
     if (this.ended)
       return;
     this.playerObjs.forEach((item, i) => {
@@ -50,6 +51,7 @@ class MultiSnake {
         if (item.collisionCheck) {
           deaths.push(item);
         }
+
       }
     });
     deaths.forEach((item, i) => {
