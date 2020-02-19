@@ -47,6 +47,9 @@ app.get('/eval', function(req, res){
   res.sendFile(__dirname + '/public/eval.html');
 });
 
+app.get('/restartgame', function(req,res){
+  startGame(1);
+});
 
 app.post('/evalpost', (req, res) => {
   console.log('Eval: ' + req.body.eval);
