@@ -110,7 +110,7 @@ class MultiSnake {
       this.ended = true;
       console.log("game ended");
       if (alivePlayers < 1) {
-        this.interface.fillScreenHex(0xFFFFFF);
+        this.interface.fillScreenHex(0x999999);
         this.interface.updateScreen();
         return;
       }
