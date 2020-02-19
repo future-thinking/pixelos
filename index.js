@@ -58,10 +58,8 @@ app.post('/evalpost', (req, res) => {
 });
 
 app.post('/adminloginattemp', (req, res) => {
-  console.log('adminloginattemp: ' + req.body.eval);
-  var uname = document.getElementById("uname").innerHTML;
-  var pword = document.getElementById("pword").innerHTML;
-  if (uname == "pixel" && pword == "pixelos") {
+  console.log('adminloginattemp: ' + req.body.uname);
+  if (req.body.uname == "pixel" && req.body.uname == "pixelos") {
     console.log(uname + " " + pword)
   }
   //res.redirect('');
