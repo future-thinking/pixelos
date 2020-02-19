@@ -53,6 +53,7 @@ class MultiSnake {
       console.log("PLAYER: " + item.num + " alive: " + item.alive);
       if (item.alive) {
         if (item.collisionCheck) {
+          console.log("death pushed");
           deaths.push(item);
         }
       }
