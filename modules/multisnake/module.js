@@ -58,11 +58,9 @@ class MultiSnake {
     }
     this.interface.fillScreenHex(0x000000);
     this.tick = 0;
-    console.log("game tick 2");
     if (this.ended) {
       return;
     }
-    console.log("survived");
     this.playerObjs.forEach((item, i) => {
       if (item.alive) {
         item.moveBody();
@@ -70,16 +68,8 @@ class MultiSnake {
     });
     let deaths = new Array();
     this.playerObjs.forEach((item, i) => {
-      console.log("PLAYER: " + item.num + " alive: " + item.alive);
       if (item.alive) {
-        console.log("test col:");
-        console.log(item.collisionCheck());
-        console.log("end test col");
         if (item.collisionCheck()) {
-          console.log("test col:");
-          console.log(item.collisionCheck());
-          console.log("end test col")
-          console.log("death pushed");
           deaths.push(item);
         }
       }
@@ -91,21 +81,16 @@ class MultiSnake {
       }
     });
 
-
-    console.log("Deaths: " + deaths);
-    console.log("All players: " + this.playerObjs);
     deaths.forEach((item, i) => {
       item.alive = false;
     });
     this.playerObjs.forEach((item, i) => {
       if (item.alive) {
-        console.log("eat check");
         item.checkEat();
       }
     });
 
     this.interface.setPixelHex(this.foodx, this.foody, 0xFFFFFF);
-    console.log("screen update");
     this.interface.updateScreen();
 
     let totalPlayers = this.playerObjs.length;
@@ -117,11 +102,8 @@ class MultiSnake {
     });
     let alivePlayers = totalPlayers - deadPlayers;
 
-    console.log("alive: " + alivePlayers);
-
     if (alivePlayers < 2) {
       this.ended = true;
-      console.log("game ended");
       if (alivePlayers < 1) {
         this.interface.fillScreenHex(0x999999);
         this.interface.updateScreen();
@@ -150,12 +132,6 @@ class MultiSnake {
           item.setDirection(content);
         }
       });
-
-      // if (this.players.includes(player_socket)) {
-      //   if (this.playerObjs.length > this.players.indexOf(player_socket)) {
-      //     this.playerObjs[this.players.indexOf(player_socket)].setDirection(content);
-      //   }
-      // }
     }
   }
 }
@@ -200,7 +176,6 @@ class SnakePlayer {
     this.body = new Array();
     this.body.push({'x': this.x, 'y': this.y});
     this.body.push({'x': this.x, 'y': this.y + 1});
-
   }
 
   moveBody() {
@@ -223,7 +198,6 @@ class SnakePlayer {
   }
 
   render() {
-    console.log("snake render, body: " + this.body);
     this.body.forEach((item, i) => {
       this.maingame.interface.setPixelHex(item.x, item.y, this.color);
     });
@@ -236,10 +210,9 @@ class SnakePlayer {
       if (player.alive) {
         player.body.forEach((bodyPart, i) => {
           if (!(player == this && i == 0)) {
-              if (this.x == bodyPart.x && this.y == bodyPart.y) {
-                console.log("Player died from collision: " + this.num + " by " + player.num);
-                this.diedNow = true;
-              }
+            if (this.x == bodyPart.x && this.y == bodyPart.y) {
+              this.diedNow = true;
+            }
           }
         });
       }
@@ -248,7 +221,6 @@ class SnakePlayer {
       return true;
     }
     if (this.x > 11 || this.x < 0 || this.y > 11 || this.y < 0) {
-      console.log("Player died from wall: " + this.num);
       return true;
     }
     return false;
