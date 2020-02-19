@@ -59,8 +59,8 @@ app.post('/evalpost', (req, res) => {
 
 app.post('/adminloginattemp', (req, res) => {
   console.log('adminloginattemp: ' + req.body.uname);
-  if (req.body.uname == "pixel" && req.body.uname == "pixelos") {
-    console.log(uname + " " + pword)
+  if (req.body.uname == "pixel" && req.body.pword == "pixelos") {
+    console.log(req.body.uname + " " + req.body.pword)
   }
   //res.redirect('');
 });
