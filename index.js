@@ -104,6 +104,9 @@ io.on('connection', function(socket) {
       games[currentGame].playerInput(socket, players.indexOf(socket) + 1, "direction_change", dir);
     }
   });
+  socket.on('restart_game', (msg) => {
+    startGame(1);
+  });
   console.log('');
 });
 

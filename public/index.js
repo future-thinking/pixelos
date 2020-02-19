@@ -26,6 +26,7 @@ var w_press = false; //87
   var s_press = false; //83
   var a_press = false; //65
   var d_press = false; //68
+  var r_press = false; //82
   var up_press = false; //38
   var down_press = false; //40
   var left_press = false; //37
@@ -40,6 +41,10 @@ var w_press = false; //87
     }
     //console.log(dirobj);
     socket.emit('direction_change', dirobj);
+  }
+
+  funtion restartgamesignal() {
+    secket.emit('restart_game', "");
   }
 
   function pressed(key) {
@@ -78,6 +83,12 @@ var w_press = false; //87
         changed();
       }
     }
+    if (e.keyCode == 82) {
+      if (!r_press) {
+        r_press = true;
+        restartgamesignal();
+      }
+    }
   };
 
   document.onkeyup = function (e) {
@@ -103,6 +114,12 @@ var w_press = false; //87
       if (d_press) {
         d_press = false;
         changed();
+      }
+    }
+    if (e.keyCode == 82) {
+      if (!r_press) {
+        r_press = true;
+        restartgamesignal();
       }
     }
   };
