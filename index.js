@@ -30,6 +30,7 @@ module_folders.forEach((item, i) => {
 
 console.log(games);
 var currentGame = -1;
+var lastGame = -1;
 
 function startGame(game) {
   if (currentGame != -1) {
@@ -37,6 +38,7 @@ function startGame(game) {
   }
   currentGame = game;
   games[currentGame].start(players);
+  lastGame = currentGame;
 }
 
 app.get('/', function(req, res){
@@ -105,7 +107,8 @@ io.on('connection', function(socket) {
     }
   });
   socket.on('restart_game', (msg) => {
-    startGame(1);
+    startGame(lastGame);
+    console.log("Started game: " + lastGame);
   });
   console.log('');
 });
