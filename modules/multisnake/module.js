@@ -52,7 +52,7 @@ class MultiSnake {
     this.playerObjs.forEach((item, i) => {
       console.log("PLAYER: " + item.num + " alive: " + item.alive);
       if (item.alive) {
-        if (item.collisionCheck) {
+        if (item.collisionCheck()) {
           console.log("death pushed");
           deaths.push(item);
         }
