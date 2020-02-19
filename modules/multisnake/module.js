@@ -66,7 +66,7 @@ class MultiSnake {
     this.playerObjs.forEach((item, i) => {
       if (item.alive) {
         console.log("eat check");
-        checkEat();
+        this.checkEat();
       }
     });
 
