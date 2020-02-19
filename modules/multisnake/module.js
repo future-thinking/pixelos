@@ -197,7 +197,7 @@ class SnakePlayer {
     this.maingame.playerObjs.forEach((player, i) => {
       if (player.alive) {
         player.body.forEach((bodyPart, i) => {
-          if (!(player == this && bodyPart == this.body[0])) {
+          if (!(player == this && i == 0)) {
               if (this.x == bodyPart.x && this.y == bodyPart.y) {
                 console.log("Player died from collision: " + this.num + " by " + player.num);
                 return true;
@@ -207,6 +207,7 @@ class SnakePlayer {
       }
     });
     if (this.x > 11 || this.x < 0 || this.y > 11 || this.y < 0) {
+      console.log("Player died from wall: " + this.num);
       return true;
     }
     return false;
