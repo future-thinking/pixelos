@@ -9,7 +9,7 @@ class MultiSnake {
     this.players = players;
     this.playerObjs = new Array();
     this.players.forEach((item, i) => {
-      this.playerObjs.push(item, this.interface, i + 1, this);
+      this.playerObjs.push(new SnakePlayer(item, this.interface, i + 1, this));
     });
     this.spawnFood();
     this.ended = false;
