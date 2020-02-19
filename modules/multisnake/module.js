@@ -201,23 +201,6 @@ class SnakePlayer {
 
   }
 
-  applyDirection() {
-    switch (this.direction) {
-      case "up":
-        this.y += 1;
-        break;
-      case "down":
-        this.y += -1;
-        break;
-      case "right":
-        this.x += 1;
-        break;
-      case "left":
-        this.x -= 1;
-        break;
-    }
-  }
-
   moveBody() {
     this.applyDirection();
     this.body.unshift({'x': this.x, 'y': this.y});
@@ -269,25 +252,43 @@ class SnakePlayer {
     return false;
   }
 
+  applyDirection() {
+    this.direction = this.nextDirection;
+    switch (this.direction) {
+      case "up":
+        this.y += 1;
+        break;
+      case "down":
+        this.y += -1;
+        break;
+      case "right":
+        this.x += 1;
+        break;
+      case "left":
+        this.x -= 1;
+        break;
+    }
+  }
+
   setDirection(direction) {
     if (direction.w) {
       if (this.direction != "down") {
-          this.direction = "up";
+          this.nextDirection = "up";
       }
     }
     if (direction.d) {
       if (this.direction != "left") {
-        this.direction = "right";
+        this.nextDirection = "right";
       }
     }
     if (direction.s) {
       if (this.direction != "up") {
-        this.direction = "down";
+        this.nextDirection = "down";
       }
     }
     if (direction.a) {
       if (this.direction != "right") {
-        this.direction = "left";
+        this.nextDirection = "left";
       }
     }
   }
