@@ -1,7 +1,7 @@
 var VirtualJoystick	= function(opts)
 {
 	opts			= opts			|| {};
-	this._container		= opts.container	|| document.body;
+	this._container		= opts.container	|| document.getElementById("wrapperId");
 	this._strokeStyle	= opts.strokeStyle	|| 'cyan';
 	this._stickEl		= opts.stickElement	|| this._buildJoystickStick();
 	this._baseEl		= opts.baseElement	|| this._buildJoystickBase();
