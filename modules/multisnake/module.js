@@ -38,6 +38,7 @@ class MultiSnake {
   }
 
   update() {
+    console.log("game tick");
     if (this.ended)
       return;
     this.playerObjs.forEach((item, i) => {
