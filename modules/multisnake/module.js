@@ -1,32 +1,35 @@
 class MultiSnake {
   constructor(screen_interface) {
     this.interface = screen_interface;
-    console.log("blallblblalalblalbla:" + this.interface);
     this.ended = false;
   }
 
   start(players) {
     console.log("multisnake start");
-    this.players = new Array();
-    players.forEach((item, i) => {
-      this.players.push(item);
-    });
-
+    this.players = players;
     this.playerObjs = new Array();
     this.players.forEach((item, i) => {
-      this.playerObjs.push(new SnakePlayer(item, this.interface, i, this));
+      this.playerObjs.push(item, this.interface, i + 1, this);
     });
-    this.ticks = 0;
-    this.foodx = Math.random();
-    this.doody = Math.random();
-    this.ended = false;
-    this.spawnFood();
-    this.alive_players = players.length;
-    this.deads = new Array();
+
+    spawnFood();
   }
 
   isEnded() {
     return this.ended;
+  }
+
+  negateDirection(direction) {
+    if (direction == "up") {
+      return "down";
+    }
+    if (direction == "down") {
+      return "up";
+    }
+    if (direction == "right") {
+      return "left";
+    }
+    return "right";
   }
 
   spawnFood() {
@@ -35,55 +38,57 @@ class MultiSnake {
   }
 
   update() {
-    if (this.ended) return;
-    this.deads.forEach((item, i) => {
+    if (this.ended)
+      return;
+    this.playerObjs.forEach((item, i) => {
+      if (item.alive)
+        item.moveBody();
+    });
+    let deaths = new Array();
+    this.playerObjs.forEach((item, i) => {
+      if (item.alive) {
+        if (item.collisionCheck) {
+          deaths.push(item);
+        }
+      }
+    });
+    deaths.forEach((item, i) => {
       item.alive = false;
     });
+    this.playerObjs.forEach((item, i) => {
+      if (item.alive)
+        checkEat();
+    });
 
-    console.log("game tick");
-    this.ticks++;
-    if (this.ticks >= 10) {
-      this.interface.clearScreen();
-      this.playerObjs.forEach((item, i) => {
-        item.move();
-      });
-      this.playerObjs.forEach((item, i) => {
-        item.collisionCheck();
-      });
-      if (this.ended) return;
-      this.playerObjs.forEach((item, i) => {
-        item.render();
-      });
-      this.ticks = 0;
+    let totalPlayers = this.playerObjs.length;
+    let deadPlayers = 0;
+    this.playerObjs.forEach((item, i) => {
+      if (!item.alive)
+        deadPlayers++;
+    });
+    let alivePlayers = totalPlayers - deadPlayers;
 
-      this.interface.setPixelHex(this.foodx, this.foody, 0xFFFFFF);
+    if (alivePlayers < 2) {
+      if (alivePlayers < 1) {
+        this.ended = true;
+        this.interface.fillScreen(0xFFFFFF);
+        this.interface.updateScreen();
+        return;
+      }
+      this.playerObjs.forEach((item, i) => {
+        if (item.alive) {
+          this.interface.fillScreen(item.headColor);
+        }
+      });
 
       this.interface.updateScreen();
+      return;
     }
+
   }
 
   end() {
     console.log("multisnake end");
-  }
-
-  playerDie(player) {
-    let totalPlayers = 0;
-    this.deads.push(player);
-    this.playerObjs.forEach((item, i) => {
-      if (item.alive) {
-        totalPlayers++;
-      }
-    });
-
-    if (this.deads.length >= (this.playerObjs.length - 1)) {
-      this.playerObjs.forEach((item, i) => {
-        if (!this.deads.includes(item)) {
-          this.interface.fillScreenHex(item.color);
-        }
-      });
-      this.ended = true;
-      this.interface.updateScreen();
-    }
   }
 
   playerInput(player_socket, type, content) {
@@ -134,7 +139,8 @@ class SnakePlayer {
 
     this.body = new Array();
     this.body.push({'x': this.x, 'y': this.y});
-    this.eaten = false;
+    this.body.push({'x': this.x, 'y': this.y + 1});
+
   }
 
   applyDirection() {
@@ -152,86 +158,43 @@ class SnakePlayer {
         this.x -= 1;
         break;
     }
-    if (this.x > 11 || this.x < 0) {this.maingame.playerDie(this);}
-    if (this.y > 11 || this.y < 0) {this.maingame.playerDie(this);}
   }
 
-  move() {
-    if (!this.alive) {
-      return;
-    }
+  moveBody() {
     this.applyDirection();
+    this.body.unshift({'x': this.x, 'y': this.y});
     if (!this.eaten) {
-      this.body.splice(this.body.length - 1);
+      this.body.splice(this.body.length - 1, 1);
     }
     this.eaten = false;
-    this.body.unshift({'x': this.x, 'y': this.y});
   }
 
-  collisionCheck() {
+  checkEat() {
     this.body.forEach((item, i) => {
-      let alr = false;
-      if (item.x == this.x && item.y == this.y) {
-        if (alr) {
-          this.maingame.playerDie(this);
-          return;
-        }
-        alr = true;
+      if (item.x == this.maingame.foodx && item.y == this.maingame.foody) {
+        this.maingame.spawnFood();
+        this.eaten = true;
       }
     });
 
-    this.maingame.playerObjs.forEach((item, i) => {
-      if (item != this && item.alive) {
-        item.body.forEach((itemb, i) => {
-          if (itemb.x == this.x && itemb.y == this.y) {
-            if (item.x == itemb.x && item.y == itemb.y) {
-              this.maingame.playerDie(item);
-            }
-            this.maingame.playerDie(this);
-            return;
+  }
+
+  collisionCheck() {
+    this.maingame.playerObjs.forEach((player, i) => {
+      if (player.alive) {
+        player.body.forEach((bodyPart, i) => {
+          if (!(player == this && bodyPart == this.body[0])) {
+              if (this.x == bodyPart.x && this.y == bodyPart.y) {
+                return true;
+              }
           }
         });
       }
     });
-
-
-    if (this.maingame.foodx == this.x && this.maingame.foody == this.y) {
-      this.maingame.spawnFood();
-      this.eaten = true;
+    if (this.x > 11 || this.x < 0 || this.y > 11 || this.y < 0) {
+      return true;
     }
-  }
-
-  render() {
-    if (!this.alive) {
-      return;
-    }
-    this.body.forEach((item, i) => {
-          this.interface.setPixelHex(item.x, item.y, this.color);
-    });
-    this.interface.setPixelHex(this.body[0].x, this.body[0].y, this.headColor);
-  }
-
-  setDirection(direction) {
-    if (direction.w) {
-      if (this.direction != "down") {
-          this.direction = "up";
-      }
-    }
-    if (direction.d) {
-      if (this.direction != "left") {
-        this.direction = "right";
-    }
-    }
-    if (direction.s) {
-      if (this.direction != "up") {
-        this.direction = "down";
-      }
-    }
-    if (direction.a) {
-      if (this.direction != "right") {
-        this.direction = "left";
-      }
-    }
+    return false;
   }
 }
 
