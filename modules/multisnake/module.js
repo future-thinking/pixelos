@@ -164,6 +164,7 @@ class SnakePlayer {
     this.interface = screen_interface;
     this.maingame = maingame;
     this.direction = "up";
+    this.nextDirection = "up";
     this.alive = true;
     this.num = player_num;
     switch (player_num) { //grb
