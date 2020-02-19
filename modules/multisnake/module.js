@@ -12,6 +12,7 @@ class MultiSnake {
       this.playerObjs.push(item, this.interface, i + 1, this);
     });
     this.spawnFood();
+    this.ended = false;
   }
 
   isEnded() {
