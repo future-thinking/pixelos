@@ -137,7 +137,7 @@ setInterval(function () {
         newDir = "a";
       }
     } else {
-      if (joystick.deltaY() > 0) {
+      if (joystick.deltaY() < 0) {
         newDir = "w";
       } else {
         newDir = "s";
