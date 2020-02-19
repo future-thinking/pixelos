@@ -164,7 +164,7 @@ class SnakePlayer {
     this.interface = screen_interface;
     this.maingame = maingame;
     this.direction = "up";
-    this.nextDirection = "up";
+    this.oldDirection = "up";
     this.alive = true;
     this.num = player_num;
     switch (player_num) { //grb
@@ -254,7 +254,7 @@ class SnakePlayer {
   }
 
   applyDirection() {
-    this.direction = this.nextDirection;
+    this.oldDirection = this.direction;
     switch (this.direction) {
       case "up":
         this.y += 1;
@@ -273,23 +273,23 @@ class SnakePlayer {
 
   setDirection(direction) {
     if (direction.w) {
-      if (this.direction != "down") {
-          this.nextDirection = "up";
+      if (this.oldDirection != "down") {
+          this.direction = "up";
       }
     }
     if (direction.d) {
-      if (this.direction != "left") {
-        this.nextDirection = "right";
+      if (this.oldDirection != "left") {
+        this.direction = "right";
       }
     }
     if (direction.s) {
-      if (this.direction != "up") {
-        this.nextDirection = "down";
+      if (this.oldDirection != "up") {
+        this.direction = "down";
       }
     }
     if (direction.a) {
-      if (this.direction != "right") {
-        this.nextDirection = "left";
+      if (this.oldDirection != "right") {
+        this.direction = "left";
       }
     }
   }
