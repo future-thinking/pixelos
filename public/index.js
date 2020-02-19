@@ -27,8 +27,6 @@ function updatePlayerCount(count) {
   }
 }
 
-
-
 var w_press = false; //87
   var s_press = false; //83
   var a_press = false; //65
