@@ -44,8 +44,9 @@ class MultiSnake {
     }
     console.log("survived");
     this.playerObjs.forEach((item, i) => {
-      if (item.alive)
+      if (item.alive) {
         item.moveBody();
+      }
     });
     let deaths = new Array();
     this.playerObjs.forEach((item, i) => {
@@ -61,6 +62,7 @@ class MultiSnake {
     });
     this.playerObjs.forEach((item, i) => {
       if (item.alive) {
+        console.log("eat check");
         checkEat();
       }
     });
@@ -74,8 +76,11 @@ class MultiSnake {
     });
     let alivePlayers = totalPlayers - deadPlayers;
 
+    console.log("alive: " + alivePlayers);
+
     if (alivePlayers < 2) {
       this.ended = true;
+      console.log("game ended");
       if (alivePlayers < 1) {
         this.interface.fillScreen(0xFFFFFF);
         this.interface.updateScreen();
