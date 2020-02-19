@@ -40,7 +40,7 @@ class MultiSnake {
 
   update() {
     this.tick++;
-    if (!(this.tick >= 20)) {
+    if (!(this.tick >= 10)) {
       return;
     }
     this.interface.fillScreen(0x000000);
@@ -220,9 +220,9 @@ class SnakePlayer {
   render() {
     console.log("snake render, body: " + this.body);
     this.body.forEach((item, i) => {
-      this.maingame.interface.setPixelHex(item.x, item.y, this.headColor);
+      this.maingame.interface.setPixelHex(item.x, item.y, this.color);
     });
-    this.maingame.interface.setPixelHex(this.x, this.y, this.color);
+    this.maingame.interface.setPixelHex(this.x, this.y, this.headColor);
   }
 
   collisionCheck() {
