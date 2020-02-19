@@ -34,8 +34,20 @@ class MultiSnake {
   }
 
   spawnFood() {
-    this.foodx = parseInt(Math.random() * 11);
-    this.foody = parseInt(Math.random() * 11);
+    let works = true;
+    do {
+      this.foodx = parseInt(Math.random() * 11);
+      this.foody = parseInt(Math.random() * 11);
+      this.playerObjs.forEach((item, i) => {
+        item.body.forEach((bodyPart, i) => {
+          if (bodyPart.x == this.foodx && bodyPart.y == this.foody) {
+            works = false;
+          }
+        });
+
+      });
+
+    } while (!works);
   }
 
   update() {
@@ -152,6 +164,7 @@ class SnakePlayer {
     this.interface = screen_interface;
     this.maingame = maingame;
     this.direction = "up";
+    this.oldDirection = "up";
     this.alive = true;
     this.num = player_num;
     switch (player_num) { //grb
@@ -187,23 +200,6 @@ class SnakePlayer {
     this.body.push({'x': this.x, 'y': this.y});
     this.body.push({'x': this.x, 'y': this.y + 1});
 
-  }
-
-  applyDirection() {
-    switch (this.direction) {
-      case "up":
-        this.y += 1;
-        break;
-      case "down":
-        this.y += -1;
-        break;
-      case "right":
-        this.x += 1;
-        break;
-      case "left":
-        this.x -= 1;
-        break;
-    }
   }
 
   moveBody() {
@@ -257,24 +253,42 @@ class SnakePlayer {
     return false;
   }
 
+  applyDirection() {
+    this.oldDirection = this.direction;
+    switch (this.direction) {
+      case "up":
+        this.y += 1;
+        break;
+      case "down":
+        this.y += -1;
+        break;
+      case "right":
+        this.x += 1;
+        break;
+      case "left":
+        this.x -= 1;
+        break;
+    }
+  }
+
   setDirection(direction) {
     if (direction.w) {
-      if (this.direction != "down") {
+      if (this.oldDirection != "down") {
           this.direction = "up";
       }
     }
     if (direction.d) {
-      if (this.direction != "left") {
+      if (this.oldDirection != "left") {
         this.direction = "right";
       }
     }
     if (direction.s) {
-      if (this.direction != "up") {
+      if (this.oldDirection != "up") {
         this.direction = "down";
       }
     }
     if (direction.a) {
-      if (this.direction != "right") {
+      if (this.oldDirection != "right") {
         this.direction = "left";
       }
     }
