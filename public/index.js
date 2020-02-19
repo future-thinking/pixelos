@@ -46,7 +46,7 @@ var joydir = "no";
     socket.emit('direction_change', dirobj);
   }
 
-  funtion restartgamesignal() {
+  function restartgamesignal() {
     secket.emit('restart_game', "");
   }
 
