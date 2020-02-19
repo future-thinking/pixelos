@@ -107,11 +107,7 @@ socket.on('game_full', (msg) => {
 });
 
 function restartButtonPress() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-    }
-  };
-  xhttp.open("GET", "/restartgame", true);
-  xhttp.send();
+var xhttp = new XMLHttpRequest();
+xhttp.open("POST", "/restartgame", true);
+xhttp.send();
 }

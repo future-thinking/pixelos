@@ -72,7 +72,6 @@ app.post('/startgamepost', (req, res) => {
   }
 });
 
-
 app.post('/tempstartpost', (req, res) => {
   startGame(1);
   res.redirect('/temp_starter.html');
