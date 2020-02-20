@@ -6,7 +6,7 @@ const io = require('socket.io')(http);
 const fs = require('fs');
 
 const interface_module = require('./interface.js');
-const interface = new interface_module(144, isOnlyEmulating);
+global.interface = new interface_module(144, isOnlyEmulating);
 
 const bodyParser = require('body-parser');
 
