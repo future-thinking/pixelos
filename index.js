@@ -38,9 +38,14 @@ function startGame(game) {
   if (currentGame != -1) {
     games[currentGame].end();
   }
-  currentGame = game;
-  games[currentGame].start(players);
-  lastGame = currentGame;
+  if (game != undefined) {
+    currentGame = game;
+    games[currentGame].start(players);
+    lastGame = currentGame;
+  }
+  else {
+    console.log("game undefined")
+  }
 }
 
 app.get('/', function(req, res){
