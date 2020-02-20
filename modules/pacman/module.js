@@ -33,6 +33,16 @@ class PacMan {
 
     this.pacman.move();
 
+    this.ghosts.forEach((ghost, i) => {
+      ghost.move();
+    });
+
+
+    this.ghosts.forEach((ghost, i) => {
+      ghost.render();
+    });
+
+
     this.pacman.eatCheck();
 
     this.map.render();
@@ -166,6 +176,23 @@ class Ghost extends PacPlayer {
     this.socket = player_socket;
     this.y = 10;
     this.x = 1 + ghost_num * 5;
+    switch (ghost_num) {
+      case 1:
+        this.color = 0xFF0000;
+        break;
+      case 2:
+        this.color = 0x00FF00;
+        break;
+      case 3:
+        this.color = 0x0000FF;
+        break;
+      default:
+
+    }
+  }
+
+  render() {
+    this.maingame.interface.setPixelHex(this.x, this.y, this.color);
   }
 }
 
