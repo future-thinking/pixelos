@@ -103,7 +103,7 @@ class Interface {
   showFullscreenPng(path) {
     PNG.decode(path, function(pixels) {
     // pixels is a 1d array (in rgba order) of decoded pixel data
-    console.log(pixels)
+    console.log(pixels);
 });
   }
 
