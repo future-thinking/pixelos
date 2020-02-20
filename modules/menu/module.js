@@ -1,7 +1,6 @@
 class Menu {
   constructor(screen_interface) {
     this.interface = screen_interface;
-    console.log("blallblblalalblalbla:" + this.interface);
     this.ended = false;
     this.page = 0;
     this.direction = "up";
@@ -9,17 +8,13 @@ class Menu {
 
   start(players) {
     console.log("menu start");
-<<<<<<< HEAD
-    interface.clearScreen();
-    for(var x; x < interface.getWidth, x++;) {
-      interface.setPixel(x,0, 255,255,255)
-    }
-    interface.showFullscreenPng('./logo.png');
-    interface.updateScreen;
-=======
     this.interface.clearScreen();
-    for(var i; i < this.interface.getWidth)
->>>>>>> 0e2e1363e6a2985b0790e126bb013bdbd1d25184
+    for(var x; x < this.interface.getWidth, x++;) {
+      this.interface.setPixel(x,0, 255,255,255)
+    }
+    this.interface.showFullscreenPng('./logo.png');
+    this.interface.updateScreen;
+    this.interface.clearScreen();
   }
 
   isEnded() {

@@ -35,7 +35,9 @@ class PacMan {
 
   end() {console.log("PackMan Ended");}
   playerInput(player_socket, player_num, type, content) {
-
+    if (this.pacman.socket = player_socket) {
+      this.pacman.setDirection(content);
+    }
   }
 }
 
