@@ -53,7 +53,8 @@ var joydir = "no";
   }
 
   function restartgamesignal() {
-    secket.emit('restart_game', "");
+    console.log('restart_game');
+    socket.emit('restart_game', "");
   }
 
   function pressed(key) {

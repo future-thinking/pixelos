@@ -26,7 +26,7 @@ function getDirectories(path) {
 var games = new Array();
 
 let module_folders = getDirectories("./modules");
-module_folders.forEach((item, i) => {
+module_folders.forEach((item) => {
   let game =  require("./modules/" + item + "/module.js");
   games.push(new game(interface));
 });
@@ -38,9 +38,14 @@ function startGame(game) {
   if (currentGame != -1) {
     games[currentGame].end();
   }
-  currentGame = game;
-  games[currentGame].start(players);
-  lastGame = currentGame;
+  if (game != undefined) {
+    currentGame = game;
+    games[currentGame].start(players);
+    lastGame = currentGame;
+  }
+  else {
+    console.log("game undefined")
+  }
 }
 
 app.get('/', function(req, res){
