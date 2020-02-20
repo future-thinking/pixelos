@@ -8,14 +8,6 @@ class Menu {
 
   start(players) {
     console.log("menu start");
-<<<<<<< HEAD
-    interface.clearScreen();
-    for(var x; x < interface.getWidth, x++;) {
-      interface.setPixel(x,0, 255,255,255)
-    }
-    interface.showFullscreenPng('./logo.png');
-    interface.updateScreen;
-=======
     this.interface.clearScreen();
     for(var x; x < this.interface.getWidth, x++;) {
       this.interface.setPixel(x,0, 255,255,255)
@@ -23,7 +15,6 @@ class Menu {
     this.interface.showFullscreenPng('./logo.png');
     this.interface.updateScreen;
     this.interface.clearScreen();
->>>>>>> c5b8548b4994360ef2a830dc5d93b73c3fb23abe
   }
 
   isEnded() {
