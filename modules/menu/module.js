@@ -9,7 +9,7 @@ class Menu {
 
   start(players) {
     console.log("menu start");
-    interface.clearScreen();
+    this.interface.clearScreen();
     for(var i; i < interface.getWidth)
   }
 
