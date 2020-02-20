@@ -27,23 +27,44 @@ class PacMan {
 
 
   update() {
+    if (this.ended) {
+      return;
+    }
     this.tick++;
     if (!(this.tick >= 10)) {return;}
     this.tick = 0;
 
     this.pacman.move();
 
+    let pcd = false;
+
+    if (this.pacman.checkDead()) {
+      pcd = true;
+    }
+
     this.ghosts.forEach((ghost, i) => {
       ghost.move();
     });
 
+    if (this.pacman.checkDead()) {
+      pcd = true;
+    }
+
     this.pacman.eatCheck();
 
-    this.map.render();
-    this.pacman.render();
-    this.ghosts.forEach((ghost, i) => {
-      ghost.render();
-    });
+    if (this.map.food.length < 1 && !pcd) {
+      this.ended = true;
+      this.interface.fillScreenHex(0xFFFF00);
+    } else if (pcd ){
+      this.ended = true;
+      this.interface.fillScreenHex(0x555555);
+    } else {
+      this.map.render();
+      this.pacman.render();
+      this.ghosts.forEach((ghost, i) => {
+        ghost.render();
+      });
+    }
     this.interface.updateScreen();
   }
 
@@ -150,6 +171,15 @@ class PacManPlayer extends PacPlayer {
     this.x = 1;
     this.y = 1;
     this.num = plnum;
+  }
+
+  checkDead() {
+    this.maingame.ghosts.forEach((ghost, i) => {
+      if (ghost.x == this.x && ghost.y == this.y) {
+        return true;
+      }
+    });
+    return false;
   }
 
   render() {

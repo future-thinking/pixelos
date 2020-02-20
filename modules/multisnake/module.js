@@ -105,7 +105,7 @@ class MultiSnake {
     if (alivePlayers < 2) {
       this.ended = true;
       if (alivePlayers < 1) {
-        this.interface.fillScreenHex(0x999999);
+        this.interface.fillScreenHex(0x555555);
         this.interface.updateScreen();
         return;
       }
