@@ -102,8 +102,11 @@ class Interface {
   }
 
   showFullscreenPng(path) {
-    PNG.decode(path, function(pixels) {
+    PNG.decode(path, function(color) {
     // pixels is a 1d array (in rgba order) of decoded pixel data
+    for(var p = 0; p <= this.pixels-1, p += 3;) {
+      this.pixels[p] = this.getCorrectColor(color[p], color[p+1], color[p+2]);
+    }
     console.log(pixels);
 });
   }

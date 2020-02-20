@@ -26,7 +26,7 @@ function getDirectories(path) {
 var games = new Array();
 
 let module_folders = getDirectories("./modules");
-module_folders.forEach((item, i) => {
+module_folders.forEach((item) => {
   let game =  require("./modules/" + item + "/module.js");
   games.push(new game(interface));
 });
