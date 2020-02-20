@@ -17,6 +17,8 @@ class PacMan {
     for (let ghostPlayerId = 1; ghostPlayerId < players.length; ghostPlayerId++) {
       ghosts.push(new Ghost(players[ghostPlayerId]));
     }
+
+    this.map = new Map(this);
   }
 
   isEnded() { return this.ended; }
@@ -27,6 +29,8 @@ class PacMan {
     if (!(this.tick >= 10)) {return;}
     this.tick = 0;
 
+    map.render();
+    this.interface.updateScreen();
   }
 
   end() {console.log("PackMan Ended");}

@@ -9,12 +9,17 @@ class Menu {
 
   start(players) {
     console.log("menu start");
+<<<<<<< HEAD
     interface.clearScreen();
     for(var x; x < interface.getWidth, x++;) {
       interface.setPixel(x,0, 255,255,255)
     }
     interface.showFullscreenPng('./logo.png');
     interface.updateScreen;
+=======
+    this.interface.clearScreen();
+    for(var i; i < this.interface.getWidth)
+>>>>>>> 0e2e1363e6a2985b0790e126bb013bdbd1d25184
   }
 
   isEnded() {

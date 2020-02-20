@@ -28,6 +28,7 @@ class Interface {
         rows.push(new Array());
         for (let pixel = 0; pixel < 12; pixel++) {
           rows[row].push(this.pixels[this.translatePixelCoordinates(pixel, row)]);
+          console.log(this.pixels[this.translatePixelCoordinates(pixel, row)]);
         }
       }
       emulating_sockets.forEach((emu_socket, i) => {
