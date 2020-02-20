@@ -1,6 +1,6 @@
 const ws281x = require('rpi-ws281x-v2');
 const convert = require('color-convert');
-var PNG = require('png-js');
+//var PNG = require('png-js');
 
 
 class Interface {

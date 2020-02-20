@@ -17,7 +17,7 @@ class PacMan {
     this.map = new Map(this);
 
     for (let ghostPlayerId = 1; ghostPlayerId < players.length; ghostPlayerId++) {
-      this.ghosts.push(new Ghost(players[ghostPlayerId], this, ghostPlayerId));
+      this.ghosts.push(new Ghost(players[ghostPlayerId], this, ghostPlayerId, ghostPlayerId + 1));
     }
 
 
@@ -37,26 +37,25 @@ class PacMan {
       ghost.move();
     });
 
-
-    this.ghosts.forEach((ghost, i) => {
-      ghost.render();
-    });
-
-
     this.pacman.eatCheck();
 
     this.map.render();
     this.pacman.render();
+    this.ghosts.forEach((ghost, i) => {
+      ghost.render();
+    });
     this.interface.updateScreen();
   }
 
   end() {console.log("PackMan Ended");}
+
   playerInput(player_socket, player_num, type, content) {
-    if (this.pacman.socket = player_socket) {
+    console.log(player_num);
+    if (player_num == 1) {
       this.pacman.setDirection(content);
     } else {
       this.ghosts.forEach((ghost, i) => {
-        if (ghost.socket = player_socket) {
+        if (ghost.num == player_num) {
           ghost.setDirection(content);
         }
       });
@@ -144,12 +143,13 @@ class PacPlayer {
 }
 
 class PacManPlayer extends PacPlayer {
-  constructor(player_socket, maingame) {
+  constructor(player_socket, maingame, plnum) {
     super(player_socket, maingame);
     this.maingame = maingame;
     this.socket = player_socket;
     this.x = 1;
     this.y = 1;
+    this.num = plnum;
   }
 
   render() {
@@ -171,11 +171,12 @@ class PacManPlayer extends PacPlayer {
 }
 
 class Ghost extends PacPlayer {
-  constructor(player_socket, maingame, ghost_num) {
+  constructor(player_socket, maingame, ghost_num, plnum) {
     super(player_socket, maingame);
     this.socket = player_socket;
     this.y = 10;
-    this.x = 1 + ghost_num * 5;
+    this.x = 1 + ghost_num * 3;
+    this.num = plnum;
     switch (ghost_num) {
       case 1:
         this.color = 0xFF0000;
