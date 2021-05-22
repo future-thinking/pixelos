@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+<head>
     <meta charset="utf-8">
     <title>Eval</title>
-  </head>
-  <body>
-    <form class="" action="/evalpost" method="post">
-      <input type="text" name="eval">
-      <button type="submit" name="submit" value="submit"></button>
-    </form>
-  </body>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="/eval.js" defer></script>
+
+</head>
+<body>
+<form class="" action="/evalpost" method="post">
+    <input type="text" name="eval">
+    <button type="submit" name="submit" value="submit"></button>
+</form>
+<button onclick="eval('interface.clearScreen();interface.updateScreen()');">Clear</button>
+Fill
+<button onclick="eval('interface.fillScreen(255,0,0);interface.updateScreen()');">Red</button>
+<button onclick="eval('interface.fillScreen(0,255,0);interface.updateScreen()');">Green</button>
+<button onclick="eval('interface.fillScreen(0,0,255);interface.updateScreen()');">Blue</button>
+<button onclick="eval('interface.fillScreen(255,255,255);interface.updateScreen()');">White</button>
+</body>
 </html>
