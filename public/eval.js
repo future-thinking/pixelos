@@ -5,10 +5,4 @@ function eval(commands) {
         dataType: "json",
         data: {eval: commands},
     })
-        .done(function(result) {
-            alert(result.message);
-        })
-        .fail(function(result) {
-            alert(result.message);
-        });
 }
