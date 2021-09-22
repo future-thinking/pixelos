@@ -84,9 +84,7 @@ class Interface {
   }
 
   clearScreen() {
-    for (let p = 0; p < this.pixel_amount; p++) {
-      this.pixels[p] = 0x000000;
-    }
+    this.fillScreenHex(0x000000);
   }
 
   fillScreen(r,g,b) {
@@ -116,4 +114,4 @@ class Interface {
 
 }
 
-module.exports = Interface
+module.exports = Interface;

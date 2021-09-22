@@ -56,7 +56,7 @@ class MultiSnake {
     if (!(this.tick >= 10)) {
       return;
     }
-    this.interface.fillScreenHex(0x000000);
+    this.interface.clearScreen();
     this.tick = 0;
     if (this.ended) {
       return;

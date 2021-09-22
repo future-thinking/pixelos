@@ -80,7 +80,6 @@ class Menu {
 
   showMenu() {
     this.interface.clearScreen();
-
   }
 
 }
