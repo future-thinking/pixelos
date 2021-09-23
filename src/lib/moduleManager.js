@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-class moduleManager {
+module.exports = class moduleManager {
     constructor() {
         this.modules = new Array();
         this.current = -1;
@@ -60,5 +60,3 @@ class moduleManager {
       }
 
 }
-
-module.exports = moduleManager;

@@ -4,7 +4,7 @@ const path = require('path');
 const router = express.Router()
 
 module.exports = function (moduleManager) {
-    
+
     router.get('/', function(req, res){
         res.sendFile(__dirname + '../public/index/index.html');
     });
@@ -24,12 +24,6 @@ module.exports = function (moduleManager) {
     
     router.post('/start', function(req,res){
         moduleManager.start(req.body.module);
-    });
-        
-    router.post('/start', (req, res) => {
-        if (req.body.module != -1) {
-            moduleManager.start(req.body.module);
-        }
     });
       
     router.get("*", (req, res) => res.status(404).send("404"));

@@ -2,8 +2,7 @@ const ws281x = require('rpi-ws281x-v2');
 const convert = require('color-convert');
 //var PNG = require('png-js');
 
-
-class Interface {
+module.exports = class Interface {
 
   constructor(pixel_amount, isOnlyEmulating) {
     this.isOnlyEmulating = isOnlyEmulating;
@@ -56,27 +55,27 @@ class Interface {
 
   setPixelHex(x,y,hex){
     var orientation = 0;
-    var xnew = 0;
-    var ynew = 0;
+    var xNew = 0;
+    var yNew = 0;
     switch (orientation) {
       case 0:
-      xnew = y;
-      ynew = x;
-      break;
+        xNew = y;
+        yNew = x;
+        break;
       case 1:
-      xnew = y;
-      ynew = -x;
-      break;
+        xNew = y;
+        yNew = -x;
+        break;
       case 2:
-      xnew = -x;
-      ynew = -y;
-      break;
+        xNew = -x;
+        yNew = -y;
+        break;
       case 3:
-      xnew = y;
-      ynew = -x;
+        xNew = y;
+        yNew = -x;
       break;
     }
-    this.pixels[this.translatePixelCoordinates(xnew, ynew)] = hex;
+    this.pixels[this.translatePixelCoordinates(xNew, yNew)] = hex;
   }
 
   setPixel(x, y, r, g, b) {
@@ -113,5 +112,3 @@ class Interface {
   }
 
 }
-
-module.exports = Interface;
