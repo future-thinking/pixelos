@@ -52,9 +52,9 @@ var joydir = "no";
     socket.emit('direction_change', dirobj);
   }
 
-  function restartgamesignal() {
-    console.log('restart_game');
-    socket.emit('restart_game', "");
+  function restart() {
+    console.log('restart');
+    socket.emit('restart', "");
   }
 
   function pressed(key) {
@@ -96,7 +96,7 @@ var joydir = "no";
     if (e.keyCode == 82) {
       if (!r_press) {
         r_press = true;
-        restartgamesignal();
+        restart();
       }
     }
   };
@@ -129,7 +129,7 @@ var joydir = "no";
     if (e.keyCode == 82) {
       if (!r_press) {
         r_press = true;
-        restartgamesignal();
+        restart();
       }
     }
   };
@@ -145,7 +145,7 @@ socket.on('game_full', (msg) => {
 
 function restartButtonPress() {
 var xhttp = new XMLHttpRequest();
-xhttp.open("POST", "/restartgame", true);
+xhttp.open("POST", "/restart", true);
 xhttp.send();
 }
 

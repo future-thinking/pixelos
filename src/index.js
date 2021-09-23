@@ -11,6 +11,10 @@ const socketManager =  require('./sockets')(http, moduleManager);
 app.use(require('express').static('public'));
 app.use(express.urlencoded());
 app.use(require('./router')(moduleManager));
+app.use(function (req, res, next) {
+  console.log(Date.now() + '  ' + req.baseUrl)
+  next()
+});
 
 http.listen(3000, function(){
   console.log('listening on *:3000');

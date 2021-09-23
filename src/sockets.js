@@ -46,9 +46,9 @@ module.exports = function (http, moduleManager) {
           }
         });
       
-        socket.on('restart_game', (msg) => {
+        socket.on('restart', (msg) => {
           moduleManager.restart();
-          console.log("Started game: " + moduleManager.getCurrent());
+          console.log("Started: " + moduleManager.getCurrent());
         });
         console.log('');
     });

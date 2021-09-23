@@ -4,33 +4,31 @@ const path = require('path');
 const router = express.Router()
 
 module.exports = function (moduleManager) {
+    
     router.get('/', function(req, res){
         res.sendFile(__dirname + '../public/index/index.html');
     });
     
-    router.get('/eval', function(req, res){
+    router.route('/eval')
+    .get(function(req, res){
         res.sendFile(__dirname + '../public/eval/eval.html');
-    });
-    
-    router.post('/restartgame', function(req,res){
-        moduleManager.restart();
-    });
-    
-    router.post('/startgame', function(req,res){
-        console.log('/startgame');
-        moduleManager.start(req.body.game);
-    });
-    
-    router.post('/evalpost', (req, res) => {
-        console.log('Eval: ' + req.body.eval);
+    })
+    .post(function(req, res){
         eval(req.body.eval);
         res.redirect('/eval');
     });
+
+    router.post('/restart', function(req,res){
+        moduleManager.restart();
+    });
     
-    router.post('/startgamepost', (req, res) => {
-        console.log('startgamepost: ' + req.body.game);
-        if (req.body.game != -1) {
-            moduleManager.start(req.body.game);
+    router.post('/start', function(req,res){
+        moduleManager.start(req.body.module);
+    });
+        
+    router.post('/start', (req, res) => {
+        if (req.body.module != -1) {
+            moduleManager.start(req.body.module);
         }
     });
       

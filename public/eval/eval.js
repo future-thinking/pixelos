@@ -1,6 +1,6 @@
 function eval(commands) {
     $.ajax({
-        url: "/evalpost",
+        url: "/eval",
         type: "POST",
         dataType: "json",
         data: {eval: commands},
