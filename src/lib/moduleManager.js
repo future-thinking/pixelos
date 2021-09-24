@@ -10,7 +10,7 @@ module.exports = class moduleManager {
 
         let module_folders = this.getDirectories("./modules");
         module_folders.forEach((item) => {
-          let module =  require("./modules/" + item + "/module.js");
+          let module =  require("../modules/" + item + "/module.js");
           modules.push(new module(screen));
         });
 
