@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 module.exports = class moduleManager {
-    constructor() {
+    constructor(interface) {
         this.modules = new Array();
         this.current = -1;
         this.last = -1;

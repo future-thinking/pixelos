@@ -5,7 +5,7 @@ const http = require('http').createServer(app);
 
 global.interface = new (require('./lib/interface'))(144, isOnlyEmulating);
 
-const moduleManager = new (require('./lib/moduleManager'))();
+const moduleManager = new (require('./lib/moduleManager'))(interface);
 const socketManager =  require('./sockets')(http, moduleManager);
 
 app.use(require('express').static('public'));
