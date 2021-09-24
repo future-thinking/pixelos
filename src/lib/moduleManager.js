@@ -11,7 +11,7 @@ module.exports = class moduleManager {
         let module_folders = this.getDirectories("./src/modules");
         module_folders.forEach((item) => {
           let module =  require("../modules/" + item + "/module.js");
-          modules.push(new module(screen));
+          this.modules.push(new module(screen));
         });
 
         setInterval(this.update, 50);
