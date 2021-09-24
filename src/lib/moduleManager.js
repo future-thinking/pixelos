@@ -8,7 +8,7 @@ module.exports = class moduleManager {
 
         this.players;
 
-        let module_folders = this.getDirectories("./modules");
+        let module_folders = this.getDirectories("../modules");
         module_folders.forEach((item) => {
           let module =  require("../modules/" + item + "/module.js");
           modules.push(new module(screen));
