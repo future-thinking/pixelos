@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 module.exports = class moduleManager {
-    constructor(interface) {
+    constructor(screen) {
         this.modules = new Array();
         this.current = -1;
         this.last = -1;
@@ -11,7 +11,7 @@ module.exports = class moduleManager {
         let module_folders = this.getDirectories("./modules");
         module_folders.forEach((item) => {
           let module =  require("./modules/" + item + "/module.js");
-          modules.push(new module(interface));
+          modules.push(new module(screen));
         });
 
         setInterval(this.update, 50);
