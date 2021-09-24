@@ -26,13 +26,13 @@ module.exports = class moduleManager {
     }
 
     start(module) {
-        if (current != -1) {
-        modules[current].end();
+        if (this.current != -1) {
+        this.modules[this.current].end();
         }
         if (module != undefined) {
-        current = module;
-        modules[current].start(players);
-        last = current;
+        this.current = module;
+        this.modules[this.current].start(this.players);
+        this.last = this.current;
         }
         else {
         console.log("module undefined")
@@ -40,11 +40,11 @@ module.exports = class moduleManager {
     }
 
     update() {
-        if (current != -1) {
-            modules[current].update();
-            if (modules[current].isEnded()) {
-            modules[current].end();
-            current = -1;
+        if (this.current != -1) {
+            this.modules[this.current].update();
+            if (this.modules[this.current].isEnded()) {
+            this.modules[this.current].end();
+            this.current = -1;
             }
         }
     }
