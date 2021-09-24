@@ -9,7 +9,7 @@ const moduleManager = new (require('./lib/moduleManager'))(interface);
 const socketManager =  require('./sockets')(http, moduleManager);
 
 app.use(require('express').static('public'));
-app.use(express.urlencoded());
+app.use(require('express').urlencoded());
 app.use(require('./router')(moduleManager));
 app.use(function (req, res, next) {
   console.log(Date.now() + '  ' + req.baseUrl)
