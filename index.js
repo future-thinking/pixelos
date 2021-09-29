@@ -164,14 +164,16 @@ function HSVtoRGB(h, s, v) {
 }
 
 function waitingScreen() {
-  const step12 = 255 / 12;
+  // const step12 = 255 / 12;
 
-  for (let x = 0; x < 12; x++) {
-    for (let y = 0; y < 12; y++) {
-      const color = HSVtoRGB(step12 * x, step12 * y, step12 * y);
-      global.interface.setPixel(x, y, color.r, color.g, color.b);
-    }
-  }
+  // for (let x = 0; x < 12; x++) {
+  //   for (let y = 0; y < 12; y++) {
+  //     const color = HSVtoRGB(step12 * x, step12 * y, step12 * y);
+  //     global.interface.setPixel(x, y, color.r, color.g, color.b);
+  //   }
+  // }
+
+  global.interface.showFullscreenPng("img/hear.png");
 
   global.interface.updateScreen();
 }
