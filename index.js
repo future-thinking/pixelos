@@ -173,7 +173,7 @@ function waitingScreen() {
   //   }
   // }
 
-  global.interface.showFullscreenPng("img/hear.png");
-
-  global.interface.updateScreen();
+  global.interface
+    .drawPng("img/hear.png")
+    .then(() => global.interface.updateScreen());
 }

@@ -17,6 +17,33 @@ class Interface {
     return this.width;
   }
 
+  async drawPng(file) {
+    return new Promise((resolve) => {
+      fs.createReadStream(file)
+        .pipe(new PNG())
+        .on("parsed", (data) => {
+          for (let y = 0; y < 12; y++) {
+            for (let x = 0; x < 12; x++) {
+              const idx = (12 * y + x) << 2;
+
+              const [r, g, b, a] = [
+                data[idx + 0],
+                data[idx + 1],
+                data[idx + 2],
+                data[idx + 3],
+              ];
+
+              if (a > 128) {
+                this.setPixel(y, x, r, g, b);
+              }
+            }
+          }
+
+          resolve(this);
+        });
+    });
+  }
+
   updateScreen() {
     if (!this.isOnlyEmulating) {
       ws281x.render(this.pixels);
