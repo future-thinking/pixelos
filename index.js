@@ -9,6 +9,7 @@ const interface_module = require("./interface.js");
 global.interface = new interface_module(144, isOnlyEmulating);
 
 const bodyParser = require("body-parser");
+const { globalAgent } = require("http");
 
 app.use(require("express").static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -116,8 +117,61 @@ setInterval(function () {
     if (games[currentGame].isEnded()) {
       games[currentGame].end();
       currentGame = -1;
+      waitingScreen();
     }
   } else {
-    startGame(1);
+    if (players.length > 1) {
+      startGame(1);
+    }
   }
 }, 50);
+
+function HSVtoRGB(h, s, v) {
+  var r, g, b, i, f, p, q, t;
+  if (arguments.length === 1) {
+    (s = h.s), (v = h.v), (h = h.h);
+  }
+  i = Math.floor(h * 6);
+  f = h * 6 - i;
+  p = v * (1 - s);
+  q = v * (1 - f * s);
+  t = v * (1 - (1 - f) * s);
+  switch (i % 6) {
+    case 0:
+      (r = v), (g = t), (b = p);
+      break;
+    case 1:
+      (r = q), (g = v), (b = p);
+      break;
+    case 2:
+      (r = p), (g = v), (b = t);
+      break;
+    case 3:
+      (r = p), (g = q), (b = v);
+      break;
+    case 4:
+      (r = t), (g = p), (b = v);
+      break;
+    case 5:
+      (r = v), (g = p), (b = q);
+      break;
+  }
+  return {
+    r: Math.round(r * 255),
+    g: Math.round(g * 255),
+    b: Math.round(b * 255),
+  };
+}
+
+function waitingScreen() {
+  const step12 = 255 / 12;
+
+  for (let x = 0; x < 12; x++) {
+    for (let y = 0; y < 12; y++) {
+      const color = HSVtoRGB(step12 * x, step12 * y, step12 * y);
+      global.interface.setPixel(x, y, color.r, color.g, color.b);
+    }
+  }
+
+  global.interface.updateScreen();
+}
