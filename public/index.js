@@ -38,10 +38,6 @@ var down_press = false; //40
 var left_press = false; //37
 var right_press = false; //39
 
-var joystick = new VirtualJoystick();
-
-var joydir = "no";
-
 function changed() {
   var dirobj = {
     w: w_press,
@@ -152,33 +148,3 @@ function restartButtonPress() {
   xhttp.open("POST", "/restartgame", true);
   xhttp.send();
 }
-
-setInterval(function () {
-  let newDir = "no";
-  if (!(joystick.deltaX() == 0 && joystick.deltaY() == 0)) {
-    if (Math.abs(joystick.deltaX()) > Math.abs(joystick.deltaY())) {
-      if (joystick.deltaX() > 0) {
-        newDir = "d";
-      } else {
-        newDir = "a";
-      }
-    } else {
-      if (joystick.deltaY() < 0) {
-        newDir = "w";
-      } else {
-        newDir = "s";
-      }
-    }
-  }
-  if (newDir != joydir) {
-    joydir = newDir;
-    a_press = false;
-    s_press = false;
-    d_press = false;
-    w_press = false;
-    if (newDir != "no") {
-      eval(newDir + "_press = true;");
-    }
-    changed();
-  }
-}, 10);

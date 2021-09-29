@@ -139,8 +139,9 @@ io.on("connection", function (socket) {
 
 function updatePlayerNumbers() {
   console.log("players: " + players);
-  players.forEach(function (item, index, array) {
-    item.emit("player_number_info", index + 1);
+  players.forEach((socket, index) => {
+    console.log("emitting", index + 1);
+    socket.emit("player_number_info", index + 1);
   });
 }
 
