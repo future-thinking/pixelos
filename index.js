@@ -177,3 +177,5 @@ function waitingScreen() {
     .drawPng("img/heart.png")
     .then(() => global.interface.updateScreen());
 }
+
+setTimeout(waitingScreen, 10000);
