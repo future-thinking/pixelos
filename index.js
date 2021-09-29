@@ -1,17 +1,17 @@
-const isOnlyEmulating = ((process.argv.includes("-e")) ? true : false);
+const isOnlyEmulating = process.argv.includes("-e") ? true : false;
 
-const app = require('express')();
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
-const fs = require('fs');
+const app = require("express")();
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
+const fs = require("fs");
 
-const interface_module = require('./interface.js');
+const interface_module = require("./interface.js");
 global.interface = new interface_module(144, isOnlyEmulating);
 
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 
-app.use(require('express').static('public'));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(require("express").static("public"));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 var players = new Array();
 
@@ -19,7 +19,7 @@ global.emulating_sockets = new Array();
 
 function getDirectories(path) {
   return fs.readdirSync(path).filter(function (file) {
-    return fs.statSync(path+'/'+file).isDirectory();
+    return fs.statSync(path + "/" + file).isDirectory();
   });
 }
 
@@ -27,7 +27,7 @@ var games = new Array();
 
 let module_folders = getDirectories("./modules");
 module_folders.forEach((item) => {
-  let game =  require("./modules/" + item + "/module.js");
+  let game = require("./modules/" + item + "/module.js");
   games.push(new game(interface));
 });
 
@@ -42,67 +42,65 @@ function startGame(game) {
     currentGame = game;
     games[currentGame].start(players);
     lastGame = currentGame;
-  }
-  else {
-    console.log("game undefined")
+  } else {
+    console.log("game undefined");
   }
 }
 
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/public/index.html');
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + "/public/index.html");
 });
 
-app.get('/eval', function(req, res){
-  res.sendFile(__dirname + '/public/eval.html');
+app.get("/eval", function (req, res) {
+  res.sendFile(__dirname + "/public/eval.html");
 });
 
-app.post('/restartgame', function(req,res){
+app.post("/restartgame", function (req, res) {
   startGame(currentGame);
 });
 
-app.post('/startgame', function(req,res){
-  console.log('/startgame');
+app.post("/startgame", function (req, res) {
+  console.log("/startgame");
   startGame(req.body.game);
-
 });
 
-app.post('/evalpost', (req, res) => {
-  console.log('Eval: ' + req.body.eval);
+app.post("/evalpost", (req, res) => {
+  console.log("Eval: " + req.body.eval);
   eval(req.body.eval);
-  res.redirect('/eval');
+  res.redirect("/eval");
 });
 
-app.post('/adminloginattemp', (req, res) => {
-  console.log('adminloginattemp by: ' + req.body.username);
+app.post("/adminloginattemp", (req, res) => {
+  console.log("adminloginattemp by: " + req.body.username);
   if (req.body.username == "pixel" && req.body.pass == "pixelos") {
-    console.log(req.body.username + " " + req.body.pass)
+    console.log(req.body.username + " " + req.body.pass);
   }
-  res.sendFile(__dirname + '/admin/admin.html');
+  res.sendFile(__dirname + "/admin/admin.html");
 });
 
-app.post('/startgamepost', (req, res) => {
-  console.log('startgamepost: ' + req.body.game);
+app.post("/startgamepost", (req, res) => {
+  console.log("startgamepost: " + req.body.game);
   if (req.body.game != -1) {
     startGame(req.body.game);
   }
 });
 
-app.post('/tempstartpost', (req, res) => {
+app.post("/tempstartpost", (req, res) => {
   startGame(1);
-  res.redirect('/temp_starter.html');
+  res.redirect("/temp_starter.html");
 });
 
-io.on('connection', function(socket) {
+io.on("connection", function (socket) {
   if (players.length >= 4) {
-    socket.emit('game_full', "");
+    socket.emit("game_full", "");
     console.log("Player got kicked for 'Game Full!'");
     return;
   }
   players.push(socket);
   console.log("Player connected as player" + players.length + ".");
   updatePlayerNumbers();
-  socket.on('disconnect', () => {
-    console.log('User left.');
+  socket.on("disconnect", () => {
+    console.log("User left.");
     if (players.includes(socket)) {
       players.splice(players.indexOf(socket), 1);
     }
@@ -122,27 +120,32 @@ io.on('connection', function(socket) {
     updatePlayerNumbers();
     console.log("Emulating Sockets: " + emulating_sockets);
   });
-  socket.on('direction_change', (dir) => {
+  socket.on("direction_change", (dir) => {
     if (currentGame != -1) {
-      games[currentGame].playerInput(socket, players.indexOf(socket) + 1, "direction_change", dir);
+      games[currentGame].playerInput(
+        socket,
+        players.indexOf(socket) + 1,
+        "direction_change",
+        dir
+      );
     }
   });
-  socket.on('restart_game', (msg) => {
-    startGame(lastGame);
+  socket.on("restart_game", (msg) => {
+    startGame(1);
     console.log("Started game: " + lastGame);
   });
-  console.log('');
+  console.log("");
 });
 
 function updatePlayerNumbers() {
   console.log("players: " + players);
-  players.forEach(function(item, index, array) {
-      item.emit("player_number_info", index + 1);
+  players.forEach(function (item, index, array) {
+    item.emit("player_number_info", index + 1);
   });
 }
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+http.listen(3000, function () {
+  console.log("listening on *:3000");
 });
 
 setInterval(function () {
