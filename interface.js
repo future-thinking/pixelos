@@ -35,7 +35,7 @@ class Interface {
               ];
 
               if (a > 128) {
-                this.setPixel(y, x, r, g, b);
+                this.setPixel(x, y, r, g, b);
               }
             }
           }
