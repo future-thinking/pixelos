@@ -231,10 +231,10 @@ class SnakePlayer {
     this.oldDirection = this.direction;
     switch (this.direction) {
       case "up":
-        this.y += 1;
+        this.y += -1;
         break;
       case "down":
-        this.y += -1;
+        this.y += 1;
         break;
       case "right":
         this.x += 1;
