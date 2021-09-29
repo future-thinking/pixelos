@@ -174,6 +174,6 @@ function waitingScreen() {
   // }
 
   global.interface
-    .drawPng("img/hear.png")
+    .drawPng("img/heart.png")
     .then(() => global.interface.updateScreen());
 }
