@@ -150,25 +150,25 @@ class SnakePlayer {
     ) {
       case 1:
         this.x = 1;
-        this.y = 1;
+        this.y = 9;
         this.color = 0x000099;
         this.headColor = 0x0000ff;
         break;
       case 2:
         this.x = 10;
-        this.y = 1;
+        this.y = 9;
         this.color = 0x990000;
         this.headColor = 0xff0000;
         break;
       case 3:
         this.x = 3;
-        this.y = 1;
+        this.y = 9;
         this.color = 0x009900;
         this.headColor = 0x00ff00;
         break;
       case 4:
         this.x = 7;
-        this.y = 1;
+        this.y = 9;
         this.color = 0x999900;
         this.headColor = 0xffff00;
         break;
