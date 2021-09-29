@@ -2,6 +2,7 @@ const ws281x = require("rpi-ws281x-v2");
 const convert = require("color-convert");
 const PNG = require("pngjs").PNG;
 const fs = require("fs");
+const { orientation } = require("./config.json");
 
 class Interface {
   constructor(pixel_amount, isOnlyEmulating) {
@@ -83,7 +84,6 @@ class Interface {
   }
 
   setPixelHex(x, y, hex) {
-    var orientation = 0;
     var xnew = 0;
     var ynew = 0;
     switch (orientation) {
