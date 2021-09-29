@@ -1,15 +1,13 @@
-const ws281x = require('rpi-ws281x-v2');
-const convert = require('color-convert');
-//var PNG = require('png-js');
-
+const ws281x = require("rpi-ws281x-v2");
+const convert = require("color-convert");
+var PNG = require("png-js");
 
 class Interface {
-
   constructor(pixel_amount, isOnlyEmulating) {
     this.isOnlyEmulating = isOnlyEmulating;
     this.pixel_amount = pixel_amount;
     if (!isOnlyEmulating) {
-      ws281x.configure({leds:this.pixel_amount, gpio:18, strip:'rgb'});
+      ws281x.configure({ leds: this.pixel_amount, gpio: 18, strip: "rgb" });
     }
     this.pixels = new Uint32Array(pixel_amount);
     this.width = Math.sqrt(this.pixel_amount);
@@ -28,11 +26,13 @@ class Interface {
       for (let row = 0; row < 12; row++) {
         rows.push(new Array());
         for (let pixel = 0; pixel < 12; pixel++) {
-          rows[row].push(this.pixels[this.translatePixelCoordinates(pixel, row)]);
+          rows[row].push(
+            this.pixels[this.translatePixelCoordinates(pixel, row)]
+          );
         }
       }
       emulating_sockets.forEach((emu_socket, i) => {
-        emu_socket.emit('pixup', rows);
+        emu_socket.emit("pixup", rows);
       });
     }
   }
@@ -46,7 +46,7 @@ class Interface {
     x = x % this.width;
     y = y % this.width;
     let pix = 0;
-    if(y % 2 == 0) {
+    if (y % 2 == 0) {
       pix = y * this.width + x;
     } else {
       pix = y * this.width + this.width - 1 - x;
@@ -54,33 +54,33 @@ class Interface {
     return pix;
   }
 
-  setPixelHex(x,y,hex){
+  setPixelHex(x, y, hex) {
     var orientation = 0;
     var xnew = 0;
     var ynew = 0;
     switch (orientation) {
       case 0:
-      xnew = y;
-      ynew = x;
-      break;
+        xnew = y;
+        ynew = x;
+        break;
       case 1:
-      xnew = y;
-      ynew = -x;
-      break;
+        xnew = y;
+        ynew = -x;
+        break;
       case 2:
-      xnew = -x;
-      ynew = -y;
-      break;
+        xnew = -x;
+        ynew = -y;
+        break;
       case 3:
-      xnew = y;
-      ynew = -x;
-      break;
+        xnew = y;
+        ynew = -x;
+        break;
     }
     this.pixels[this.translatePixelCoordinates(xnew, ynew)] = hex;
   }
 
   setPixel(x, y, r, g, b) {
-    this.setPixelHex(x,y,this.getCorrectColor(r, g, b));
+    this.setPixelHex(x, y, this.getCorrectColor(r, g, b));
   }
 
   clearScreen() {
@@ -89,31 +89,34 @@ class Interface {
     }
   }
 
-  fillScreen(r,g,b) {
+  fillScreen(r, g, b) {
     for (let p = 0; p < this.pixel_amount; p++) {
-      this.pixels[p] = this.getCorrectColor(r,g,b);
+      this.pixels[p] = this.getCorrectColor(r, g, b);
     }
   }
 
   fillScreenHex(hex) {
     for (let p = 0; p < this.pixel_amount; p++) {
-      this.pixels[p] = hex
+      this.pixels[p] = hex;
     }
   }
 
   showFullscreenPng(path) {
-    PNG.decode(path, function(color) {
+    PNG.decode(path, function (color) {
       // pixels is a 1d array (in rgba order) of decoded pixel data
       console.log(global.interface.pixel_amount);
       var p = 0;
-      while(p < global.interface.pixel_amount) {
+      while (p < global.interface.pixel_amount) {
         console.log(p);
-        global.interface.pixels[p] = global.interface.getCorrectColor(color[p], color[p+1], color[p+2]);
+        global.interface.pixels[p] = global.interface.getCorrectColor(
+          color[p],
+          color[p + 1],
+          color[p + 2]
+        );
         p = p + 3;
       }
     });
   }
-
 }
 
-module.exports = Interface
+module.exports = Interface;
