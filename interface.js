@@ -93,15 +93,15 @@ class Interface {
         break;
       case 1:
         xnew = y;
-        ynew = -x;
+        ynew = 11-x;
         break;
       case 2:
-        xnew = -x;
-        ynew = -y;
+        xnew = 11-x;
+        ynew = 11-y;
         break;
       case 3:
         xnew = y;
-        ynew = -x;
+        ynew = 1--x;
         break;
     }
     this.pixels[this.translatePixelCoordinates(xnew, ynew)] = hex;
