@@ -1,5 +1,12 @@
+* {
+  margin: 0;
+  padding: 0;
+
+  font-family: sans-serif;
+}
+
 .player_display_container {
-  margin: auto;
+  padding-top: 4px;
   text-align: center;
 }
 
@@ -9,52 +16,67 @@
 }
 
 .player_display_container table tr td {
-  background-color: white;
-  border-color: black;
+  background-color: transparent;
+  border-color: white;
+  color: white;
+  border-radius: 50%;
   border-style: solid;
   width: 30px;
   height: 30px;
+  font-weight: bold;
+  box-shadow: 5px 5px 70px -5px rgba(0, 0, 0, 0.75);
 }
 
-.buttons_container {
-  text-align: center;
-  margin: auto;
-  margin-top: 2em;
+button {
+  background-color: #262626;
+  color: white;
+  font-size: 12vmin;
+  outline: none !important;
+  border: none;
+  border-radius: 20px;
+  width: 28vmin;
+  height: 28vmin;
+  box-shadow: 5px 5px 70px -5px rgba(0, 0, 0, 0.75);
+  transition: ease 0.5s;
+  /* box-shadow: ; */
 }
 
-.buttons_container table {
-  text-align: center;
-  margin: auto;
+.play-btn {
+  font-size: 8vmin;
+  width: 20vmin;
+  height: 20vmin;
 }
 
-.buttons_container table tr td button {
-  width: 30vmin;
-  height: 30vmin;
-}
-
-.body,
-.wrapper {
-  /* Break the flow */
-  position: absolute;
-  top: 0px;
-
-  /* Give them all the available space */
-  width: 100%;
-  height: 100%;
-
-  /* Remove the margins if any */
-  margin: 0;
-
-  /* Allow them to scroll down the document */
-  overflow-y: hidden;
-}
-
-.body {
-  /* Sending body at the bottom of the stack */
-  z-index: 1;
+button:active {
+  box-shadow: none;
 }
 
 .wrapper {
   /* Making the wrapper stack above the body */
   z-index: 2;
+}
+
+body {
+  height: 100vh;
+  overflow: hidden;
+  justify-content: stretch;
+  align-items: stretch;
+  flex-direction: column;
+  background-color: #2e2e2e;
+}
+
+.controlls-wrapper {
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.controlls {
+  display: grid;
+  grid-gap: 2px;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
 }

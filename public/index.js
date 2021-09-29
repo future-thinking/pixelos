@@ -20,7 +20,8 @@ function updatePlayerCount(count) {
       break;
   }
   for (let i = 1; i < 5; i++) {
-    document.getElementById("player_" + i).style.backgroundColor = "white";
+    document.getElementById("player_" + i).style.backgroundColor =
+      "transparent";
   }
   for (let i = 1; i < count + 1; i++) {
     document.getElementById("player_" + i).style.backgroundColor = color;

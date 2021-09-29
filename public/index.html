@@ -1,81 +1,77 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
-    <title></title>
-    <meta name="viewport" content="width=device-width, user-scalable=no">
-    <link rel="stylesheet" href="/index.css">
+    <meta charset="utf-8" />
+    <title>PixelOS Snake Game</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <link rel="stylesheet" href="/index.css" />
     <script>
-    window.onbeforeunload = function() {
-      alert("Bitte nicht während einem Spiel aufhören.");
+      window.onbeforeunload = function () {
+        alert("If you leave now, you will be killed.");
         return "If you leave now, you will be killed.";
-    }
-    function absorbEvent_(event) {
-      var e = event || window.event;
-      e.preventDefault && e.preventDefault();
-      e.stopPropagation && e.stopPropagation();
-      e.cancelBubble = true;
-      e.returnValue = false;
-      return false;
-    }
-
-    function preventLongPressMenu(node) {
-      node.ontouchstart = absorbEvent_;
-      node.ontouchmove = absorbEvent_;
-      node.ontouchend = absorbEvent_;
-      node.ontouchcancel = absorbEvent_;
-    }
-
-    function init() {
-      preventLongPressMenu(document.getElementById('theimage'));
-    }
-
-  </script>
-  </head>
-  <body class="body">
-    <div class="wrapper" id="wrapperId">
+      };
+    </script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/virtualjoystick.js"></script>
-    <script src="/index.js" charset="utf-8"></script>
-      <div class="player_display_container">
-        <table>
-          <tr>
-            <td id="player_1"></td>
-            <td id="player_2"></td>
-            <td id="player_3"></td>
-            <td id="player_4"></td>
-          </tr>
-        </table>
-      </div>
-      <div class="buttons_container">
-        <table>
-          <tr>
-            <td></td>
-            <td><button type="button" name="button"
-              onmousedown="pressed('w')"
-              onmouseup="release('w')">W</button></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><button type="button"
-              onmousedown="pressed('a')"
-              onmouseup="release('a')" name="button">A</button></td>
-            <td><button type="button"
-                onmousedown="pressed('r')"
-                onmouseup="release('r')" name="button">restart</button></td>
-            <td></td>
-            <td><button type="button"
-                onmousedown="pressed('d')"
-                onmouseup="release('d')" name="button">D</button></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td><button type="button" name="button"
-              onmousedown="pressed('s')"
-              onmouseup="release('s')">S</button></td>
-            <td></td>
-          </tr>
-        </table>
+    <script defer src="/index.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div class="player_display_container">
+      <table>
+        <tr>
+          <td id="player_1">1</td>
+          <td id="player_2">2</td>
+          <td id="player_3">3</td>
+          <td id="player_4">4</td>
+        </tr>
+      </table>
+    </div>
+    <div class="controlls-wrapper">
+      <div class="controlls">
+        <span></span>
+        <button
+          type="button"
+          name="button"
+          onmousedown="pressed('w')"
+          onmouseup="release('w')"
+        >
+          W
+        </button>
+        <span></span>
+        <button
+          type="button"
+          onmousedown="pressed('a')"
+          onmouseup="release('a')"
+          name="button"
+        >
+          A
+        </button>
+        <button
+          type="button"
+          onmousedown="pressed('r')"
+          onmouseup="release('r')"
+          name="button"
+          class="play-btn"
+        >
+          PLAY
+        </button>
+        <button
+          type="button"
+          onmousedown="pressed('d')"
+          onmouseup="release('d')"
+          name="button"
+        >
+          D
+        </button>
+        <span></span>
+        <button
+          type="button"
+          name="button"
+          onmousedown="pressed('s')"
+          onmouseup="release('s')"
+        >
+          S
+        </button>
+        <span></span>
       </div>
     </div>
   </body>
