@@ -45,9 +45,7 @@ class MultiSnake {
             works = false;
           }
         });
-
       });
-
     } while (!works);
   }
 
@@ -90,7 +88,7 @@ class MultiSnake {
       }
     });
 
-    this.interface.setPixelHex(this.foodx, this.foody, 0xFFFFFF);
+    this.interface.setPixelHex(this.foodx, this.foody, 0xffffff);
     this.interface.updateScreen();
 
     let totalPlayers = this.playerObjs.length;
@@ -118,7 +116,6 @@ class MultiSnake {
       this.interface.updateScreen();
       return;
     }
-
   }
 
   end() {
@@ -126,7 +123,7 @@ class MultiSnake {
   }
 
   playerInput(player_socket, player_num, type, content) {
-    if (type="direction_change") {
+    if ((type = "direction_change")) {
       this.playerObjs.forEach((item, i) => {
         if (item.num == player_num) {
           item.setDirection(content);
@@ -144,43 +141,44 @@ class SnakePlayer {
     this.oldDirection = "up";
     this.alive = true;
     this.num = player_num;
-    switch (player_num) { //grb
+    switch (
+      player_num //grb
+    ) {
       case 1:
         this.x = 1;
         this.y = 1;
-        this.color = 0x000088;
-        this.headColor = 0x0000FF;
+        this.color = 0x000099;
+        this.headColor = 0x0000ff;
         break;
       case 2:
         this.x = 10;
         this.y = 1;
-        this.color = 0x008800;
-        this.headColor = 0x00FF00;
+        this.color = 0x990000;
+        this.headColor = 0xff0000;
         break;
       case 3:
         this.x = 3;
         this.y = 1;
-        this.color = 0x880000;
-        this.headColor = 0xFF0000;
+        this.color = 0x009900;
+        this.headColor = 0x00ff00;
         break;
       case 4:
         this.x = 7;
         this.y = 1;
-        this.color = 0x888800;
-        this.headColor = 0xFFFF00;
+        this.color = 0x999900;
+        this.headColor = 0xffff00;
         break;
       default:
-
     }
 
     this.body = new Array();
-    this.body.push({'x': this.x, 'y': this.y});
-    this.body.push({'x': this.x, 'y': this.y + 1});
+    this.body.push({ x: this.x, y: this.y });
+    this.body.push({ x: this.x, y: this.y + 1 });
   }
 
   moveBody() {
     this.applyDirection();
-    this.body.unshift({'x': this.x, 'y': this.y});
+    this.body.unshift({ x: this.x, y: this.y });
     if (!this.eaten) {
       this.body.splice(this.body.length - 1, 1);
     }
@@ -194,7 +192,6 @@ class SnakePlayer {
         this.eaten = true;
       }
     });
-
   }
 
   render() {
@@ -247,7 +244,7 @@ class SnakePlayer {
   setDirection(direction) {
     if (direction.w) {
       if (this.oldDirection != "down") {
-          this.direction = "up";
+        this.direction = "up";
       }
     }
     if (direction.d) {
