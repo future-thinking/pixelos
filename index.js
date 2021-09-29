@@ -115,7 +115,9 @@ setInterval(function () {
     games[currentGame].update();
     if (games[currentGame].isEnded()) {
       games[currentGame].end();
-      startGame(1);
+      currentGame = -1;
     }
+  } else {
+    startGame(1);
   }
 }, 50);
