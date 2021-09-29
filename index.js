@@ -51,45 +51,6 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + "/public/index.html");
 });
 
-app.get("/eval", function (req, res) {
-  res.sendFile(__dirname + "/public/eval.html");
-});
-
-app.post("/restartgame", function (req, res) {
-  startGame(currentGame);
-});
-
-app.post("/startgame", function (req, res) {
-  console.log("/startgame");
-  startGame(req.body.game);
-});
-
-app.post("/evalpost", (req, res) => {
-  console.log("Eval: " + req.body.eval);
-  eval(req.body.eval);
-  res.redirect("/eval");
-});
-
-app.post("/adminloginattemp", (req, res) => {
-  console.log("adminloginattemp by: " + req.body.username);
-  if (req.body.username == "pixel" && req.body.pass == "pixelos") {
-    console.log(req.body.username + " " + req.body.pass);
-  }
-  res.sendFile(__dirname + "/admin/admin.html");
-});
-
-app.post("/startgamepost", (req, res) => {
-  console.log("startgamepost: " + req.body.game);
-  if (req.body.game != -1) {
-    startGame(req.body.game);
-  }
-});
-
-app.post("/tempstartpost", (req, res) => {
-  startGame(1);
-  res.redirect("/temp_starter.html");
-});
-
 io.on("connection", function (socket) {
   if (players.length >= 4) {
     socket.emit("game_full", "");
@@ -154,7 +115,7 @@ setInterval(function () {
     games[currentGame].update();
     if (games[currentGame].isEnded()) {
       games[currentGame].end();
-      currentGame = -1;
+      startGame(1);
     }
   }
 }, 50);
