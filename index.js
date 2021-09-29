@@ -145,8 +145,8 @@ function updatePlayerNumbers() {
   });
 }
 
-http.listen(3000, function () {
-  console.log("listening on *:3000");
+http.listen(80, function () {
+  console.log("listening on *:80");
 });
 
 setInterval(function () {
