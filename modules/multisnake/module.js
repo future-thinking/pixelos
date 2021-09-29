@@ -5,6 +5,10 @@ class MultiSnake {
   }
 
   start(players) {
+    if (players.length == 0) {
+      this.ended = true;
+      return;
+    }
     console.log("multisnake start");
     this.players = players;
     this.playerObjs = new Array();
