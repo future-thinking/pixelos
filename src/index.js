@@ -1,16 +1,15 @@
-require("dotenv").config();
-const isOnlyEmulating = process.argv.includes("-e") ? true : false;
-
 const app = require("express")();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const fs = require("fs");
-
 const { Interface } = require("./interface.js");
+
+require("dotenv").config();
+const isOnlyEmulating = process.argv.includes("-e") ? true : false;
+
 global.interface = new Interface(144, isOnlyEmulating);
 
 const bodyParser = require("body-parser");
-const { globalAgent } = require("http");
 
 app.use(require("express").static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));

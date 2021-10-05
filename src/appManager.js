@@ -1,0 +1,3 @@
+class AppManager {
+  constructor(path) {}
+}
