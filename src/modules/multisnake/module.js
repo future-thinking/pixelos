@@ -1,4 +1,11 @@
+const { Color } = require("../../interface");
+
 class MultiSnake {
+  /**
+   * type {Interface}
+   */
+  interface;
+
   constructor(screen_interface) {
     this.interface = screen_interface;
     this.ended = false;
@@ -58,7 +65,7 @@ class MultiSnake {
     if (!(this.tick >= 10)) {
       return;
     }
-    this.interface.fillScreenHex(0x000000);
+    this.interface.clearScreen();
     this.tick = 0;
     if (this.ended) {
       return;
@@ -92,7 +99,7 @@ class MultiSnake {
       }
     });
 
-    this.interface.setPixelHex(this.foodx, this.foody, 0xffffff);
+    this.interface.setPixel(this.foodx, this.foody, new Color(255, 255, 255));
     this.interface.updateScreen();
 
     let totalPlayers = this.playerObjs.length;
@@ -107,13 +114,13 @@ class MultiSnake {
     if (alivePlayers < 2) {
       this.ended = true;
       if (alivePlayers < 1) {
-        this.interface.fillScreenHex(0x555555);
+        this.interface.fillScreen(new Color(255, 255, 255));
         this.interface.updateScreen();
         return;
       }
       this.playerObjs.forEach((item, i) => {
         if (item.alive) {
-          this.interface.fillScreenHex(item.headColor);
+          this.interface.fillScreen(item.headColor);
         }
       });
 
@@ -151,26 +158,26 @@ class SnakePlayer {
       case 1:
         this.x = 1;
         this.y = 9;
-        this.color = 0x000099;
-        this.headColor = 0x0000ff;
+        this.color = new Color(0, 0, 180);
+        this.headColor = new Color(0, 0, 255);
         break;
       case 2:
         this.x = 10;
         this.y = 9;
-        this.color = 0x990000;
-        this.headColor = 0xff0000;
+        this.color = new Color(180, 0, 0);
+        this.headColor = new Color(255, 0, 0);
         break;
       case 3:
         this.x = 3;
         this.y = 9;
-        this.color = 0x009900;
-        this.headColor = 0x00ff00;
+        this.color = new Color(0, 180, 0);
+        this.headColor = new Color(0, 255, 0);
         break;
       case 4:
         this.x = 7;
         this.y = 9;
-        this.color = 0x999900;
-        this.headColor = 0xffff00;
+        this.color = new Color(180, 180, 0);
+        this.headColor = new Color(255, 255, 0);
         break;
       default:
     }
@@ -200,9 +207,9 @@ class SnakePlayer {
 
   render() {
     this.body.forEach((item, i) => {
-      this.maingame.interface.setPixelHex(item.x, item.y, this.color);
+      this.maingame.interface.setPixel(item.x, item.y, this.color);
     });
-    this.maingame.interface.setPixelHex(this.x, this.y, this.headColor);
+    this.maingame.interface.setPixel(this.x, this.y, this.headColor);
   }
 
   collisionCheck() {

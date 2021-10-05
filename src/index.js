@@ -1,3 +1,4 @@
+require("dotenv").config();
 const isOnlyEmulating = process.argv.includes("-e") ? true : false;
 
 const app = require("express")();
@@ -5,8 +6,8 @@ const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const fs = require("fs");
 
-const interface_module = require("./interface.js");
-global.interface = new interface_module(144, isOnlyEmulating);
+const { Interface } = require("./interface.js");
+global.interface = new Interface(144, isOnlyEmulating);
 
 const bodyParser = require("body-parser");
 const { globalAgent } = require("http");
@@ -26,7 +27,7 @@ function getDirectories(path) {
 
 var games = new Array();
 
-let module_folders = getDirectories("./modules");
+let module_folders = getDirectories("./src/modules");
 module_folders.forEach((item) => {
   let game = require("./modules/" + item + "/module.js");
   games.push(new game(interface));
@@ -107,8 +108,9 @@ function updatePlayerNumbers() {
   });
 }
 
-http.listen(80, function () {
-  console.log("listening on *:80");
+const port = process.env.PORT;
+http.listen(port, function () {
+  console.log("listening on *:" + port);
 });
 
 setInterval(function () {
@@ -126,56 +128,10 @@ setInterval(function () {
   }
 }, 50);
 
-function HSVtoRGB(h, s, v) {
-  var r, g, b, i, f, p, q, t;
-  if (arguments.length === 1) {
-    (s = h.s), (v = h.v), (h = h.h);
-  }
-  i = Math.floor(h * 6);
-  f = h * 6 - i;
-  p = v * (1 - s);
-  q = v * (1 - f * s);
-  t = v * (1 - (1 - f) * s);
-  switch (i % 6) {
-    case 0:
-      (r = v), (g = t), (b = p);
-      break;
-    case 1:
-      (r = q), (g = v), (b = p);
-      break;
-    case 2:
-      (r = p), (g = v), (b = t);
-      break;
-    case 3:
-      (r = p), (g = q), (b = v);
-      break;
-    case 4:
-      (r = t), (g = p), (b = v);
-      break;
-    case 5:
-      (r = v), (g = p), (b = q);
-      break;
-  }
-  return {
-    r: Math.round(r * 255),
-    g: Math.round(g * 255),
-    b: Math.round(b * 255),
-  };
-}
-
 function waitingScreen() {
-  // const step12 = 255 / 12;
-
-  // for (let x = 0; x < 12; x++) {
-  //   for (let y = 0; y < 12; y++) {
-  //     const color = HSVtoRGB(step12 * x, step12 * y, step12 * y);
-  //     global.interface.setPixel(x, y, color.r, color.g, color.b);
-  //   }
-  // }
-
   global.interface
     .drawPng("img/heart.png")
     .then(() => global.interface.updateScreen());
 }
 
-setTimeout(waitingScreen, 10000);
+setTimeout(waitingScreen, 1000);
