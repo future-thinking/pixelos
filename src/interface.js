@@ -68,15 +68,17 @@ class Interface {
       });
     }
 
-    for (let row = 0; row < width; row++) {
-      let line = "";
-      for (let col = 0; col < width; col++) {
-        line += chalk.rgb(...this.pixels[row][col].asArray()).bold("■ ");
+    if (this.isOnlyEmulating) {
+      console.log();
+      for (let row = 0; row < width; row++) {
+        let line = "";
+        for (let col = 0; col < width; col++) {
+          line += chalk.rgb(...this.pixels[row][col].asArray()).bold("■ ");
+        }
+        console.log(line);
       }
-      console.log(line);
+      return;
     }
-
-    if (this.isOnlyEmulating) return;
 
     const pixelStrip = new Uint32Array(pixelAmount);
 
