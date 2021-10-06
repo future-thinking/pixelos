@@ -21,7 +21,7 @@ class Interface {
     this.width = Math.sqrt(pixelAmount);
 
     if (!isOnlyEmulating) {
-      const ws281x = require("rpi-ws281x-v2");
+      const ws281x = require("rpi-ws281x");
       ws281x.configure({ leds: pixelAmount, gpio: 18, strip: "rgb" });
     }
 
@@ -61,12 +61,6 @@ class Interface {
 
   updateScreen() {
     const { pixelAmount, width, pixels } = this;
-
-    if (emulating_sockets.length > 0) {
-      emulating_sockets.forEach((socket) => {
-        socket.emit("pixel_update", this.pixels);
-      });
-    }
 
     if (this.isOnlyEmulating) {
       console.log();

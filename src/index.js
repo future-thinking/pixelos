@@ -2,13 +2,15 @@ const app = require("express")();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 
-const { Interface } = require("./interface.js");
+const { Interface, Color } = require("./interface.js");
 const { AppManager } = require("./appManager");
 
 require("dotenv").config();
 const isOnlyEmulating = process.argv.includes("-e") ? true : false;
 
 const screen = new Interface(144, isOnlyEmulating);
+
+screen.drawPng("img/poweroff.png").then(() => screen.updateScreen());
 
 const bodyParser = require("body-parser");
 const { PlayerManager } = require("./playerManager.js");
