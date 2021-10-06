@@ -1,28 +1,33 @@
+const { Color } = require("../../interface");
+const { Player } = require("../../playerManager");
 class MultiSnake {
+  /**
+   * type {Interface}
+   */
+  interface;
+
+  players = [];
+
   constructor(screen_interface) {
     this.interface = screen_interface;
-    this.ended = false;
   }
 
-  start(players) {
-    if (players.length == 0) {
-      this.ended = true;
-      return;
-    }
-    console.log("multisnake start");
-    this.players = players;
-    this.playerObjs = new Array();
-    this.players.forEach((item, i) => {
-      this.playerObjs.push(new SnakePlayer(item, this.interface, i + 1, this));
+  /**
+   * @type {Function}
+   */
+  endGame;
+
+  start(players, endGame) {
+    this.endGame = endGame;
+
+    this.players = [];
+    players.forEach((player, i) => {
+      this.players.push(new SnakePlayer(player, i + 1, this));
     });
     this.spawnFood();
-    this.ended = false;
-    this.tick = 0;
   }
 
-  isEnded() {
-    return this.ended;
-  }
+  stop() {}
 
   negateDirection(direction) {
     if (direction == "up") {
@@ -43,8 +48,9 @@ class MultiSnake {
       this.foodx = parseInt(Math.random() * 11);
       this.foody = parseInt(Math.random() * 11);
       works = true;
-      this.playerObjs.forEach((item, i) => {
-        item.body.forEach((bodyPart, i) => {
+      console.log(this.players);
+      this.players.forEach((player) => {
+        player.body.forEach((bodyPart) => {
           if (bodyPart.x == this.foodx && bodyPart.y == this.foody) {
             works = false;
           }
@@ -53,51 +59,44 @@ class MultiSnake {
     } while (!works);
   }
 
-  update() {
-    this.tick++;
-    if (!(this.tick >= 10)) {
-      return;
-    }
-    this.interface.fillScreenHex(0x000000);
-    this.tick = 0;
-    if (this.ended) {
-      return;
-    }
-    this.playerObjs.forEach((item, i) => {
-      if (item.alive) {
-        item.moveBody();
+  tick() {
+    console.log("update");
+    this.interface.clearScreen();
+    this.players.forEach((player) => {
+      if (player.alive) {
+        player.moveBody();
       }
     });
-    let deaths = new Array();
-    this.playerObjs.forEach((item, i) => {
-      if (item.alive) {
-        if (item.collisionCheck()) {
-          deaths.push(item);
+    let deaths = [];
+    this.players.forEach((player) => {
+      if (player.alive) {
+        if (player.collisionCheck()) {
+          deaths.push(player);
         }
       }
     });
 
-    this.playerObjs.forEach((item, i) => {
-      if (item.alive) {
-        item.render();
+    this.players.forEach((player) => {
+      if (player.alive) {
+        player.render();
       }
     });
 
     deaths.forEach((item, i) => {
       item.alive = false;
     });
-    this.playerObjs.forEach((item, i) => {
-      if (item.alive) {
-        item.checkEat();
+    this.players.forEach((player) => {
+      if (player.alive) {
+        player.checkEat();
       }
     });
 
-    this.interface.setPixelHex(this.foodx, this.foody, 0xffffff);
+    this.interface.setPixel(this.foodx, this.foody, new Color(255, 255, 255));
     this.interface.updateScreen();
 
-    let totalPlayers = this.playerObjs.length;
+    let totalPlayers = this.players.length;
     let deadPlayers = 0;
-    this.playerObjs.forEach((item, i) => {
+    this.players.forEach((item, i) => {
       if (!item.alive) {
         deadPlayers++;
       }
@@ -105,19 +104,20 @@ class MultiSnake {
     let alivePlayers = totalPlayers - deadPlayers;
 
     if (alivePlayers < 2) {
-      this.ended = true;
       if (alivePlayers < 1) {
-        this.interface.fillScreenHex(0x555555);
+        this.interface.fillScreen(new Color(255, 255, 255));
         this.interface.updateScreen();
+        this.endGame();
         return;
       }
-      this.playerObjs.forEach((item, i) => {
+      this.players.forEach((item, i) => {
         if (item.alive) {
-          this.interface.fillScreenHex(item.headColor);
+          this.interface.fillScreen(item.headColor);
         }
       });
-
+      console.log("stopping game");
       this.interface.updateScreen();
+      this.endGame();
       return;
     }
   }
@@ -125,57 +125,56 @@ class MultiSnake {
   end() {
     console.log("multisnake end");
   }
-
-  playerInput(player_socket, player_num, type, content) {
-    if ((type = "direction_change")) {
-      this.playerObjs.forEach((item, i) => {
-        if (item.num == player_num) {
-          item.setDirection(content);
-        }
-      });
-    }
-  }
 }
 
 class SnakePlayer {
-  constructor(socket, screen_interface, player_num, maingame) {
-    this.interface = screen_interface;
-    this.maingame = maingame;
+  /**
+   *
+   * @param {Player} player
+   * @param {*} playerNumber
+   * @param {*} game
+   */
+  constructor(player, playerNumber, game) {
+    this.interface = game.interface;
+    this.game = game;
     this.direction = "up";
     this.oldDirection = "up";
     this.alive = true;
-    this.num = player_num;
+    this.playerNumber = playerNumber;
+
+    player.onDirectionChange((input) => this.setDirection(input));
+
     switch (
-      player_num //grb
+      playerNumber //grb
     ) {
       case 1:
         this.x = 1;
         this.y = 9;
-        this.color = 0x000099;
-        this.headColor = 0x0000ff;
+        this.color = new Color(0, 0, 180);
+        this.headColor = new Color(0, 0, 255);
         break;
       case 2:
         this.x = 10;
         this.y = 9;
-        this.color = 0x990000;
-        this.headColor = 0xff0000;
+        this.color = new Color(180, 0, 0);
+        this.headColor = new Color(255, 0, 0);
         break;
       case 3:
         this.x = 3;
         this.y = 9;
-        this.color = 0x009900;
-        this.headColor = 0x00ff00;
+        this.color = new Color(0, 180, 0);
+        this.headColor = new Color(0, 255, 0);
         break;
       case 4:
         this.x = 7;
         this.y = 9;
-        this.color = 0x999900;
-        this.headColor = 0xffff00;
+        this.color = new Color(180, 180, 0);
+        this.headColor = new Color(255, 255, 0);
         break;
       default:
     }
 
-    this.body = new Array();
+    this.body = [];
     this.body.push({ x: this.x, y: this.y });
     this.body.push({ x: this.x, y: this.y + 1 });
   }
@@ -191,8 +190,8 @@ class SnakePlayer {
 
   checkEat() {
     this.body.forEach((item, i) => {
-      if (item.x == this.maingame.foodx && item.y == this.maingame.foody) {
-        this.maingame.spawnFood();
+      if (item.x == this.game.foodx && item.y == this.game.foody) {
+        this.game.spawnFood();
         this.eaten = true;
       }
     });
@@ -200,14 +199,14 @@ class SnakePlayer {
 
   render() {
     this.body.forEach((item, i) => {
-      this.maingame.interface.setPixelHex(item.x, item.y, this.color);
+      this.interface.setPixel(item.x, item.y, this.color);
     });
-    this.maingame.interface.setPixelHex(this.x, this.y, this.headColor);
+    this.interface.setPixel(this.x, this.y, this.headColor);
   }
 
   collisionCheck() {
     this.diedNow = false;
-    this.maingame.playerObjs.forEach((player, i) => {
+    this.game.players.forEach((player, i) => {
       if (player.alive) {
         player.body.forEach((bodyPart, i) => {
           if (!(player == this && i == 0)) {
@@ -269,4 +268,4 @@ class SnakePlayer {
   }
 }
 
-module.exports = MultiSnake;
+module.exports = (screen) => new MultiSnake(screen);
