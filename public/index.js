@@ -45,7 +45,6 @@ function changed() {
     a: a_press,
     d: d_press,
   };
-  //console.log(dirobj);
   socket.emit("direction_change", dirobj);
 }
 

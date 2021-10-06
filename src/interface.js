@@ -105,7 +105,8 @@ class Interface {
    * @param {Color} color
    */
   setPixel(x, y, color) {
-    this.pixels[x][y] = color;
+    if (x < this.width && y < this.width && x >= 0 && y >= 0)
+      this.pixels[x][y] = color;
   }
 
   clearScreen() {

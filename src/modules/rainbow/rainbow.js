@@ -10,9 +10,11 @@ class Rainbow {
     this.screen = screen;
   }
 
-  start() {
+  start(players) {
     this.screen.fillScreen(new Color(255, 0, 255));
     this.screen.updateScreen();
+    console.log("players", players);
+    players.forEach((player) => player.onDirectionChange(console.log));
   }
 }
 
