@@ -1,13 +1,14 @@
 const app = require("express")();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
-const fs = require("fs");
+
 const { Interface } = require("./interface.js");
+const { AppManager } = require("./appManager");
 
 require("dotenv").config();
 const isOnlyEmulating = process.argv.includes("-e") ? true : false;
 
-global.interface = new Interface(144, isOnlyEmulating);
+const screen = new Interface(144, isOnlyEmulating);
 
 const bodyParser = require("body-parser");
 
@@ -18,35 +19,7 @@ var players = new Array();
 
 global.emulating_sockets = new Array();
 
-function getDirectories(path) {
-  return fs.readdirSync(path).filter(function (file) {
-    return fs.statSync(path + "/" + file).isDirectory();
-  });
-}
-
 var games = new Array();
-
-let module_folders = getDirectories("./src/modules");
-module_folders.forEach((item) => {
-  let game = require("./modules/" + item + "/module.js");
-  games.push(new game(interface));
-});
-
-var currentGame = -1;
-var lastGame = -1;
-
-function startGame(game) {
-  if (currentGame != -1) {
-    games[currentGame].end();
-  }
-  if (game != undefined) {
-    currentGame = game;
-    games[currentGame].start(players);
-    lastGame = currentGame;
-  } else {
-    console.log("game undefined");
-  }
-}
 
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/public/index.html");
@@ -112,25 +85,5 @@ http.listen(port, function () {
   console.log("listening on *:" + port);
 });
 
-setInterval(function () {
-  if (currentGame != -1) {
-    games[currentGame].update();
-    if (games[currentGame].isEnded()) {
-      games[currentGame].end();
-      currentGame = -1;
-      waitingScreen();
-    }
-  } else {
-    if (players.length > 1) {
-      startGame(1);
-    }
-  }
-}, 50);
-
-function waitingScreen() {
-  global.interface
-    .drawPng("img/heart.png")
-    .then(() => global.interface.updateScreen());
-}
-
-setTimeout(waitingScreen, 1000);
+const appManager = new AppManager("./src/modules", screen);
+appManager.startApp(appManager.getAppByIndex(1));

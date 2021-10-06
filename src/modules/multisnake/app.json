@@ -1,0 +1,4 @@
+{
+    "main": "./module.js",
+    "name": "Multiplayer Snake"
+}

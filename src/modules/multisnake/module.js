@@ -276,4 +276,4 @@ class SnakePlayer {
   }
 }
 
-module.exports = MultiSnake;
+module.exports = (screen) => new MultiSnake(screen);
