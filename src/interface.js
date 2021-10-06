@@ -21,8 +21,8 @@ class Interface {
     this.width = Math.sqrt(pixelAmount);
 
     if (!isOnlyEmulating) {
-      const ws281x = require("rpi-ws281x");
-      ws281x.configure({ leds: pixelAmount, gpio: 18, strip: "rgb" });
+      this.ws281x = require("rpi-ws281x");
+      this.ws281x.configure({ leds: pixelAmount, gpio: 18, strip: "rgb" });
     }
 
     this.clearScreen();
@@ -89,7 +89,7 @@ class Interface {
       }
     }
 
-    ws281x.render(pixelStrip);
+    this.ws281x.render(pixelStrip);
   }
 
   /**
