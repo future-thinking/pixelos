@@ -143,7 +143,7 @@ class Color {
    * @returns {Number}
    */
   getUInt() {
-    return (this.red << 16) | (this.green << 8) | this.blue;
+    return (this.r << 16) | (this.g << 8) | this.b;
   }
 
   asArray() {
