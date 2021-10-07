@@ -10,6 +10,8 @@ class MultiSnake {
 
   playAlone = false;
 
+  ended = false;
+
   constructor(screen_interface) {
     this.interface = screen_interface;
   }
@@ -66,7 +68,8 @@ class MultiSnake {
   }
 
   tick() {
-    console.log("update");
+    if (this.ended) return;
+
     this.interface.clearScreen();
     this.players.forEach((player) => {
       if (player.alive) {
@@ -113,20 +116,33 @@ class MultiSnake {
       (!this.playAlone && alivePlayers < 2) ||
       (this.playAlone && alivePlayers == 0)
     ) {
-      if (alivePlayers < 1) {
-        this.interface.fillScreen(new Color(255, 255, 255));
-        this.interface.updateScreen();
-        this.endGame();
-        return;
-      }
-      this.players.forEach((item, i) => {
-        if (item.alive) {
-          this.interface.fillScreen(item.headColor);
+      this.ended = true;
+      if (!this.playAlone) {
+        if (alivePlayers < 1) {
+          //
+          this.interface.fillScreen(new Color(255, 255, 255));
+          this.interface
+            .drawPng("img/error.png")
+            .then(() => this.interface.updateScreen());
+          return;
         }
-      });
-      console.log("stopping game");
-      this.interface.updateScreen();
-      this.endGame();
+        this.players.forEach((item, i) => {
+          if (item.alive) {
+            winner = true;
+            this.interface.fillScreen(item.headColor);
+          }
+        });
+        this.interface
+          .drawPng("img/crown.png")
+          .then(() => this.interface.updateScreen());
+      } else {
+        this.interface
+          .drawPng("img/error.png")
+          .then(() => this.interface.updateScreen());
+      }
+
+      // console.log("stopping game")
+      // this.endGame();
       return;
     }
   }
@@ -150,6 +166,7 @@ class SnakePlayer {
     this.oldDirection = "up";
     this.alive = true;
     this.playerNumber = playerNumber;
+    this.score = 0;
 
     player.onDirectionChange((input) => this.setDirection(input));
 
@@ -202,6 +219,7 @@ class SnakePlayer {
       if (item.x == this.game.foodx && item.y == this.game.foody) {
         this.game.spawnFood();
         this.eaten = true;
+        this.score++;
       }
     });
   }
