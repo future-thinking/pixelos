@@ -8,6 +8,8 @@ class MultiSnake {
 
   players = [];
 
+  playAlone = false;
+
   constructor(screen_interface) {
     this.interface = screen_interface;
   }
@@ -25,6 +27,10 @@ class MultiSnake {
       this.players.push(new SnakePlayer(player, i + 1, this));
     });
     this.spawnFood();
+
+    if (players.length == 1) {
+      this.playAlone = true;
+    }
   }
 
   stop() {}
@@ -103,7 +109,10 @@ class MultiSnake {
     });
     let alivePlayers = totalPlayers - deadPlayers;
 
-    if (alivePlayers < 2) {
+    if (
+      (!this.playAlone && alivePlayers < 2) ||
+      (this.playAlone && alivePlayers == 0)
+    ) {
       if (alivePlayers < 1) {
         this.interface.fillScreen(new Color(255, 255, 255));
         this.interface.updateScreen();
