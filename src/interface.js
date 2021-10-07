@@ -78,7 +78,7 @@ class Interface {
 
     const pixelStrip = new Uint32Array(pixelAmount);
 
-    let orientedPixels = pixels;
+    let orientedPixels = getCopyOfMatrix(pixels);
 
     const orientation = process.env.ORIENTATION || 0;
 
@@ -178,4 +178,8 @@ function rotate(matrix) {
   }
 
   return matrix;
+}
+
+function getCopyOfMatrix(mat) {
+  return mat.map((row) => row.map((col) => col));
 }
