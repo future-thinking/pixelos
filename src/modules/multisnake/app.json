@@ -1,5 +1,0 @@
-{
-    "main": "./module.js",
-    "name": "Multiplayer Snake",
-    "tickRate": 100
-}

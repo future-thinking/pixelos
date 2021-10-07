@@ -1,4 +1,5 @@
 {
     "main": "./rainbow.js",
-    "name": "Rainbow"
+    "name": "Rainbow",
+    "tickRate": 30
 }

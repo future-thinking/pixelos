@@ -40,6 +40,10 @@ class AppManager {
     return this.apps[index];
   }
 
+  getAppByName(name) {
+    return this.apps.filter((app) => app.config.name == name)[0];
+  }
+
   appStarted(app) {
     if (this.running != null) {
       console.log("stopping old app");
@@ -50,10 +54,18 @@ class AppManager {
     this.running = app;
   }
 
+  stopApp() {
+    if (this.running) {
+      this.running.stop();
+    }
+  }
+
   appStopped(app) {
     this.running = null;
     console.log("stopped app");
-    //Start Menu
+    this.screen.clearScreen();
+    this.screen.drawPng("img/heart.png").then(() => this.screen.updateScreen());
+    this.playerManager.clearListeners();
   }
 }
 
@@ -116,8 +128,6 @@ class App {
     this.stop();
 
     this.instance = this.factory(this.screen);
-
-    console.log(this.instance);
 
     this.appManager.appStarted(this);
 

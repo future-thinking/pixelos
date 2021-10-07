@@ -1,0 +1,5 @@
+{
+    "main": "./flasher.js",
+    "name": "Flasher",
+    "tickRate": 30
+}

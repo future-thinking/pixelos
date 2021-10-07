@@ -63,18 +63,28 @@ class Interface {
     const { pixelAmount, width, pixels } = this;
 
     if (this.isOnlyEmulating) {
-      console.log();
+      let fieldPrint = "";
       for (let row = 0; row < width; row++) {
-        let line = "";
+        fieldPrint += "\n";
         for (let col = 0; col < width; col++) {
-          line += chalk.rgb(...this.pixels[row][col].asArray()).bold("■ ");
+          fieldPrint += chalk
+            .rgb(...this.pixels[col][row].asArray())
+            .bold("■ ");
         }
-        console.log(line);
       }
+      console.log(fieldPrint);
       return;
     }
 
     const pixelStrip = new Uint32Array(pixelAmount);
+
+    let orientedPixels = getCopyOfMatrix(pixels);
+
+    const orientation = process.env.ORIENTATION || 0;
+
+    for (let i = 0; i < orientation; i++) {
+      orientedPixels = rotate(orientedPixels);
+    }
 
     for (let x = 0; x < width; x++) {
       for (let y = 0; y < width; y++) {
@@ -85,7 +95,7 @@ class Interface {
           pix = y * width + width - 1 - x;
         }
 
-        pixelStrip[pix] = pixels[x][y].getUInt();
+        pixelStrip[pix] = orientedPixels[x][y].getUInt();
       }
     }
 
@@ -152,3 +162,24 @@ class Color {
 }
 
 module.exports = { Interface, Color };
+
+function rotate(matrix) {
+  const n = matrix.length;
+  const x = Math.floor(n / 2);
+  const y = n - 1;
+  for (let i = 0; i < x; i++) {
+    for (let j = i; j < y - i; j++) {
+      k = matrix[i][j];
+      matrix[i][j] = matrix[y - j][i];
+      matrix[y - j][i] = matrix[y - i][y - j];
+      matrix[y - i][y - j] = matrix[j][y - i];
+      matrix[j][y - i] = k;
+    }
+  }
+
+  return matrix;
+}
+
+function getCopyOfMatrix(mat) {
+  return mat.map((row) => row.map((col) => col));
+}

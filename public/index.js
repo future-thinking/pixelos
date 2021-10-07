@@ -2,6 +2,8 @@ var socket = io();
 
 var currentCount = 0;
 
+const isMobile = window.innerWidth < 800;
+
 function updatePlayerCount(count) {
   if (count == currentCount) {
     return;
@@ -28,6 +30,63 @@ function updatePlayerCount(count) {
   }
 }
 
+const Direction = {
+  UP: 0,
+  RIGHT: 1,
+  DOWN: 2,
+  LEFT: 3,
+};
+
+if (isMobile) {
+  const joy = new JoyStick("joyDiv", {
+    internalFillColor: "#ffffff",
+    internalStrokeColor: "#ffffff",
+    externalStrokeColor: "#ffffff",
+  });
+
+  let lastDirection = undefined;
+
+  setInterval(() => {
+    let currentDirection = undefined;
+    const [x, y] = [joy.GetX(), joy.GetY()];
+    const [absX, absY] = [Math.abs(x), Math.abs(y)];
+
+    const d = Math.sqrt(x * x + y * y);
+
+    if (d > 40) {
+      if (absX > absY) {
+        if (x > 0) {
+          currentDirection = Direction.RIGHT;
+        } else {
+          currentDirection = Direction.LEFT;
+        }
+      } else {
+        if (y > 0) {
+          currentDirection = Direction.UP;
+        } else {
+          currentDirection = Direction.DOWN;
+        }
+      }
+    }
+
+    if (currentDirection != lastDirection) {
+      lastDirection = currentDirection;
+      socket.emit("direction_change", {
+        w: currentDirection == Direction.UP,
+        s: currentDirection == Direction.DOWN,
+        a: currentDirection == Direction.LEFT,
+        d: currentDirection == Direction.RIGHT,
+      });
+      console.log({
+        w: currentDirection == Direction.UP,
+        s: currentDirection == Direction.DOWN,
+        a: currentDirection == Direction.LEFT,
+        d: currentDirection == Direction.RIGHT,
+      });
+    }
+  }, 20);
+}
+
 var w_press = false; //87
 var s_press = false; //83
 var a_press = false; //65
@@ -39,24 +98,15 @@ var left_press = false; //37
 var right_press = false; //39
 
 function changed() {
-  var dirobj = {
+  socket.emit("direction_change", {
     w: w_press,
     s: s_press,
     a: a_press,
     d: d_press,
-  };
-  socket.emit("direction_change", dirobj);
-}
-
-function restartgamesignal() {
-  console.log("restart_game");
-  socket.emit("restart_game", "");
+  });
 }
 
 function pressed(key) {
-  if (key == "r") {
-    restartgamesignal();
-  }
   eval(key + "_press = true;");
   changed();
 }
@@ -92,12 +142,6 @@ document.onkeydown = function (e) {
       changed();
     }
   }
-  if (e.keyCode == 82) {
-    if (!r_press) {
-      r_press = true;
-      restartgamesignal();
-    }
-  }
 };
 
 document.onkeyup = function (e) {
@@ -125,12 +169,6 @@ document.onkeyup = function (e) {
       changed();
     }
   }
-  if (e.keyCode == 82) {
-    if (!r_press) {
-      r_press = true;
-      restartgamesignal();
-    }
-  }
 };
 
 socket.on("player_number_info", (msg) => {
@@ -142,8 +180,10 @@ socket.on("game_full", (msg) => {
   socket.disconnect();
 });
 
-function restartButtonPress() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.open("POST", "/restartgame", true);
-  xhttp.send();
-}
+socket.on("games", (games) => {
+  const gamesEl = document.getElementById("games");
+  gamesEl.innerHTML = "";
+  for (const game of games) {
+    gamesEl.innerHTML += `<button onclick="socket.emit('start_game', '${game}');">${game}</button`;
+  }
+});
