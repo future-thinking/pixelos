@@ -78,6 +78,14 @@ class Interface {
 
     const pixelStrip = new Uint32Array(pixelAmount);
 
+    let orientedPixels = pixels;
+
+    const orientation = process.env.ORIENTATION || 0;
+
+    for (let i = 0; i < orientation; i++) {
+      orientedPixels = rotate(orientedPixels);
+    }
+
     for (let x = 0; x < width; x++) {
       for (let y = 0; y < width; y++) {
         let pix = 0;
@@ -87,7 +95,7 @@ class Interface {
           pix = y * width + width - 1 - x;
         }
 
-        pixelStrip[pix] = pixels[x][y].getUInt();
+        pixelStrip[pix] = orientedPixels[x][y].getUInt();
       }
     }
 
@@ -154,3 +162,18 @@ class Color {
 }
 
 module.exports = { Interface, Color };
+
+function rotate(matrix) {
+  const n = matrix.length;
+  const x = Math.floor(n / 2);
+  const y = n - 1;
+  for (let i = 0; i < x; i++) {
+    for (let j = i; j < y - i; j++) {
+      k = matrix[i][j];
+      matrix[i][j] = matrix[y - j][i];
+      matrix[y - j][i] = matrix[y - i][y - j];
+      matrix[y - i][y - j] = matrix[j][y - i];
+      matrix[j][y - i] = k;
+    }
+  }
+}
