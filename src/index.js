@@ -10,9 +10,7 @@ const isOnlyEmulating = process.argv.includes("-e") ? true : false;
 
 const screen = new Interface(144, isOnlyEmulating);
 
-screen.drawPng("img/poweroff.png").then(() => screen.updateScreen());
-screen.setPixel(1, 1, new Color(255, 0, 255));
-screen.updateScreen();
+screen.drawPng("img/heart.png").then(() => screen.updateScreen());
 
 const bodyParser = require("body-parser");
 const { PlayerManager } = require("./playerManager.js");
@@ -35,7 +33,3 @@ const playerManager = new PlayerManager(io);
 
 const appManager = new AppManager("./src/modules", screen, playerManager);
 global.appManager = appManager;
-
-setTimeout(() => {
-  appManager.getAppByIndex(2).start();
-}, 1000);
