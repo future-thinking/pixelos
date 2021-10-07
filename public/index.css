@@ -74,19 +74,17 @@ html {
 }
 
 .buttons {
-  overflow-y: scroll;
+  overflow: scroll;
   background-color: var(--background-card);
   padding: 5px;
   text-align: center;
-  max-height: 8em;
   width: 100vw;
+  margin-bottom: env(safe-area-inset-bottom, 0vh);
 }
 
 .game-selector {
-  width: 100vw;
-  height: min-content;
   text-align: center;
-  display: inline;
+  width: max-content;
 }
 
 .game-selector > button {
