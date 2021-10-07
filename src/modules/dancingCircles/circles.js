@@ -38,6 +38,8 @@ class Rainbow {
     players.forEach((player) => player.onDirectionChange(console.log));
   }
 
+  stop() {}
+
   tick() {
     this.screen.clearScreen();
 

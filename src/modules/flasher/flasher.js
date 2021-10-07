@@ -24,6 +24,8 @@ class Rainbow {
 
     this.screen.updateScreen();
   }
+
+  stop() {}
 }
 
 function random() {

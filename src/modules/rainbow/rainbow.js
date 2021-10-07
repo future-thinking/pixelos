@@ -38,6 +38,8 @@ class Rainbow {
 
     this.screen.updateScreen();
   }
+
+  stop() {}
 }
 
 function HSVtoRGB(h, s, v) {
