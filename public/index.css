@@ -60,6 +60,13 @@ button:active {
 
 body {
   background-color: #2e2e2e;
+  height: 100%;
+  position: fixed;
+}
+
+html {
+  overflow: hidden;
+  width: 100%;
 }
 
 .wrapper {
