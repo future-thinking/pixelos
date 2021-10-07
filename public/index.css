@@ -78,7 +78,7 @@ html {
   background-color: var(--background-card);
   padding: 5px;
   text-align: center;
-  max-height: 5em;
+  max-height: 8em;
   width: 100vw;
 }
 
