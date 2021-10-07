@@ -68,7 +68,7 @@ class Interface {
         fieldPrint += "\n";
         for (let col = 0; col < width; col++) {
           fieldPrint += chalk
-            .rgb(...this.pixels[row][col].asArray())
+            .rgb(...this.pixels[col][row].asArray())
             .bold("■ ");
         }
       }

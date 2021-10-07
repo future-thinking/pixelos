@@ -29,7 +29,7 @@ http.listen(port, function () {
   console.log("listening on *:" + port);
 });
 
-const playerManager = new PlayerManager(io);
+const playerManager = new PlayerManager(io, screen);
 
 const appManager = new AppManager("./src/modules", screen, playerManager);
 global.appManager = appManager;
