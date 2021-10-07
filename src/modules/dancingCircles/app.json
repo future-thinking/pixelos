@@ -1,5 +1,5 @@
 {
     "main": "./circles.js",
     "name": "Dancing Circles",
-    "tickRate": 500
+    "tickRate": 30
 }

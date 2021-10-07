@@ -42,10 +42,11 @@ class Rainbow {
     this.screen.clearScreen();
 
     for (const circle of this.circles) {
-      const speed = 1;
+      const speed = 0.2;
       circle.x += speed * circle.dir;
       circle.y += speed - speed * circle.dir;
       circle.dir += 0.1;
+      circle.dir = ((circle.dir + 1) % 1) - 1;
     }
 
     for (let x = 0; x < this.screen.width; x++) {
