@@ -176,4 +176,6 @@ function rotate(matrix) {
       matrix[j][y - i] = k;
     }
   }
+
+  return matrix;
 }
