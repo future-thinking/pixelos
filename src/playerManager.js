@@ -48,6 +48,10 @@ class PlayerManager {
     return [...this.players];
   }
 
+  clearListeners() {
+    this.players.forEach((player) => player.clearListeners());
+  }
+
   statusTimeout;
   statusIteration = 0;
 
@@ -90,6 +94,10 @@ class Player {
 
   onDirectionChange(callback) {
     this.directionListeners.push(callback);
+  }
+
+  clearListeners() {
+    this.directionListeners = [];
   }
 
   constructor(socket, playerManager) {

@@ -65,7 +65,7 @@ class AppManager {
     console.log("stopped app");
     this.screen.clearScreen();
     this.screen.drawPng("img/heart.png").then(() => this.screen.updateScreen());
-    //Start Menu
+    this.playerManager.clearListeners();
   }
 }
 
@@ -128,8 +128,6 @@ class App {
     this.stop();
 
     this.instance = this.factory(this.screen);
-
-    console.log(this.instance);
 
     this.appManager.appStarted(this);
 
