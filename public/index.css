@@ -57,17 +57,21 @@ button:active {
 }
 
 body {
+  background-color: #2e2e2e;
+}
+
+.wrapper {
+  display: flex;
   height: 100vh;
   overflow: hidden;
-  justify-content: stretch;
-  align-items: stretch;
+  justify-content: space-between;
+  align-items: center;
   flex-direction: column;
-  background-color: #2e2e2e;
 }
 
 .controlls-wrapper {
   width: 100vw;
-  height: 100%;
+  /* height: 100%; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,4 +83,18 @@ body {
   grid-template-columns: repeat(3, 1fr);
   justify-items: center;
   align-items: center;
+}
+
+.game-selector {
+  width: 100vw;
+  height: min-content;
+  text-align: center;
+}
+
+.game-selector > button {
+  height: min-content;
+  width: min-content;
+  font-size: 20px;
+  margin: 5px;
+  padding: 10px;
 }

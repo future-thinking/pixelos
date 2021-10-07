@@ -40,6 +40,10 @@ class AppManager {
     return this.apps[index];
   }
 
+  getAppByName(name) {
+    return this.apps.filter((app) => app.config.name == name)[0];
+  }
+
   appStarted(app) {
     if (this.running != null) {
       console.log("stopping old app");

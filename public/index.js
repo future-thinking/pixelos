@@ -142,6 +142,14 @@ socket.on("game_full", (msg) => {
   socket.disconnect();
 });
 
+socket.on("games", (games) => {
+  const gamesEl = document.getElementById("games");
+  gamesEl.innerHTML = "";
+  for (const game of games) {
+    gamesEl.innerHTML += `<button onclick="socket.emit('start_game', '${game}');">${game}</button`;
+  }
+});
+
 function restartButtonPress() {
   var xhttp = new XMLHttpRequest();
   xhttp.open("POST", "/restartgame", true);

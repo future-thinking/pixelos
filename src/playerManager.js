@@ -14,6 +14,11 @@ class PlayerManager {
       this.players.push(new Player(socket, this));
       console.log("Player connected as player" + this.players.length + ".");
       this.updatePlayerNumbers();
+
+      socket.emit(
+        "games",
+        global.appManager.apps.map((app) => app.config.name)
+      );
     });
   }
   updatePlayerNumbers() {
@@ -55,6 +60,10 @@ class Player {
     socket.on("direction_change", (input) => {
       this.direction = input;
       this.directionListeners.forEach((cb) => cb(input));
+    });
+
+    socket.on("start_game", (game) => {
+      global.appManager.getAppByName(game).start();
     });
   }
 }

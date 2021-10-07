@@ -32,7 +32,8 @@ http.listen(port, function () {
 const playerManager = new PlayerManager(io);
 
 const appManager = new AppManager("./src/modules", screen, playerManager);
+global.appManager = appManager;
 
 setTimeout(() => {
-  appManager.getAppByIndex(1).start();
+  appManager.getAppByIndex(2).start();
 }, 1000);
