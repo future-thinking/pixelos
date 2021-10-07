@@ -128,7 +128,6 @@ class MultiSnake {
         }
         this.players.forEach((item, i) => {
           if (item.alive) {
-            winner = true;
             this.interface.fillScreen(item.headColor);
           }
         });
