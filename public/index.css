@@ -1,3 +1,7 @@
+:root {
+  --background-card: rgba(0, 0, 0, 0.4);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -8,6 +12,7 @@
 .player_display_container {
   padding-top: 4px;
   text-align: center;
+  background-color: var(--background-card);
 }
 
 .player_display_container table {
@@ -27,41 +32,23 @@
   box-shadow: 5px 5px 70px -5px rgba(0, 0, 0, 0.75);
 }
 
-button {
-  background-color: #262626;
-  color: white;
-  font-size: 12vmin;
-  outline: none !important;
-  border: none;
-  border-radius: 20px;
-  /* width: 28vmin;
-  height: 28vmin;
-  width: 100%;
-  height: ; */
-  box-shadow: 5px 5px 70px -5px rgba(0, 0, 0, 0.75);
-  transition: ease 0.5s;
-  /* box-shadow: ; */
-}
-
-.play-btn {
-  font-size: 8vmin;
-  width: 20vmin;
-  height: 20vmin;
-}
-
-button:active {
-  box-shadow: none;
-}
-
-.wrapper {
-  /* Making the wrapper stack above the body */
-  z-index: 2;
+.background {
+  background-image: url("img/arcade.jpeg");
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: scale(1.1);
 }
 
 body {
-  background-color: #2e2e2e;
-  height: 100%;
   position: fixed;
+  height: 100%;
 }
 
 html {
@@ -79,54 +66,47 @@ html {
 }
 
 .controlls-wrapper {
-  width: 100vw;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  margin: 40px 0;
+  background-color: var(--background-card);
 }
 
-.controlls {
+.buttons {
+  overflow-y: scroll;
+  background-color: var(--background-card);
+  padding: 5px;
+  text-align: center;
+  max-height: 5em;
   width: 100vw;
-  height: 100%;
-  display: grid;
-  grid-gap: 2px;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  justify-items: stretch;
-  align-items: stretch;
-}
-
-.controlls > * {
-  /* aspect-ratio: 1; */
 }
 
 .game-selector {
   width: 100vw;
   height: min-content;
   text-align: center;
+  display: inline;
 }
 
 .game-selector > button {
-  height: min-content;
-  width: min-content;
   font-size: 20px;
   margin: 5px;
   padding: 10px;
   transition: ease 0.1s;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
 }
-
-/* .game-selector > button:hover {
-  height: min-content;
-  width: min-content;
-  font-size: 20px;
-  margin: 5px;
-  padding: 10px;
-} */
 
 @media only screen and (min-width: 600px) {
   .controlls-wrapper {
     display: none;
+  }
+
+  .buttons {
+    height: auto;
+    overflow: hidden;
   }
 }
