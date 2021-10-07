@@ -34,5 +34,5 @@ const playerManager = new PlayerManager(io);
 const appManager = new AppManager("./src/modules", screen, playerManager);
 
 setTimeout(() => {
-  appManager.getAppByIndex(0).start();
+  appManager.getAppByIndex(1).start();
 }, 3000);

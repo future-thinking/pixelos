@@ -63,14 +63,16 @@ class Interface {
     const { pixelAmount, width, pixels } = this;
 
     if (this.isOnlyEmulating) {
-      console.log();
+      let fieldPrint = "";
       for (let row = 0; row < width; row++) {
-        let line = "";
+        fieldPrint += "\n";
         for (let col = 0; col < width; col++) {
-          line += chalk.rgb(...this.pixels[row][col].asArray()).bold("■ ");
+          fieldPrint += chalk
+            .rgb(...this.pixels[row][col].asArray())
+            .bold("■ ");
         }
-        console.log(line);
       }
+      console.log(fieldPrint);
       return;
     }
 
