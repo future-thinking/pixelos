@@ -54,6 +54,12 @@ class AppManager {
     this.running = app;
   }
 
+  stopApp() {
+    if (this.running) {
+      this.running.stop();
+    }
+  }
+
   appStopped(app) {
     this.running = null;
     console.log("stopped app");

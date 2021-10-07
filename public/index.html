@@ -75,7 +75,13 @@
           <span></span>
         </div>
       </div>
-      <div class="game-selector" id="games"></div>
+      <div class="buttons">
+        <div class="game-selector" id="games"></div>
+        <div class="game-selector">
+          <button onclick="socket.emit('stop_game');">Stop Game</button>
+          <button onclick="socket.emit('clear_screen')">Clear Screen</button>
+        </div>
+      </div>
     </div>
   </body>
   <script src="/index.js" charset="utf-8"></script>

@@ -110,6 +110,16 @@ class Player {
     socket.on("start_game", (game) => {
       global.appManager.getAppByName(game).start();
     });
+
+    socket.on("stop_game", (game) => {
+      global.appManager.stopApp();
+    });
+
+    socket.on("clear_screen", (game) => {
+      global.appManager.stopApp();
+      this.playerManager.screen.clearScreen();
+      this.playerManager.screen.updateScreen();
+    });
   }
 }
 

@@ -34,8 +34,10 @@ button {
   outline: none !important;
   border: none;
   border-radius: 20px;
-  width: 28vmin;
+  /* width: 28vmin;
   height: 28vmin;
+  width: 100%;
+  height: ; */
   box-shadow: 5px 5px 70px -5px rgba(0, 0, 0, 0.75);
   transition: ease 0.5s;
   /* box-shadow: ; */
@@ -71,18 +73,26 @@ body {
 
 .controlls-wrapper {
   width: 100vw;
-  /* height: 100%; */
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100%;
+  margin: 40px 0;
 }
 
 .controlls {
+  width: 100vw;
+  height: 100%;
   display: grid;
   grid-gap: 2px;
   grid-template-columns: repeat(3, 1fr);
-  justify-items: center;
-  align-items: center;
+  grid-template-rows: repeat(3, 1fr);
+  justify-items: stretch;
+  align-items: stretch;
+}
+
+.controlls > * {
+  /* aspect-ratio: 1; */
 }
 
 .game-selector {
@@ -97,4 +107,13 @@ body {
   font-size: 20px;
   margin: 5px;
   padding: 10px;
+  transition: ease 0.1s;
 }
+
+/* .game-selector > button:hover {
+  height: min-content;
+  width: min-content;
+  font-size: 20px;
+  margin: 5px;
+  padding: 10px;
+} */
