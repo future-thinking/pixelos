@@ -57,6 +57,8 @@ class AppManager {
   appStopped(app) {
     this.running = null;
     console.log("stopped app");
+    this.screen.clearScreen();
+    this.screen.drawPng("img/heart.png").then(() => this.screen.updateScreen());
     //Start Menu
   }
 }
