@@ -12,24 +12,12 @@ const screen = new Interface(144, isOnlyEmulating);
 
 screen.drawPng("img/heart.png").then(() => screen.updateScreen());
 
-const bodyParser = require("body-parser");
 const { PlayerManager } = require("./playerManager.js");
+const { default: WebManager } = require("./webManager.js");
 
-app.use(require("express").static("public"));
-app.use(bodyParser.urlencoded({ extended: true }));
+const webManager = new WebManager();
 
-global.emulating_sockets = new Array();
-
-app.get("/", function (req, res) {
-  res.sendFile(__dirname + "/public/index.html");
-});
-
-const port = process.env.PORT;
-http.listen(port, function () {
-  console.log("listening on *:" + port);
-});
-
-const playerManager = new PlayerManager(io, screen);
+const playerManager = new PlayerManager(webManager.getIo(), screen);
 
 const appManager = new AppManager("./src/modules", screen, playerManager);
 global.appManager = appManager;
