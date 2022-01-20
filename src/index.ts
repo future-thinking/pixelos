@@ -3,4 +3,4 @@ import { config } from "dotenv";
 
 config();
 
-new PixelOS();
+PixelOS.init().start();

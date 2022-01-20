@@ -1,17 +1,20 @@
-import { AppManager } from "./appManager";
-import ScreenInterface from "./screenInterface";
+import GameManager from "./gameManager";
+import { SnakeGame } from "./modules/snake/snake";
+import ScreenInterface, { Color } from "./screenInterface";
 import WebManager from "./webManager";
 
 export default class PixelOS {
   private static _instance: PixelOS;
 
   webManager: WebManager;
-  appManager: AppManager;
+  gameManager: GameManager;
   screenInterface: ScreenInterface;
 
   emulating: boolean;
 
-  constructor() {
+  constructor() {}
+
+  start() {
     this.emulating = process.argv.includes("-e") ? true : false;
 
     this.screenInterface = new ScreenInterface(
@@ -20,14 +23,24 @@ export default class PixelOS {
       this.emulating
     );
 
+    this.screenInterface.fill(new Color(255, 200, 100)).update();
+
     this.webManager = new WebManager();
+
+    this.gameManager = new GameManager();
+    this.gameManager.startGame(SnakeGame);
   }
 
-  public static get Instance(): PixelOS {
-    return this._instance ?? (this._instance = new PixelOS());
+  public static init(): PixelOS {
+    this._instance = new PixelOS();
+    return this._instance;
+  }
+
+  public static getInstance(): PixelOS {
+    return PixelOS._instance;
   }
 
   public static getInterface(): ScreenInterface {
-    return this.Instance.screenInterface;
+    return PixelOS.getInstance().screenInterface;
   }
 }

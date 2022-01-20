@@ -26,6 +26,8 @@ export default class ScreenInterface {
         strip: "rgb",
       });
     }
+
+    this.clear();
   }
 
   getDimensions(): { amount: number; width: number; height: number } {
@@ -132,8 +134,8 @@ export default class ScreenInterface {
   }
 
   fill(color: Color): ScreenInterface {
-    this.frame = [...Array(this.height)].map((_) =>
-      Array(this.width).fill(color)
+    this.frame = [...Array(Number(this.height))].map((_) =>
+      Array(Number(this.width)).fill(color)
     );
 
     return this;
@@ -188,6 +190,11 @@ export class Color {
 
   getHex(): string {
     return "0x" + convert.rgb.hex(this.r, this.g, this.b);
+  }
+
+  static random(): Color {
+    const value = () => Math.round(Math.random() * 255);
+    return new Color(value(), value(), value());
   }
 
   getUInt(): number {
