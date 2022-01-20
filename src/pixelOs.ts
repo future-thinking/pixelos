@@ -28,7 +28,6 @@ export default class PixelOS {
     this.webManager = new WebManager();
 
     this.gameManager = new GameManager();
-    this.gameManager.startGame(SnakeGame);
   }
 
   public static init(): PixelOS {

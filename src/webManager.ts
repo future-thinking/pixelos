@@ -3,6 +3,8 @@ import EventEmitter from "events";
 import express from "express";
 import { createServer } from "http";
 import { Server, Socket } from "socket.io";
+import cors from "cors";
+import PixelOS from "./pixelOs";
 
 export default class WebManager extends EventEmitter {
   app: express.Application;
@@ -21,7 +23,14 @@ export default class WebManager extends EventEmitter {
     this.app.use(bodyParser.urlencoded({ extended: true }));
 
     const http = createServer(this.app);
-    this.ioServer = new Server(http);
+    this.ioServer = new Server(http, {
+      cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
+      },
+    });
+
+    this.initSocketIO();
 
     const port = process.env.PORT ?? 3000;
     http.listen(port, function () {
@@ -54,6 +63,7 @@ export class PlayerManager extends EventEmitter {
 
   constructor(webManager: WebManager) {
     super();
+    this.webManager = webManager;
   }
 
   createUser(webClient: WebClient): Player {
@@ -105,7 +115,8 @@ export class WebClient {
     this.clientType = clientType.PLAYER;
 
     if (this.clientType == clientType.PLAYER) {
-      this.player = webManager.playerManager.createUser(this);
+      // this.player =
+      //   PixelOS.getInstance().webManager.playerManager.createUser(this);
     }
 
     socket.on("disconnect", () => {
