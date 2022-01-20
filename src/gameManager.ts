@@ -35,6 +35,7 @@ type factoryFunction = () => GameInstance;
 export interface Game {
   name: string;
   minimumPlayers: number;
+  maximumPlayers: number;
   factory: factoryFunction;
 }
 

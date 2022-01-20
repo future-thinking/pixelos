@@ -5,6 +5,7 @@ import { Color } from "../../screenInterface";
 export const SnakeGame: Game = {
   name: "Snake",
   minimumPlayers: 1,
+  maximumPlayers: 4,
   factory: function (): GameInstance {
     return new SnakeInstance();
   },
