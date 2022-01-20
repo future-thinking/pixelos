@@ -17,12 +17,8 @@ export default class WebManager extends EventEmitter {
 
     this.app = express();
 
-    this.app.use(express.static("public"));
+    this.app.use(express.static("client/dist"));
     this.app.use(bodyParser.urlencoded({ extended: true }));
-
-    this.app.get("/", function (req, res) {
-      res.sendFile(__dirname + "/public/index.html");
-    });
 
     const http = createServer(this.app);
     this.ioServer = new Server(http);

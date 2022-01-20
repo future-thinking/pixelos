@@ -2,11 +2,12 @@
   "name": "pixel-os-nodejs",
   "version": "1.0.0",
   "description": "nodejs driven api for ws281x-LEDs matrix",
-  "main": "src/index.js",
+  "main": "build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node src/index.js",
-    "dev": "tsc && node build/index.js -e"
+    "start": "npm run build && node .",
+    "dev": "tsc && node build/index.js -e",
+    "build": "tsc && (cd client && npm run build)"
   },
   "repository": {
     "type": "git",
