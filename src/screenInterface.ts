@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import convert from "color-convert";
-import * as ws281x from "rpi-ws281x";
+import fs from "fs";
+import { PNG } from "pngjs";
 
 export default class ScreenInterface {
   frame: Frame;
@@ -18,7 +19,7 @@ export default class ScreenInterface {
     this.height = height;
 
     if (!emulating) {
-      this.ws281x = ws281x;
+      this.ws281x = require("ws281x");
       this.ws281x.configure({
         leds: width * height,
         gpio: process.env.GPIO ?? 18,
@@ -136,6 +137,35 @@ export default class ScreenInterface {
     );
 
     return this;
+  }
+
+  async drawPng(file: fs.PathLike) {
+    const { width, height } = this.getDimensions();
+
+    return new Promise((resolve) => {
+      fs.createReadStream(file)
+        .pipe(new PNG())
+        .on("parsed", (data) => {
+          for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
+              const idx = (width * y + x) << 2;
+
+              const [r, g, b, a] = [
+                data[idx + 0],
+                data[idx + 1],
+                data[idx + 2],
+                data[idx + 3],
+              ];
+
+              if (a > 128) {
+                this.setPixel(x, y, new Color(r, g, b));
+              }
+            }
+          }
+
+          resolve(this);
+        });
+    });
   }
 
   clear(): ScreenInterface {
