@@ -12,6 +12,11 @@ class SocketSingleton {
 
   constructor() {
     this.socket = socketIOClient(useBackend());
+
+    this.socket.on("ping", () => {
+      this.socket.emit("pong");
+      console.log("got pinged");
+    });
   }
 }
 

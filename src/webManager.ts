@@ -6,12 +6,18 @@ import { Server, Socket } from "socket.io";
 import cors from "cors";
 import PixelOS from "./pixelOs";
 import { Dir } from "fs";
+import { SocketAddress } from "net";
+import { ClientSessionOptions } from "http2";
 
 export default class WebManager extends EventEmitter {
   app: express.Application;
   ioServer: Server;
 
   playerManager: PlayerManager;
+
+  lastPing: number = Date.now();
+
+  clients: Set<WebClient> = new Set<WebClient>();
 
   constructor() {
     super();
@@ -37,9 +43,15 @@ export default class WebManager extends EventEmitter {
     http.listen(port, function () {
       console.log("listening on *:" + port);
     });
-  }
 
-  clients: Set<WebClient> = new Set<WebClient>();
+    setInterval(() => {
+      for (const client of this.clients) {
+        client.socket.emit("ping");
+      }
+      console.log("pinged " + this.clients.size + " clients");
+      this.lastPing = Date.now();
+    }, 2000);
+  }
 
   initSocketIO() {
     this.ioServer.on("connection", (socket) => {
@@ -154,6 +166,8 @@ export class WebClient {
 
   player: Player | null = null;
 
+  ping: number = -1;
+
   constructor(socket: Socket, webManager: WebManager) {
     this.socket = socket;
     this.clientType = clientType.PLAYER;
@@ -170,6 +184,17 @@ export class WebClient {
       if (this.clientType == clientType.PLAYER) {
         this.player.onDisconnect();
       }
+    });
+
+    socket.on("ping", (pingId) => {
+      socket.emit("pong", pingId);
+    });
+
+    socket.on("pong", () => {
+      this.ping = Date.now() - this.webManager.lastPing;
+      socket.emit("pingValue", this.ping);
+
+      console.log("got ponged with ping of " + this.ping);
     });
   }
 }
