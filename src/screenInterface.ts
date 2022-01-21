@@ -48,7 +48,8 @@ export default class ScreenInterface {
         fieldPrint += chalk.rgb(...this.frame[col][row].asArray()).bold("■ ");
       }
     }
-    process.stdout.write("\u001B[2J\u001B[0;0f");
+    !process.argv.includes("-v") &&
+      process.stdout.write("\u001B[2J\u001B[0;0f");
     process.stdout.write(fieldPrint);
   }
 
