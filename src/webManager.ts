@@ -41,7 +41,7 @@ export default class WebManager extends EventEmitter {
   clients: Set<WebClient> = new Set<WebClient>();
 
   initSocketIO() {
-    this.ioServer.on("connection", function (socket) {
+    this.ioServer.on("connection", (socket) => {
       console.log("a user connected");
       const client = new WebClient(socket, this);
       this.emit("clientConnect", client);
