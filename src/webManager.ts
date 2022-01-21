@@ -5,6 +5,7 @@ import { createServer } from "http";
 import { Server, Socket } from "socket.io";
 import cors from "cors";
 import PixelOS from "./pixelOs";
+import { Dir } from "fs";
 
 export default class WebManager extends EventEmitter {
   app: express.Application;
@@ -74,11 +75,40 @@ export class PlayerManager extends EventEmitter {
   }
 }
 
+export enum Direction {
+  UP,
+  DOWN,
+  LEFT,
+  RIGHT,
+  CENTER,
+}
+
+export function getDirectionDelta(direction: Direction): [number, number] {
+  switch (direction) {
+    case Direction.UP:
+      return [0, -1];
+    case Direction.DOWN:
+      return [0, 1];
+    case Direction.LEFT:
+      return [-1, 0];
+    case Direction.RIGHT:
+      return [1, 0];
+    case Direction.CENTER:
+      return [0, 0];
+  }
+}
+
+export interface IPlayerDirectionUpdate {
+  player: Player;
+  direction: Direction;
+}
 export class Player {
   webClient: WebClient;
   playerManager: PlayerManager;
   uuid: number;
   name: number;
+
+  direction: Direction = Direction.CENTER;
 
   constructor(webClient: WebClient, playerManager: PlayerManager) {
     this.playerManager = playerManager;
@@ -87,6 +117,20 @@ export class Player {
     this.uuid = playerManager.currentPlayerUuid++;
 
     this.playerManager.emit("playerConnect", this);
+
+    this.setupSocketHooks();
+  }
+
+  setupSocketHooks() {
+    this.webClient.socket.on("direction_update", (direction: Direction) => {
+      if (this.direction != direction) {
+        this.direction = direction;
+        this.playerManager.emit("playerDirectionUpdate", {
+          player: this,
+          direction: this.direction,
+        } as IPlayerDirectionUpdate);
+      }
+    });
   }
 
   getPlayerNumber() {
@@ -113,10 +157,10 @@ export class WebClient {
   constructor(socket: Socket, webManager: WebManager) {
     this.socket = socket;
     this.clientType = clientType.PLAYER;
+    this.webManager = webManager;
 
     if (this.clientType == clientType.PLAYER) {
-      // this.player =
-      //   PixelOS.getInstance().webManager.playerManager.createUser(this);
+      this.player = this.webManager.playerManager.createUser(this);
     }
 
     socket.on("disconnect", () => {
