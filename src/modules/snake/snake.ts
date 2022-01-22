@@ -1,3 +1,4 @@
+import { spawn } from "child_process";
 import { runInThisContext } from "vm";
 import gameManager, { Game, GameInstance, Ticker } from "../../gameManager";
 import PixelOS from "../../pixelOs";
@@ -18,41 +19,93 @@ export const SnakeGame: Game = {
   },
 };
 
+interface SnakePlayer {
+  webPlayer: Player;
+  snake: Snake;
+}
+
+interface Pixel {
+  x: number;
+  y: number;
+}
+interface Snake {
+  head: Pixel;
+  direction: Direction;
+  body: Pixel[];
+}
+
+const spawns: [Pixel, Direction][] = [
+  [{ x: 1, y: 1 }, Direction.DOWN],
+  [{ x: PixelOS.getInterface().width - 2, y: 1 }, Direction.DOWN],
+  [{ x: 1, y: PixelOS.getInterface().height - 2 }, Direction.UP],
+  [
+    {
+      x: PixelOS.getInterface().width - 2,
+      y: PixelOS.getInterface().height - 2,
+    },
+    Direction.UP,
+  ],
+];
+
 class SnakeInstance implements GameInstance {
   position: [number, number] = [2, 2];
   direction: Direction = Direction.CENTER;
 
+  players: { [id: number]: SnakePlayer } = {};
+
   onStart(): void {
     PixelOS.getInterface().fill(new Color(0, 255, 0)).update();
+
+    PixelOS.getWebManager().playerManager.players.forEach((player) => {
+      this.players[player.uuid] = {
+        webPlayer: player,
+        snake: {
+          head: spawns[player.getPlayerNumber()][0],
+          direction: spawn[player.getPlayerNumber()][1],
+          body: [],
+        },
+      };
+    });
 
     PixelOS.getInstance().webManager.playerManager.on(
       "playerDirectionUpdate",
       (event: IPlayerDirectionUpdate) => {
-        this.direction = event.direction;
+        if (event.direction == Direction.CENTER) return;
+        if (this.players[event.player.uuid]) {
+          this.players[event.player.uuid].snake.direction = event.direction;
+        }
       }
     );
 
-    new Ticker(10, this, () => {
-      // console.log(
-      //   this.direction,
-      //   directionDelta,
-      //   getDirectionDelta(this.direction)
-      // );
-      console.log(typeof Direction.CENTER, typeof this.direction);
-      console.log(Direction.CENTER, this.direction);
-      const delta = getDirectionDelta(this.direction);
-      // console.log(delta);
-      this.position[0] += delta[0];
-      this.position[1] += delta[1];
+    new Ticker(2, this, () => {
+      PixelOS.getInterface().clear();
 
-      this.position[0] =
-        this.position[0] % PixelOS.getInstance().screenInterface.width;
-      this.position[1] =
-        this.position[1] % PixelOS.getInstance().screenInterface.height;
-      PixelOS.getInterface()
-        .clear()
-        .setPixel(this.position[0], this.position[1], new Color(255, 0, 0))
-        .update();
+      for (const player in this.players) {
+        const snake = this.players[player].snake;
+
+        const [dx, dy] = getDirectionDelta(snake.direction);
+        snake.body.push(snake.head);
+        snake.head = {
+          x: snake.head.x + dx,
+          y: snake.head.y + dy,
+        };
+
+        PixelOS.getInterface().setPixel(
+          snake.head.x,
+          snake.head.y,
+          new Color(255, 0, 0)
+        );
+
+        snake.body.forEach((pixel) => {
+          PixelOS.getInterface().setPixel(
+            pixel.x,
+            pixel.y,
+            new Color(255, 0, 0)
+          );
+        });
+      }
+
+      PixelOS.getInterface().update();
     });
   }
   gameManager: gameManager;
