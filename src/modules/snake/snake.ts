@@ -54,59 +54,51 @@ class SnakeInstance implements GameInstance {
   players: { [id: number]: SnakePlayer } = {};
 
   onStart(): void {
-    PixelOS.getInterface().fill(new Color(0, 255, 0)).update();
-
-    PixelOS.getWebManager().playerManager.players.forEach((player) => {
-      this.players[player.uuid] = {
-        webPlayer: player,
-        snake: {
-          head: spawns[player.getPlayerNumber()][0],
-          direction: spawn[player.getPlayerNumber()][1],
-          body: [],
-        },
-      };
-    });
-
-    PixelOS.getInstance().webManager.playerManager.on(
-      "playerDirectionUpdate",
-      (event: IPlayerDirectionUpdate) => {
-        if (event.direction == Direction.CENTER) return;
-        if (this.players[event.player.uuid]) {
-          this.players[event.player.uuid].snake.direction = event.direction;
-        }
-      }
-    );
-
-    new Ticker(2, this, () => {
-      PixelOS.getInterface().clear();
-
-      for (const player in this.players) {
-        const snake = this.players[player].snake;
-
-        const [dx, dy] = getDirectionDelta(snake.direction);
-        snake.body.push(snake.head);
-        snake.head = {
-          x: snake.head.x + dx,
-          y: snake.head.y + dy,
-        };
-
-        PixelOS.getInterface().setPixel(
-          snake.head.x,
-          snake.head.y,
-          new Color(255, 0, 0)
-        );
-
-        snake.body.forEach((pixel) => {
-          PixelOS.getInterface().setPixel(
-            pixel.x,
-            pixel.y,
-            new Color(255, 0, 0)
-          );
-        });
-      }
-
-      PixelOS.getInterface().update();
-    });
+    // PixelOS.getInterface().fill(new Color(0, 255, 0)).update();
+    // PixelOS.getInstance().webManager.playerManager.players.forEach((player) => {
+    //   this.players[player.uuid] = {
+    //     webPlayer: player,
+    //     snake: {
+    //       head: spawns[player.getPlayerNumber()][0],
+    //       direction: spawn[player.getPlayerNumber()][1],
+    //       body: [],
+    //     },
+    //   };
+    // });
+    // PixelOS.getInstance().webManager.playerManager.on(
+    //   "playerDirectionUpdate",
+    //   (event: IPlayerDirectionUpdate) => {
+    //     if (event.direction == Direction.CENTER) return;
+    //     if (this.players[event.player.uuid]) {
+    //       this.players[event.player.uuid].snake.direction = event.direction;
+    //     }
+    //   }
+    // );
+    // new Ticker(2, this, () => {
+    //   PixelOS.getInterface().clear();
+    //   for (const player in this.players) {
+    //     const snake = this.players[player].snake;
+    //     const [dx, dy] = getDirectionDelta(snake.direction);
+    //     snake.body.push(snake.head);
+    //     snake.head = {
+    //       x: snake.head.x + dx,
+    //       y: snake.head.y + dy,
+    //     };
+    //     PixelOS.getInterface().setPixel(
+    //       snake.head.x,
+    //       snake.head.y,
+    //       new Color(255, 0, 0)
+    //     );
+    //     snake.body.forEach((pixel) => {
+    //       PixelOS.getInterface().setPixel(
+    //         pixel.x,
+    //         pixel.y,
+    //         new Color(255, 0, 0)
+    //       );
+    //     });
+    //   }
+    //   PixelOS.getInterface().update();
+    // });
   }
   gameManager: gameManager;
   onEnd(): void {}
