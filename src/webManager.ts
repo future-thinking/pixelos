@@ -196,8 +196,6 @@ export class WebClient {
     socket.on("pong", () => {
       this.ping = Date.now() - this.webManager.lastPing;
       socket.emit("pingValue", this.ping);
-
-      console.log("got ponged with ping of " + this.ping);
     });
   }
 }
