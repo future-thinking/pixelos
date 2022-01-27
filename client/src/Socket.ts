@@ -15,7 +15,6 @@ class SocketSingleton {
 
     this.socket.on("ping", () => {
       this.socket.emit("pong");
-      console.log("got pinged");
     });
   }
 }

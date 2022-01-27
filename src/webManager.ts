@@ -8,6 +8,7 @@ import PixelOS from "./pixelOs";
 import { Dir } from "fs";
 import { SocketAddress } from "net";
 import { ClientSessionOptions } from "http2";
+import { SnakeGame } from "./modules/snake/snake";
 
 export default class WebManager extends EventEmitter {
   app: express.Application;
@@ -48,7 +49,6 @@ export default class WebManager extends EventEmitter {
       for (const client of this.clients) {
         client.socket.emit("ping");
       }
-      console.log("pinged " + this.clients.size + " clients");
       this.lastPing = Date.now();
     }, 2000);
   }
@@ -72,7 +72,7 @@ export class PlayerManager extends EventEmitter {
 
   players: Set<Player> = new Set<Player>();
 
-  currentPlayerUuid: number;
+  currentPlayerUuid: number = 0;
 
   constructor(webManager: WebManager) {
     super();
@@ -83,6 +83,9 @@ export class PlayerManager extends EventEmitter {
     const player = new Player(webClient, this);
     this.players.add(player);
 
+    setTimeout(() => {
+      PixelOS.getInstance().gameManager.startGame(SnakeGame);
+    }, 10);
     return player;
   }
 }
