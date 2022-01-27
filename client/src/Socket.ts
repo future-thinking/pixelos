@@ -1,6 +1,10 @@
 import { Socket } from "socket.io-client";
 import socketIOClient from "socket.io-client";
 
+export interface IMeta {
+  uuid: number;
+  playerNumber: number;
+}
 class SocketSingleton {
   static _instance: SocketSingleton;
 
@@ -10,11 +14,17 @@ class SocketSingleton {
 
   socket: Socket;
 
+  meta: IMeta | null = null;
+
   constructor() {
     this.socket = socketIOClient(useBackend());
 
     this.socket.on("ping", () => {
       this.socket.emit("pong");
+    });
+
+    this.socket.on("meta", (meta: IMeta) => {
+      this.meta = meta;
     });
   }
 }
