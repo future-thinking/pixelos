@@ -46,3 +46,16 @@ Optionally you can run this command with autostart on the pi. To do this click [
 
 Checkout the parts and pictures on Printables.com
 https://www.printables.com/model/226546-ikea-lack-led-matrix
+
+## Development
+
+This application is structured in modules which you can start from the web app.
+
+Currently there are four modules: 
+
+- Snake
+   - classic snake game
+   - up to 4 players 
+- Rainbow
+- Dancing Circles
+- Flasher
