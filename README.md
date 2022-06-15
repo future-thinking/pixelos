@@ -9,18 +9,25 @@ This is purposely designed to work with 12 by 12 led matrices using addressable 
 ### Installation
 
 1. Download and install the newest verion of nodejs
-   $ curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
-   $ sudo apt install nodejs
+
+       $ curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
+       $ sudo apt install nodejs
+   
 2. Check if everything installed successfully
-   $ node --version
+    
+       $ node --version
+    
 3. Clone the repository with
-   $ git clone https://github.com/future-thinking/pixelos.git
+
+       $ git clone https://github.com/future-thinking/pixelos.git
+       
 4. cd into the cloned directory and run npm install not only in the main directory but also in the client directory
-   $ cd pixelos
-   $ npm install
-   $ cd client
-   $ npm install
-   $ cd ..
+
+       $ cd pixelos
+       $ npm install
+       $ cd client
+       $ npm install
+       $ cd ..
 
 ### Configuration
 
